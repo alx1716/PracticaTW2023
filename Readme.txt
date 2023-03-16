@@ -3,4 +3,7 @@ Este Archivo sirve para dos cosas, comprobar que se ha sincronizado este reposit
 
 Sigo Modificando el archivo para ver si me sale en el repositorio a la página web
 
+He comprobado que se puede actualizar aquí si modifico en mi máquina local, ahora debo mirar si funciona al revés.
+
+
 
