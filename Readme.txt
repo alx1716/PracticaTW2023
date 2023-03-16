@@ -11,5 +11,8 @@ He comprobado que me guarda los cambios haciendo un pull desde mi máquina.
 
 Hago un cambio más para ver si con el cmd sin ser admin me funcionan los pull
 
+Compruebo que funcionan correctamente
+
+
 
 
