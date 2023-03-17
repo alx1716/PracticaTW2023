@@ -13,6 +13,8 @@ Hago un cambio más para ver si con el cmd sin ser admin me funcionan los pull
 
 Compruebo que funcionan correctamente
 
+@Fer: Pruebo a realizar modificación de fichero en local
+
 
 
 
