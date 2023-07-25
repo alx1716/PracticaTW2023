@@ -15,6 +15,18 @@ Compruebo que funcionan correctamente
 
 @Fer: Pruebo a realizar modificación de fichero en local
 
+@Fer:  he creado una rama para el proyecto con Thymeleaf, he subido el proyecto, me quedan detalles de login y registro, creo que voy a cambiar para usar el email como usuario para registro y acceso.
+Para hacer pruebas con hsql yo lo tengo instalado en una carpeta de disco c:, primero me abro un cmd como admin y ejecuto esto:
+java -cp C:\hsqldb-2.7.1\hsqldb\lib\hsqldb.jar org.hsqldb.Server -database.0 file:wikinado_db -dbname.0 wikdb
 
+me abro otro cmd me meto en la carpeta bin de hsqldb y ejecuto el runserverSwing
 
+me creo una conexion con estos datos:
+Driver: org.hsqldb.jdbc.JDBCDriver
+url: jdbc:hsqldb:hsql://localhost/wikdb
+user: SA
+
+pulsar OK
+
+Por otro lado en las properties del proyecto tengo puesto el puerto 8090, asique para hacer pruebas en local --> http://localhost:8090/
 
