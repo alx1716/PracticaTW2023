@@ -1,0 +1,17 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layouts/base :: head">
+
+    <title>Página de Inicio</title>
+</head>
+<body>
+<nav th:replace="layouts/base :: nav"></nav>
+    <h2 th:fragment="content-title">Bienvenido a Wikiñado</h2>
+    <div th:fragment="content">
+        <p>
+            ¡Bienvenido a Wikiñado, la enciclopedia colaborativa de conocimientos! 
+            Aquí podrás encontrar una amplia variedad de artículos sobre arquitectura, psicología, matemáticas, física, música, filosofía y más. 
+            Navega por las categorías y disfruta de nuestros artículos.
+        </p>
+    </div>
+</body>
+</html>
