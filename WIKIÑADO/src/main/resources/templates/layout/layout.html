@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+	<meta charset="UTF-8" />
+	<title th:text="'WIKIÑADO-La enciclopedia de cuñaos'"></title>
+
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<!--Esto es para hacer un layout común a todas las vistas usando fragment de th: y luego reemplazando en cada vista con th:replace=/eldirectorio donde tengamos el layout en este caso templates es la raíz-->
+	<header th:fragment="header"> <!--Barra de Navegación-->
+		<nav class="navbar navbar-expand-lg navbar-primary bg-white ">
+			<li class="container-fluid">
+				
+				<a class="navbar-brand" th:href="@{/home}">
+					<img th:src="@{/images/logo.png}" alt="Logo de WIKIÑADO" /><h5 class="text-primary">¡Lo sabes todo y no lo sabes!</h5></a>
+					
+					
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+					<ul class="navbar-nav">
+						<li  sec:authorize="isAuthenticated() and hasRole('ROLE_GESTOR')" class="nav-item">  <!-- esto es solo para controlar que solo los gestores puedan tener el boton de crear wiki 09/08/2023-->
+							<a class="btn btn-primary btn-lg mx-2" aria-current="page" th:href="@{/formulario}">Crear Una Wiki<span class="sr-only"></span></a>
+						</li>
+						<li sec:authorize="isAuthenticated()" class="nav-item">
+							<a class="btn btn-primary btn-lg mx-2" th:href="@{/listar}">Lista de Wikis</a>
+							<!--Notese como se manda ese link a la vista listar con Thymeleaf-->
+						</li>
+
+					</ul>
+
+				</div>
+				
+				
+				<!--este va a ser un desplegable para hacer log in y log out-->
+
+				<ul class="navbar-nav navbar-right">
+					<!-- Este va a ser el Botón de login-->
+					<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/login}">Log
+							in</a></li> <!-- sólo sí el usuario no está autenticado mostrará el boton de login -->
+							
+					<!-- Este va a ser el Botón de registro-->		
+					<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/registro}">Registrarse</a></li> <!-- sólo sí el usuario no está autenticado mostrará el boton de Registro -->		
+							
+					<!-- Este es el desplegable copiado de bootstrap sólo se mostrará si el usuario está autenticado-->
+					<li sec:authorize="isAuthenticated()" class="dropdown">
+						<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<span sec:authentication="name"></span>
+						</a>
+
+						<div class="dropdown-menu">
+							<!--AQUI ES DONDE DEBERÍA METER EL ACCESO LA MEMORIA, EL MANUAL, JAVADOC Y EL PERFIL, SEGURAMENTE TENGA QUE
+							ESTAR AL LORO DEL ORDEN EN QUE LOS PONGO-->
+								
+								<button class="btn btn-outline-primary" onclick="location.href='/home';">Acceso a la Memoria</button>
+    							<button class="dropdown-item" onclick="location.href='/home';">Acceso al Manual</button>
+							    <button class="dropdown-item" onclick="location.href='/home';">Acceso al Javadoc</button>
+							    <button class="dropdown-item" onclick="location.href='/perfil';">Mi Perfil</button> <!--He creado una vista perfil y esto me manda al controlador y FUNCIONA 09/08/2023-->
+														
+								<form id="logoutForm" th:action="@{/logout}" method="post">	<!-- En el contexto de Spring Security, cuando se realiza una solicitud a la URL "/logout" 
+								(que es lo que especifica th:action="@{/logout}"), Spring Security automáticamente intercepta esta solicitud y realiza el proceso de cierre de sesión. 
+								No es necesario que implementes un controlador para gestionar el cierre de sesión manualmente.-->	
+									<button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
+										type="submit">Log out</button>
+								</form>
+							
+							
+							
+
+						</div>
+					</li>
+
+				</ul>
+			
+				
+		</nav>
+
+		<!--Creamos mensajes de alerta que se guarden en la sessión cuando se editen o se eliminen usuarios y se redirija a la lista de de usuarios actualizada-->
+
+		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	</header>
+
+
+
+	<div class="container">
+
+
+	</div>
+
+
+
+
+	<footer th:fragment="footer" class="container">
+		<hr /> <!--esta es una linea horizontal para separar -->
+		
+       	<div class="d-flex justify-content-center align-items-center" style="height: auto;" >
+		<img class="img-fluid " style="width: 70%; height: 30%;" th:src="@{/images/tok.jpg}" />
+		</div>
+		
+		<p sec:authorize="isAuthenticated()"><!--Para validar si el susario está autentica -->
+
+			<!--despues de poner en el meta lo de sec se usa para el nombre y el rol del usuario autenticado-->
+
+			Usuario Logeado: <span sec:authentication="name"></span> | Roles: <span
+				sec:authentication="principal.authorities"></span>
+			<!--el rol se muestra como ROL_GESTOR en el caso de alex, supongo que se podrá personalizar -->
+		</p>
+
+		<p>
+			Powered By me
+		</p>
+
+		<p>
+			Este proyecto es realizado siguiendo unos vídeos que me van a convertir en un excelente programador<br />
+			&COPY; Company 2023. Incluye todos los derechos a Javier Alexander Victoria Baltán.
+		</p>
+		<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<!--<script th:src="@{/js/bootstrap.bundle.min.js}"></script>   esto parece ser que me daba problemas para que se desplegara el boton de log out-->
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
+		
+		
+
+
+	</footer>
+</body>
+
+</html>
