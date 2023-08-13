@@ -142,7 +142,7 @@ public class ArticuloController {
 	public String modificar(Model modelo) {
 		
 		modelo.addAttribute("mensaje", "Esto me lleva al formulario de subida de la propuesta despues de haber dado a la modificación de artículo");
-		return "propuesta";
+		return "articulo/propuesta";
 		
 	}
 	
