@@ -34,9 +34,26 @@ public class Usuario implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // un usuario puede tener muchos roles.
 	@JoinColumn(name = "user_id") // es la llave foranea que tiene la clase Role
 	private List<Role> roles = new ArrayList<Role>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para los artículos asigandos al usuario.
+	private List<Articulo> articulosAsignados = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
+	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();  // el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
+	
+	//Getters and Setters
+	
 
 	public String getEmail() {
 		return email;
+	}
+
+	public List<Articulo> getArticulosAsignados() {
+		return articulosAsignados;
+	}
+
+	public void setArticulosAsignados(List<Articulo> articulosAsignados) {
+		this.articulosAsignados = articulosAsignados;
 	}
 
 	public void setEmail(String email) {

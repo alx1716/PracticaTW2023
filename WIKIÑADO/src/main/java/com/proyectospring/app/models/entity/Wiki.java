@@ -65,7 +65,7 @@ public class Wiki  implements Serializable{
 	
 	
 	
-	@OneToMany(mappedBy = "wiki",fetch=FetchType.LAZY, cascade= CascadeType.ALL) //un cliente(la clase en la que estamos), puede tener muchas facturas.// cascade es para que si a la wiki le hacemos algo se extienda a todos sus elementos hijos en cascada video 89 minuto 9:10
+	@OneToMany(mappedBy = "wiki",fetch=FetchType.LAZY, cascade= CascadeType.ALL) //una wiki (la clase en la que estamos), puede tener muchos artículos.// cascade es para que si a la wiki le hacemos algo se extienda a todos sus elementos hijos en cascada video 89 minuto 9:10
 	private List<Articulo> articulos;  // una wiki va a tener muchos articulos.
 
 	

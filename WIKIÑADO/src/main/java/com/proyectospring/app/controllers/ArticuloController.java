@@ -116,8 +116,7 @@ public class ArticuloController {
 	 * 
 	 */
 	@PostMapping("/formulario")
-	public String guardarArticulo( @Valid Articulo articulo,BindingResult resultado, Model modelo, @RequestParam(name = "item_id[]", required = false) Long[] itemId,
-			@RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, RedirectAttributes flash, SessionStatus status ) {
+	public String guardarArticulo( @Valid Articulo articulo,BindingResult resultado, Model modelo,RedirectAttributes flash, SessionStatus status ) {
 		
 		if (resultado.hasErrors()) {
 			modelo.addAttribute("titulo", "Crear Articulo");
@@ -132,6 +131,18 @@ public class ArticuloController {
 		
 		flash.addFlashAttribute("success", "Articulo creado con éxito!");
 		return "redirect:/ver/"+ articulo.getWiki().getId();
+		
+	}
+	
+	
+	/**
+	 * Método para modificar un artículo
+	 */
+	@GetMapping("/propuesta")
+	public String modificar(Model modelo) {
+		
+		modelo.addAttribute("mensaje", "Esto me lleva al formulario de subida de la propuesta despues de haber dado a la modificación de artículo");
+		return "propuesta";
 		
 	}
 	

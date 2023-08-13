@@ -51,9 +51,11 @@ public class Articulo implements Serializable{
 	private Wiki wiki;
 	
 	
+	@ManyToOne(fetch= FetchType.LAZY)
+    private Usuario usuarioAsignado;          // esto es para ver el usuario al que está asignado el artículo
 	
-	
-	
+	@OneToMany(mappedBy = "propuestaPara", cascade = CascadeType.ALL)
+	private List<PropuestaModificacion> propuestas;
 	
 	
 	
@@ -71,9 +73,32 @@ public class Articulo implements Serializable{
 	
 	
 	//getters and setters
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
+	public List<PropuestaModificacion> getPropuestas() {
+		return propuestas;
+	}
+
+
+	public void setPropuestas(List<PropuestaModificacion> propuestas) {
+		this.propuestas = propuestas;
+	}
+
+
+	public Usuario getUsuarioAsignado() {
+		return usuarioAsignado;
+	}
+
+
+	public void setUsuarioAsignado(Usuario usuarioAsignado) {
+		this.usuarioAsignado = usuarioAsignado;
+	}
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
