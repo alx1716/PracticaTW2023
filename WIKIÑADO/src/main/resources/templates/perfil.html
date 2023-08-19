@@ -9,7 +9,63 @@
 	
 	<div class="container py-4">
 		
-		<h1 th:text="'Este perfil es del usuario: '+${usuario.name}"></h1>
+		<strong><h1 class="shadow p-3 mb-5 bg-white rounded text-info " th:text="'Bienvenido a tu perfil '+${usuario.username}"></h1></strong>
+		
+		<!--mostrará la información de la wiki -->
+				<ul class="list-group">
+					
+					<strong><li class="list-group-item  h3 bg-primary text-white">Roles:
+    					<span th:each="authority : ${#authentication.getAuthorities()}" th:text="'<'+${authority.getAuthority().substring(5)}+ '>'+' '"></span> <!--Con esto evito la palabra ROLE_ y sale solo el nombre del rol-->
+					</li></strong>
+
+					<strong><li class="list-group-item h4 bg-light text-primary" th:text="'E-mail: '+${usuario.email}"></li></strong>
+				</ul>
+		<!--Tabla con las Propuestas hechas por el usuario // tengo que comprobar que aunque haga logout se siguen viendo  FUNCIONA A 19/08/2023!!!-->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Propuestas Presentadas'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-success">Propuesta ID</th>
+           					 <th class="text-warning">Estado</th>
+           					 <th class="text-primary">Articulo a modificar</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="propuesta : ${usuario.modificacionesPropuestas}">
+				            <td th:text="${propuesta.id}"></td>
+				            <td th:text="${propuesta.estado}"></td>
+				            <td th:text="${propuesta.articulo.titulo}"></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+        
+        	<!--Tabla con los artículos asignados en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
+		<div sec:authorize="isAuthenticated() and hasRole('ROLE_SUPERVISOR')" class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Artículos asignados'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-info">Artículo</th>
+           					 <th class="text-success">Perteneciente a la Wiki</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="articulo : ${usuario.articulosAsignados}">
+				            <td th:text="${articulo.id}"></td>
+				            <td th:text="${articulo.wiki}"></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+		
 
 		
 		

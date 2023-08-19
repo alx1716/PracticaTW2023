@@ -17,10 +17,7 @@ public class MVCConfig implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		
-		/*String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString();
-		
-		//registramos la nueva ruta como un recurso estatico
-		registry.addResourceHandler("/uploads/**").addResourceLocations(resourcePath);*/
+	
 	}
 	
 	

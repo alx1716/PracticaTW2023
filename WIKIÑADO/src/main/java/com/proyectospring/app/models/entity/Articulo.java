@@ -54,8 +54,8 @@ public class Articulo implements Serializable{
 	@ManyToOne(fetch= FetchType.LAZY)
     private Usuario usuarioAsignado;          // esto es para ver el usuario al que está asignado el artículo
 	
-	@OneToMany(mappedBy = "propuestaPara", cascade = CascadeType.ALL)
-	private List<PropuestaModificacion> propuestas;
+	@OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<PropuestaModificacion> propuestas = new ArrayList<PropuestaModificacion>();
 	
 	
 	

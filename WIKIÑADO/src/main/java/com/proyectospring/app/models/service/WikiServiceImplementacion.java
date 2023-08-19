@@ -7,14 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.proyectospring.app.models.dao.IWikiDao;
 import com.proyectospring.app.models.dao.IArticuloDao;
-import com.proyectospring.app.models.dao.IProductoDao;
 import com.proyectospring.app.models.entity.Wiki;
 import com.proyectospring.app.models.entity.Articulo;
-import com.proyectospring.app.models.entity.Producto;
 
 /**
  * Una clase Service está básada en el patrón de diseño Facade también llamado Proxy.
@@ -38,8 +34,7 @@ public class WikiServiceImplementacion implements IWikiService {
 	@Autowired
 	private IWikiDao wikiDao;  // se inyecta la interfaz que hereda la CRUD de Spring
 	
-	@Autowired
-	private IProductoDao productoDao;
+
 	
 	@Autowired
 	IArticuloDao articuloDao;

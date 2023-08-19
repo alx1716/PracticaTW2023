@@ -1,45 +1,35 @@
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES ('Teorías de conspiración famosas:', 'Victoria', 'Alexander.victoria@vikingassistance.com', '2017-08-28');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES ('Extraterrestres y avistamientos OVNI:', 'Gomez', 'Mamba@gmail.com', '2023-03-14');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Pseudociencia y medicina alternativa:', 'Guzman', 'profesor@bolsadeideas.com', '2017-08-01');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Grandes teorías de la historia:', 'Doe', 'john.doe@gmail.com', '2017-08-02');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Conspiraciones en la industria de la tecnología:', 'Torvalds', 'linus.torvalds@gmail.com', '2017-08-03');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Misterios en el mundo antiguo:', 'Doe', 'jane.doe@gmail.com', '2017-08-04');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Proyectos secretos del gobierno:', 'Lerdorf', 'rasmus.lerdorf@gmail.com', '2017-08-05');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Curiosidades históricas y eventos inexplicables:', 'Gamma', 'erich.gamma@gmail.com', '2017-08-06');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Profecías y predicciones:', 'Helm', 'richard.helm@gmail.com', '2017-08-07');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Enigmas de la mente humana:', 'Johnson', 'ralph.johnson@gmail.com', '2017-08-08');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Fenómenos paranormales y casas embrujadas:', 'Vlissides', 'john.vlissides@gmail.com', '2017-08-09');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Criptozoología y criaturas misteriosas:', 'Gosling', 'james.gosling@gmail.com', '2017-08-010');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Mitos y leyendas urbanas contemporáneas:', 'Lee', 'bruce.lee@gmail.com', '2017-08-11');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Reliquias y objetos sagrados:', 'Doe', 'johnny.doe@gmail.com', '2017-08-12');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Poderes ocultos y habilidades sobrenaturales:', 'Roe', 'john.roe@gmail.com', '2017-08-13');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Misterios en el espacio y la astronomía:', 'Roe', 'jane.roe@gmail.com', '2017-08-14');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Experiencias y testimonios de encuentros paranormales:', 'Doe', 'richard.doe@gmail.com', '2017-08-15');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Civilizaciones perdidas y tecnologías olvidadas:', 'Doe', 'janie.doe@gmail.com', '2017-08-16');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Objetos históricos y reliquias controversiales:', 'Webb', 'phillip.webb@gmail.com', '2017-08-17');
-INSERT INTO wikis (Nombre, Apellido, Email, Fecha) VALUES('Fenómenos naturales inusuales y teorías alternativas:', 'Victoria', 'perritobuenos@gmail.com', '2016-06-12');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES ('Teorías de conspiración famosas:', 'Victoria', 'Alexander.victoria@vikingassistance.com', '2017-08-28');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES ('Extraterrestres y avistamientos OVNI:', 'Gomez', 'Mamba@gmail.com', '2023-03-14');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Pseudociencia y medicina alternativa:', 'Guzman', 'profesor@bolsadeideas.com', '2017-08-01');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Grandes teorías de la historia:', 'Doe', 'john.doe@gmail.com', '2017-08-02');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Conspiraciones en la industria de la tecnología:', 'Torvalds', 'linus.torvalds@gmail.com', '2017-08-03');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Misterios en el mundo antiguo:', 'Doe', 'jane.doe@gmail.com', '2017-08-04');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Proyectos secretos del gobierno:', 'Lerdorf', 'rasmus.lerdorf@gmail.com', '2017-08-05');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Curiosidades históricas y eventos inexplicables:', 'Gamma', 'erich.gamma@gmail.com', '2017-08-06');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Profecías y predicciones:', 'Helm', 'richard.helm@gmail.com', '2017-08-07');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Enigmas de la mente humana:', 'Johnson', 'ralph.johnson@gmail.com', '2017-08-08');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Fenómenos paranormales y casas embrujadas:', 'Vlissides', 'john.vlissides@gmail.com', '2017-08-09');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Criptozoología y criaturas misteriosas:', 'Gosling', 'james.gosling@gmail.com', '2017-08-010');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Mitos y leyendas urbanas contemporáneas:', 'Lee', 'bruce.lee@gmail.com', '2017-08-11');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Reliquias y objetos sagrados:', 'Doe', 'johnny.doe@gmail.com', '2017-08-12');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Poderes ocultos y habilidades sobrenaturales:', 'Roe', 'john.roe@gmail.com', '2017-08-13');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Misterios en el espacio y la astronomía:', 'Roe', 'jane.roe@gmail.com', '2017-08-14');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Experiencias y testimonios de encuentros paranormales:', 'Doe', 'richard.doe@gmail.com', '2017-08-15');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Civilizaciones perdidas y tecnologías olvidadas:', 'Doe', 'janie.doe@gmail.com', '2017-08-16');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Objetos históricos y reliquias controversiales:', 'Webb', 'phillip.webb@gmail.com', '2017-08-17');
+INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Fenómenos naturales inusuales y teorías alternativas:', 'Victoria', 'perritobuenos@gmail.com', '2016-06-12');
 
 
 
 
 
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Panasonic Pantalla LCD', 259990, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Sony Camara digital DSC-W320B', 123490, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Apple iPod shuffle', 1499990, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Sony Notebook Z110', 37990, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Hewlett Packard Multifunctional F2280', 69990, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Biachi Bicicleta Aro 26', 69990, NOW());
-INSERT INTO productos (nombre, precio, fecha_creacion) VALUES('Mica Comoda 5 Cajones', 299990, NOW());
+
 
 
 
 
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Falsa llegada a la Luna','/articulos/test.txt' , 1, NOW());  
-
-
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Reptilianos: ¿verdad o ficción?', 'Alguna observación importante!!', 1, NOW());
-
-
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Control del clima por el gobierno', 'Alguna observación importante!!', 1, NOW());
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Roswell: El incidente OVNI más famoso', 'Alguna observación importante!!', 2, NOW());
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Encuentros cercanos del tercer tipo', 'Alguna observación importante!!', 2, NOW());
@@ -60,8 +50,8 @@ INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('SUPERVISOR'
 
 INSERT INTO `authorities` (user_id, authority) VALUES (1,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_GESTOR');
-INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_COLABORADOR');
-INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_SUPERVISOR');
-INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
-INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COORDINADOR');
+/*INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_COLABORADOR');*/
+INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_SUPERVISOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COLABORADOR');
+INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COORDINADOR');
+INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');

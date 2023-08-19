@@ -48,6 +48,14 @@ public class Usuario implements Serializable {
 		return email;
 	}
 
+	public List<PropuestaModificacion> getModificacionesPropuestas() {
+		return modificacionesPropuestas;
+	}
+
+	public void setModificacionesPropuestas(List<PropuestaModificacion> modificacionesPropuestas) {
+		this.modificacionesPropuestas = modificacionesPropuestas;
+	}
+
 	public List<Articulo> getArticulosAsignados() {
 		return articulosAsignados;
 	}

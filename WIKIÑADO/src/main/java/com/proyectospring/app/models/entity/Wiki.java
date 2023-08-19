@@ -44,9 +44,9 @@ public class Wiki  implements Serializable{
 	@NotEmpty  // Para validar que el campo no esté vacío. Sólo se utiliza con cadenas para el resto de objetos se usa @NotNull
 	private String nombre;
 	
-	@Column(name="Apellido")
+	@Column(name="Creador")
 	@NotEmpty
-	private String apellido;
+	private String creador;
 	
 	@Column(name="Email")
 	@NotEmpty
@@ -119,12 +119,12 @@ public class Wiki  implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getCreador() {
+		return creador;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setCreador(String creador) {
+		this.creador = creador;
 	}
 
 	public String getEmail() {
@@ -164,9 +164,9 @@ public class Wiki  implements Serializable{
 	
 
     /**
-     * método que añade una factura a la lista de facturas del cliente
+     * método que añade un artículo a la lista de artículos  de la wiki
      * 
-     * @param factura
+     * @param articulo
      */
 	public void addArticulo(Articulo articulo) {  
 		
@@ -180,12 +180,12 @@ public class Wiki  implements Serializable{
 
 	
 	/**
-	 * método para poner el nombre completo del cliente en las facturas o donde sea que se necesite sólo poniendo el objeto cliente, directamente se llama a este método
+	 * método para poner el nombre completo del cliente en los artículos o donde sea que se necesite sólo poniendo el objeto wiki, directamente se llama a este método
 	 * 
 	 */
 	@Override
 	public String toString() {
-		return nombre + " " + apellido;
+		return nombre + " " + creador;
 	}
 	
 	

@@ -1,33 +1,48 @@
 package com.proyectospring.app.controllers;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.UrlResource;
+
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectospring.app.models.entity.Wiki;
+
 import com.proyectospring.app.models.entity.Articulo;
-import com.proyectospring.app.models.entity.ItemFactura;
-import com.proyectospring.app.models.entity.Producto;
+import com.proyectospring.app.models.entity.PropuestaModificacion;
+import com.proyectospring.app.models.entity.Usuario;
+import com.proyectospring.app.models.service.CustomUserDetails;
+import com.proyectospring.app.models.service.IPropuestaModificacionService;
+import com.proyectospring.app.models.service.IUsuarioService;
 import com.proyectospring.app.models.service.IWikiService;
 
 //@Secured("ROLE_GESTOR") // se anota la clase entera ya que TODOS los métodos deben ser sólo accesibles a los Gestores.
@@ -38,6 +53,12 @@ public class ArticuloController {
 	
 	@Autowired
 	private IWikiService wikiService;
+	
+	@Autowired
+	private IPropuestaModificacionService propuestaService;
+	
+	@Autowired
+	private IUsuarioService userService;
 	
 	
 	/**
@@ -135,16 +156,98 @@ public class ArticuloController {
 	}
 	
 	
+	@PostMapping("/propuesta")
+	public String guardarPropuesta(@RequestParam("file") MultipartFile file, @ModelAttribute Articulo articulo,RedirectAttributes flash) throws IOException {
+		
+		byte[] archivo = file.getBytes();
+		PropuestaModificacion nuevaPropuesta = new PropuestaModificacion();
+		String contenido = new String(archivo, StandardCharsets.UTF_8);   // aquí meto el contenido del archivo en un string
+		
+		// se obtiene el usuario autenticado y se guarda la propuesta en su lista
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+	    Usuario usuario = userService.findOne(userDetails.getUserId());
+	    
+	    nuevaPropuesta.setPropuesta(contenido);
+		nuevaPropuesta.setEstado("Evaluación");  // COMENTAR CON FER SI ESTO SERÍA MEJOR HACERLO CON UN ENUMERADO
+		nuevaPropuesta.setArticulo(articulo);  // aquí se pone para que artículo viene dicha propuesta
+	    nuevaPropuesta.setUsuario(usuario); // le paso el nombre del usuario autenticado ///
+	    propuestaService.save(nuevaPropuesta); // guardamos la propuesta
+	    
+	    //Recupero la propuesta para que no vaya a haber dos propuestas repetidas
+	    PropuestaModificacion propuestaGuardada = propuestaService.findOne(nuevaPropuesta.getId());
+	    
+	    usuario.getModificacionesPropuestas().add(propuestaGuardada); // le añado la nueva propuesta
+	    userService.save(usuario);  // guardo el usuario
+	    
+	   
+
+		// ahora añadimos la propuesta al articulo
+		articulo.getPropuestas().add(propuestaGuardada);
+		
+		wikiService.saveArticulo(articulo);  // guardo el artículo con la propuesta ya añadida
+		flash.addFlashAttribute("success", "Propuesta creada con éxito!");
+		return"redirect:/articulo/ver/"+articulo.getId();
+	}
+	
 	/**
 	 * Método para modificar un artículo
 	 */
-	@GetMapping("/propuesta")
-	public String modificar(Model modelo) {
+	@GetMapping("/modificar/{id}")
+	public String modificar(@PathVariable(value = "id") Long articuloId,  Model modelo, RedirectAttributes flash,  HttpServletResponse response) {
 		
-		modelo.addAttribute("mensaje", "Esto me lleva al formulario de subida de la propuesta despues de haber dado a la modificación de artículo");
+		Articulo articulo = wikiService.findArticuloById(articuloId); // encontramos el artículo a modificar
+		if (articulo == null) {
+			
+			flash.addAttribute("error", "El artículo no existe en la BBDD");
+			return "redirect:/listar";
+		}
+		
+		
+		
+	    //fin de la prueba para descargar el archivo html
+		
+		modelo.addAttribute("articulo", articulo); // pasamos el artículo a la vista
+		modelo.addAttribute("mensaje", "Sube una propuesta de modificación de este Artículo");
 		return "articulo/propuesta";
 		
 	}
+	
+	
+	@Secured("ROLE_GESTOR") // pueden pasarse un array de roles
+	@RequestMapping(value = "/editar/{id}") // le vamos a pasar el id por parámetro a la url y hace una pedición GET
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> modelo, RedirectAttributes flash) {
+
+		Articulo articulo = null;
+		/*
+		 * Ahora tenemos que mirar que el id sea mayor que cero y por lo tanto válido
+		 */
+		if (id > 0) {
+			articulo = wikiService.findArticuloById(id); // se llama al método de la Clase DAO que por detrás llama al objeto
+													// Entity mannager con su método find()
+
+			// si el ID del artículo pasado por parámetro no existe se pasa un mensaje de
+			// error
+			if (articulo == null) {
+
+				flash.addFlashAttribute("error", "El artículo no existe en la BBDD!");
+				return "redirect:/listar";
+			}
+
+		} else {
+			flash.addFlashAttribute("error", "El ID del artículo no puede ser cero!");
+			return "redirect:/listar";
+		}
+
+		modelo.put("articulo", articulo); // se pasa el artículo a la vista.
+
+		modelo.put("titulo", "Editar Artículo");
+
+		return "articulo/formulario"; // me lleva a la vista del formulario con ese artículo?
+
+	}
+	
+	
 	
 	/**
 	 * implementamos el método para borrar facturas de un cliente

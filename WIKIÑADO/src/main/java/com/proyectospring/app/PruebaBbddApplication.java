@@ -7,13 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.proyectospring.app.models.service.IUploadFileService;
+
 
 @SpringBootApplication
 public class PruebaBbddApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
-	@Autowired
-	IUploadFileService uploadFileService;
+	
 
 	/*@Autowired
 	BCryptPasswordEncoder passwordEncoder;*/
@@ -27,8 +26,7 @@ public class PruebaBbddApplication extends SpringBootServletInitializer implemen
 	public void run(String... args) throws Exception { // para eliminar y crear el directorio uploads cuando se inicie
 														// nuestra aplicación.
 
-		uploadFileService.deleteAll();
-		uploadFileService.init();
+		
 
 		/*String password = "12345";
 

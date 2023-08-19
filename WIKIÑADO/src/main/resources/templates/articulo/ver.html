@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/layout :: head"></head>
 
@@ -25,7 +25,8 @@
 	<div class="container py-4">
 		<div class="card bg-light">
 
-			<div class="card-header h2 text-center text-primary" th:text="${titulo}"></div>
+			<div class="card-header h2 text-center text-primary" th:text="${titulo}"> </div>
+			<span id="tituloArticulo" style="display: none;" th:text="${articulo.titulo}"></span>
 			<div class="card-body">
 
 
@@ -45,11 +46,11 @@
 
 				
 
-				<!--Vamos a crear lo de las observaciones-->
+				<!--Vamos a crear lo del contenido-->
 			<div class="card boder-info mb-2">
     			<div class="card-body d-flex flex-row justify-content-between">
        				<div>
-            			<p class="card-text" th:text="${articulo.contenido}" th:if="${not #strings.isEmpty(articulo.contenido)}"></p>
+            			<p id="contenidoArticulo" class="card-text" th:text="${articulo.contenido}" th:if="${not #strings.isEmpty(articulo.contenido)}"></p>
             			<h4 class="card-title" th:if="${#strings.isEmpty(articulo.contenido)}" th:text="'El articulo no tiene contenido!!'"></h4>
         			</div>
         		<div class="ml-auto">
@@ -63,7 +64,7 @@
 				
 				<!-- Botón para poner la modificación del artículo-->
 				
-				<a th:href="@{'/articulo/propuesta'}" class="btn btn-primary  mx-5" th:text="'Enseña lo que sabes (Modifica este artículo)'"></a>
+				<a sec:authorize="hasRole('ROLE_COLABORADOR')or !isAuthenticated()" th:href="@{'/articulo/modificar/'+${articulo.id}}" class="btn btn-primary  mx-5" th:text="'Enseña lo que sabes (Modifica este artículo)'" onclick="descargarContenido()"></a>
 					
 				
 				
@@ -71,7 +72,27 @@
 		</div>
 
 	</div>
+	<!-- Función para descargar el contenido del artículo-->
+	<script>
+        function descargarContenido() {
+            var contenido = document.getElementById('contenidoArticulo').innerHTML;
+            var titulo = document.getElementById('tituloArticulo').innerText;
+            var blob = new Blob([contenido], { type: 'text/html' });
+            var url = window.URL.createObjectURL(blob);
+            
+            var enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = url;
+            enlaceDescarga.download = titulo + '.html';
+            
+            document.body.appendChild(enlaceDescarga);
+            enlaceDescarga.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(enlaceDescarga);
+        }
+    </script>
 	<footer th:replace="layout/layout :: footer"></footer>
+	
+
 </body>
 
 </html>

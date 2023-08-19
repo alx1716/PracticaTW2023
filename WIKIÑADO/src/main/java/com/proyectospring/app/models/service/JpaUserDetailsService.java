@@ -22,7 +22,7 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 																	// esta la provee spring security
 
 	@Autowired
-	private IUsuarioDao usuarioaDao;
+	private IUsuarioDao usuarioaDao; // para buscar al usuario en la BBDD
 
 	@Override
 	@Transactional(readOnly = true)
@@ -54,8 +54,7 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 		}
 
 		// se devuelve el usuario autenticado // esto lo tengo que checkear a ver si me sirve así o al cambiar al email como forma de login pasa algo.
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
-				authorities);
+		return new CustomUserDetails(usuario.getUsername(), usuario.getPassword(), usuario.getId(), authorities);
 	}
 
 }

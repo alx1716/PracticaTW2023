@@ -1,20 +1,18 @@
 package com.proyectospring.app.controllers;
 
 
-import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -37,7 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectospring.app.models.entity.Wiki;
 import com.proyectospring.app.models.service.IWikiService;
-import com.proyectospring.app.models.service.IUploadFileService;
+
 import com.proyectospring.app.util.paginator.PageRender;
 
 @Controller
@@ -54,28 +52,11 @@ public class WikiController {
 	private IWikiService wikiService;
 	
 	
-	@Autowired
-	private IUploadFileService uploadFileService;
 	
 	
 	
-	@Secured("ROLE_COLABORADOR") // Para dar seguridad a los controladores en vez de hacerlo en la clase de configuración de seguridad
-	@GetMapping(value = "/uploads/{filename:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
-
-		Resource recurso = null;
-
-		try {
-			recurso = uploadFileService.load(filename);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-				.body(recurso);
-	}
+	
+	
 
 	//@Secured("ROLE_COLABORADOR")
 	@GetMapping(value = "/ver/{id}") // Método para poder ver la foto con el controlador
@@ -161,12 +142,12 @@ public class WikiController {
 			// error
 			if (wiki == null) {
 
-				flash.addFlashAttribute("error", "El ID del cliente no existe en la BBDD!");
+				flash.addFlashAttribute("error", "El ID de la wiki no existe en la BBDD!");
 				return "redirect:/listar";
 			}
 
 		} else {
-			flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+			flash.addFlashAttribute("error", "El ID de la wiki no puede ser cero!");
 			return "redirect:/listar";
 		}
 
@@ -196,28 +177,6 @@ public class WikiController {
 			return "formulario";
 		}
 
-		/*if (!foto.isEmpty()) {
-
-			if (nuevaWiki.getId() != null && nuevaWiki.getId() > 0 && nuevaWiki.getFoto() != null
-					&& nuevaWiki.getFoto().length() > 0) {
-
-				uploadFileService.delete(nuevaWiki.getFoto());
-			}
-
-			String uniqueFilename = null;
-			try {
-				uniqueFilename = uploadFileService.copy(foto);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
-
-			nuevaWiki.setFoto(uniqueFilename);
-		} else {
-			nuevaWiki.setFoto("NO HAY FOTO"); // CON ESTO EVITO QUE ME SALTE UN ERROR AL NO HABER FOTO EN EL CLIENTE.
-		}*/
 
 		String mensajeFlash = (nuevaWiki.getId() != null) ? "Wiki editada con éxito"
 				: "Wki creada con éxito!"; // para ver si se ha creado o editado.
@@ -248,14 +207,6 @@ public class WikiController {
 			flash.addFlashAttribute("success", "Wiki eliminada con éxito!");
 
 			
-			// antes deliminar debemos validar
-			
-				/*if (uploadFileService.delete(wiki.getFoto())) {
-					flash.addAttribute("info", "Foto " + wiki.getFoto() + " Eliminada con éxito");
-
-				}*/
-
-			
 		}
 		return "redirect:/listar"; // OJO que si no pongo el '/' falla en redirigir la vista.
 
@@ -283,19 +234,6 @@ public class WikiController {
 		
 		Collection< ? extends GrantedAuthority> authorities = auth.getAuthorities(); //obtenemos la lista de roles...OJO a la clase que deben extender los roles
 		
-		
-		
-		//esta sería una forma de validar recorriendo una lista de los roles que dispone el usuario
-		/*for (GrantedAuthority authority : authorities) {
-			
-			if (role.equals(authority.getAuthority())) {	 //si el rol se encuentra entre los roles se devuelve true.
-				
-				return true;
-				
-			}
-			
-		}
-		return false;*/
 		
 		//otra forma de validar más resumida sería
 		return authorities.contains(new SimpleGrantedAuthority(role)); // simpleGrantedAuthoritie es una implementacion concreta de GRantedAuthorieties

@@ -41,7 +41,7 @@
 					<tbody>
 						<tr th:each="wiki: ${listado_wikis}">
 	  <!-- OJO importante--><td><h4><a th:href="@{/ver/} + ${wiki.id}" th:text="${wiki.nombre}"></a></h4></td> <!-- He modificado esto hoy 05/08/2023 para que me por el nombre al detalle de cada link, esto sirve para entrar en cada wiki y luego en cada articulo-->
-							<td th:text="${wiki.apellido}"></td>
+							<td th:text="${wiki.creador}"></td>
 							<td th:text="${wiki.email}"></td>
 							<td th:text="${wiki.createAt}"></td>
 							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-success btn-xs" th:href="@{'/articulo/formulario/'} + ${wiki.id}"

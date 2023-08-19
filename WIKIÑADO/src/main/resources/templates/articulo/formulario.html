@@ -20,7 +20,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'Wiki'"></label>
 						<div class="col-sm-6">
-							<input th:value="${articulo.wiki.nombre}+ ' '+ ${articulo.wiki.apellido}"
+							<input th:value="${articulo.wiki.nombre}+ ' '+ ${articulo.wiki.creador}"
 								class="form-control" disabled='disable' />
 							<!-- Con disabled es para sólo mostrar el nombre de la wiki en cada articulo-->
 						</div>
@@ -35,7 +35,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="observacion" class="col-sm-2 col-form-label" th:text="'Contenido del Artículo'"></label>
+						<label for="contenido" class="col-sm-2 col-form-label" th:text="'Contenido del Artículo'"></label>
 						<div class="col-sm-6">
 							<textarea th:field="*{contenido}" class="form-control"></textarea>
 						</div>

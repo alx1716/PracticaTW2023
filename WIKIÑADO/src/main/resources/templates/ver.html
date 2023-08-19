@@ -41,6 +41,7 @@
 							<th>Descripción</th>
 							<th>Fecha de creación</th>
 							<th>Lee este sinsentido!</th>
+							<th sec:authorize="hasRole('ROLE_GESTOR')">Editar Articulo</th>
 							<th sec:authorize="hasRole('ROLE_GESTOR')">Eliminar Articulo</th>
 						</tr>
 					</thead>
@@ -53,6 +54,8 @@
 							<td th:text="${articulo.fechaCreacion}"></td>
 							<td><a class="btn btn-primary btn-xs"
 									th:href="@{'/articulo/ver/'+${articulo.id}}" th:text="'A ver esta Trola?'"></a></td>
+									<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-success btn-xs"
+									th:href="@{'/articulo/editar/'+${articulo.id}}" th:text="'Editar Artículo'"></a></td>
 							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-danger btn-xs"
 									th:href="@{'/articulo/eliminar/'+${articulo.id}}" th:text="'Eliminar Articulo'"
 									onclick="return confirm('¿Estás seguro que deseas eliminar este articulo?');"></td>
