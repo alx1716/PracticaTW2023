@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+	
+	
+<div class="d-flex justify-content-end mb-3">
+<!-- Botón para crear nuevos usuarios -->
+        <form th:action="@{/crear}" method="get">
+            <button class="btn btn-secondary btn-lg mx-10" type="submit">Crear Nuevo Usuario</button>
+        </form>				
+</div>	
+        <h4>Lista de Usuarios</h4>
+  <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nombre de Usuario</th>
+            <th>Email</th>
+            <th>Roles</th>
+           
+            <th>Asignar Nuevo Rol</th>
+            <th>Baja de usuario</th>
+            
+        </tr>
+        <tr th:each="usuario : ${listaUsuarios}">
+            <td th:text="${usuario.id}"></td>
+            <td th:text="${usuario.username}"></td>
+            <td th:text="${usuario.email}"></td>
+            <td>
+                <ul>
+                    <li th:each="rol : ${usuario.roles}" th:text="${rol.authority}"></li>
+                </ul>
+            </td>
+			
+      
+        <td>
+                <form th:action="@{/asigna_rol}" method="post">
+                    <input type="hidden" name="userId" th:value="${usuario.id}">
+                   <select name="newRole">
+    					  <option th:each="rol : ${predefinedRoles}" th:value="${rol}" th:text="${rol}"></option>
+					</select>
+                    <button type="submit" th:href="@{/asigna_rol(userId=${usuario.id})}">Guardar</button>
+                </form>
+               
+            </td>
+        
+            <td>
+        <form th:action="@{/eliminar_usuario}" method="post">
+            <input type="hidden" name="userId" th:value="${usuario.id}">
+            <button type="submit">Baja</button>
+        </form>
+    </td>
+    
+        </tr>
+    </table>
+
+<!-- Tabla para mostrar las solicitudes de cambio de rol -->
+ <h4>Peticiones de cambio de Rol</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Usuario</th>
+            <th>Nuevo Rol Solcitado</th>
+            <th>Estado Solicitud</th>
+            <th>Acciones</th>
+        </tr>
+        <tr th:each="usuario : ${listaUsuarios}" th:if="${usuario.roles[0].newRole != null}">
+            <td th:text="${usuario.username}"></td>
+            <td th:text="${usuario.roles[0].newRole}"></td> 
+            <td th:text="${usuario.roles[0].status}"></td>
+            <td>
+            <form th:action="@{/actualizar-rol}" method="post">
+                <input type="hidden" th:name="userId" th:value="${usuario.id}" />
+                <!-- Ocultar los botones si el estado de la petición es distinto a PENDIENTE  -->
+               	<th:block th:if="${usuario.roles[0].status == T(com.proyectospring.app.enums.PeticionStatus).PENDIENTE}">
+                <button type="submit" name="action" value="accept">Aceptar</button>
+                <button type="submit" name="action" value="reject">Rechazar</button>
+                </th:block>
+            </form>
+        </td>
+        </tr>
+    </table>
+
+ 
+
+</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

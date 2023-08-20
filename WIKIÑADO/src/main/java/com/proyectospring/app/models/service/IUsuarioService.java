@@ -2,6 +2,7 @@ package com.proyectospring.app.models.service;
 
 import java.util.List;
 
+import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.entity.Usuario;
 
 
@@ -16,5 +17,7 @@ public interface IUsuarioService {
 	public void delete(Long id);
 	
 	public void save(Usuario user);
+	
+	void actualizarRol(Usuario usuario, RoleEnum nuevoRol);
 
 }

@@ -2,6 +2,7 @@ package com.proyectospring.app.models.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,6 +56,29 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 
 		// se devuelve el usuario autenticado // esto lo tengo que checkear a ver si me sirve así o al cambiar al email como forma de login pasa algo.
 		return new CustomUserDetails(usuario.getUsername(), usuario.getPassword(), usuario.getId(), authorities);
-	}
+		}
+		
+		//metodo para obtener listado de roles
+		public Iterable<Usuario> rolList(){
+			return usuarioaDao.findAll();
+		}
+		
+		//método que devuelve el listado de usuarios y roles 16/08
+		public List<Usuario> userList() {
+			 List<Usuario> usuarios = (List<Usuario>) usuarioaDao.findAll();
+			    return usuarios;
+		}
+		
+		public Optional<Usuario> findUsuarioById(Long userId) {
+			return usuarioaDao.findById(userId);
+		}
+		
+		
+		
+		//metodo que almacena un usuario en BBDD
+		public void saveUser(Usuario usuario){
+			usuarioaDao.save(usuario);
+		}
+
 
 }

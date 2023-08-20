@@ -2,10 +2,15 @@ package com.proyectospring.app.models.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityManager;
+import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.dao.IUsuarioDao;
 import com.proyectospring.app.models.entity.Usuario;
 
@@ -14,7 +19,10 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
-
+	
+	@Autowired
+	private EntityManager entityManager;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario findOne(Long id) {
@@ -52,6 +60,17 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 		return (List<Usuario>) usuarioDao.findAll();
 	}
 	
-	
+	@Override
+	@Transactional
+	public void actualizarRol(Usuario usuario, RoleEnum nuevoRol) {
+	    // Implementa la lógica para actualizar el rol del usuario usando SQL o mecanismos ORM
+	    // Por ejemplo, puedes usar una consulta SQL nativa para actualizar el rol del usuario
+	    String sqlActualizarRol = "UPDATE authorities SET authority = ? WHERE user_id = ?";
+	    entityManager.createNativeQuery(sqlActualizarRol)
+	        .setParameter(1, nuevoRol.name())
+	        .setParameter(2, usuario.getId())
+	        .executeUpdate();
+	}
+
 
 }

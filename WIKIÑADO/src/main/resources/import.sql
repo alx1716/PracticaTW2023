@@ -48,10 +48,12 @@ INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('admin','$2a
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('COORDINADOR','$2a$10$riL0iV3GSwsm4/HX0YePgOz1ys.wyj0mPhFWEB/N3vtkMvRRlyv2C','coordinador@wikinado.com',1);
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('SUPERVISOR','$2a$10$hMgaXSjfiWT6l1Btozp5M.xozobXE9upygUIVuMz/0GXkQ4Q2WuYm','supervisor@wikinado.com',1);
 
-INSERT INTO `authorities` (user_id, authority) VALUES (1,'ROLE_COLABORADOR');
+INSERT INTO `authorities` (user_id, authority, new_role, status) VALUES (1,'ROLE_COLABORADOR', 'ROLE_COORDINADOR', 'PENDIENTE' );
 INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_GESTOR');
 /*INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_COLABORADOR');*/
 INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_SUPERVISOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COORDINADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
+
+

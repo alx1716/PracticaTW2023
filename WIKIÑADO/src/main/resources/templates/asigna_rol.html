@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+    <h2>Resultado de Asignación de Rol al usuario:</h2>
+    <p th:if="${asignacionExitosa}" class="alert alert-success font-weight-bold">Asignación de rol realizada con éxito.</p>
+    <p th:unless="${asignacionExitosa}" class="alert alert-danger font-weight-bold">El usuario ya tiene el Rol que intentas agregarle, por favor, selecciona otro.</p>
+    
+    <h3>Roles actuales del usuario:</h3>
+    <ul>
+        <li th:each="rol : ${usuarioRoles}" th:text="${rol.authority}"></li>
+    </ul>
+</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

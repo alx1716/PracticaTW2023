@@ -31,7 +31,7 @@ public class Usuario implements Serializable {
 	private String email;
 
 	private Boolean enabled;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // un usuario puede tener muchos roles.
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true) // un usuario puede tener muchos roles.
 	@JoinColumn(name = "user_id") // es la llave foranea que tiene la clase Role
 	private List<Role> roles = new ArrayList<Role>();
 	

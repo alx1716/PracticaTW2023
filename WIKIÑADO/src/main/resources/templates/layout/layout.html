@@ -28,6 +28,9 @@
 				
 				<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 					<ul class="navbar-nav">
+						<li  sec:authorize="isAuthenticated() and hasRole('ROLE_GESTOR')" class="nav-item">  <!-- esto es solo para controlar que solo los gestores puedan tener el boton de Gestor de usuarios 16/08/2023-->
+							<a class="btn btn-primary btn-lg mx-2" aria-current="page" th:href="@{/gestor_user}">Gestor de Usuarios<span class="sr-only"></span></a>
+						</li>
 						<li  sec:authorize="isAuthenticated() and hasRole('ROLE_GESTOR')" class="nav-item">  <!-- esto es solo para controlar que solo los gestores puedan tener el boton de crear wiki 09/08/2023-->
 							<a class="btn btn-primary btn-lg mx-2" aria-current="page" th:href="@{/formulario}">Crear Una Wiki<span class="sr-only"></span></a>
 						</li>
