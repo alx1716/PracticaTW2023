@@ -39,7 +39,10 @@ public class Articulo implements Serializable{
 	private Long id;
 	@NotEmpty
 	private String titulo;
+	
+	
 	@Column(columnDefinition = "TEXT") // esto lo hago para poder insertar textos largos en las consultas sql en este campo.
+	@NotEmpty
 	private String contenido;
 	
 	@Temporal(TemporalType.DATE)
@@ -57,7 +60,8 @@ public class Articulo implements Serializable{
 	@OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PropuestaModificacion> propuestas = new ArrayList<PropuestaModificacion>();
 	
-	
+	@OneToMany(mappedBy = "articulo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<UsuarioArticulo> usuarioArticulos = new ArrayList<>();
 	
 	
 	
@@ -79,6 +83,16 @@ public class Articulo implements Serializable{
 	public Long getId() {
 		return id;
 	}
+	public List<UsuarioArticulo> getUsuarioArticulos() {
+		return usuarioArticulos;
+	}
+
+
+	public void setUsuarioArticulos(List<UsuarioArticulo> usuarioArticulos) {
+		this.usuarioArticulos = usuarioArticulos;
+	}
+
+
 	public List<PropuestaModificacion> getPropuestas() {
 		return propuestas;
 	}

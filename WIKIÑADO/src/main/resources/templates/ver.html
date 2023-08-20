@@ -10,13 +10,26 @@
 	<div class="container py-4">
 		<div class="card bg-light ">
 
-			<div class="card-header card bg-success text-white " th:text="${titulo}"></div>
+			<div class="card-header h4 card bg-success text-white " th:text="${titulo}"></div>
 			<div class="card-body card bg-success text-white">
 
-				<h4 class="card-title">
-					<a sec:authorize="hasRole('ROLE_GESTOR')" class="btn btn-primary btn-xs"
-						th:href="@{'/articulo/formulario/'} + ${wiki.id}" th:text="'Crear Articulo'"></a>
-				</h4>
+				<div class="d-flex">
+				    <h4 class="card-title ">
+				        <a sec:authorize="hasRole('ROLE_GESTOR')" class="btn btn-primary btn-xs"
+				            th:href="@{'/articulo/formulario/'} + ${wiki.id}" th:text="'Crear Articulo'"></a>
+				    </h4>
+
+				    <form sec:authorize="hasRole('ROLE_GESTOR')" th:action="@{/asignarWiki/}+${wiki.id}" method="POST" class="ml-3">
+						<label class=" mx-2 h4 text-white">Asignale esta wiki a --></label>
+				        <select class="btn btn-primary btn-xs" name="userId">
+							<option value="" disabled selected>Selecciona Cuñado</option>
+				            <option class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" th:value="${usuario.id}" th:text="${usuario.username}"></option>
+				        </select>
+				        <button type="submit" class="btn btn-outline-primary text-white">Asignar Wiki</button>
+				    </form>
+				</div>
+
+				
 				
 				<!--mostrará la información de la wiki -->
 				<ul class="list-group">
@@ -75,6 +88,7 @@
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<!--<script th:src="@{/js/bootstrap.bundle.min.js}"></script>   esto parece ser que me daba problemas para que se desplegara el boton de log out-->
 	<script th:src="@{/js/jquery-ui.min.js}"></script>
+	
 </body>
 
 </html>

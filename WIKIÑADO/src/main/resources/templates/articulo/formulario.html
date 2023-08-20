@@ -8,7 +8,7 @@
 	<div class="container py-4">
 		<div class="card bg-light">
 
-			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-header bg bg-success text-white h2" th:text="${titulo}"></div>
 			<div class="card-body">
 				<h4 class="card-title">
 					<a class="btn btn-secondary btn-xs" th:href="@{'/ver/' + ${articulo.wiki.id}}"
@@ -37,7 +37,8 @@
 					<div class="form-group row">
 						<label for="contenido" class="col-sm-2 col-form-label" th:text="'Contenido del Artículo'"></label>
 						<div class="col-sm-6">
-							<textarea th:field="*{contenido}" class="form-control"></textarea>
+							<textarea th:field="*{contenido}" class="form-control" th:errorclass="'form-control is-invalid'"></textarea>
+							<div class="invalid-feedback" th:if="${#fields.hasErrors('contenido')}" th:errors="*{contenido}"></div>
 						</div>
 					</div>
 

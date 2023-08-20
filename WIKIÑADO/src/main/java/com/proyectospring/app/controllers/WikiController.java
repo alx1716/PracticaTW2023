@@ -3,6 +3,7 @@ package com.proyectospring.app.controllers;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -33,15 +34,17 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.Wiki;
+import com.proyectospring.app.models.service.IUsuarioService;
 import com.proyectospring.app.models.service.IWikiService;
 
 import com.proyectospring.app.util.paginator.PageRender;
 
 @Controller
-@SessionAttributes("cliente") // para guardar las sesiones de actualización o creación de los usuarios ya así
+@SessionAttributes("wiki") // para guardar las sesiones de actualización o creación de los usuarios ya así
 								// saber si estamos editando un registro o creando uno nuevo
-//OJO!!! si no hay pegas esto es para borrar!!! @RequestMapping("/") // se pasa el objeto a la sesion y este va permanecer ahí hasta que se llame al
+// se pasa el objeto a la sesion y este va permanecer ahí hasta que se llame al
 						// método guardar
 public class WikiController {
 
@@ -51,7 +54,12 @@ public class WikiController {
 	// del DAO directamente me da error
 	private IWikiService wikiService;
 	
-	
+	/**
+	 * Para poder pasar un listado de los usuarios a la vista de la wiki y 
+	 * poder asignar dicha wiki a un usuario
+	 */
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	
 	
@@ -63,6 +71,8 @@ public class WikiController {
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> modelo, RedirectAttributes flash) {
 
 		Wiki wiki = wikiService.findOne(id);
+		
+		List<Usuario> usuarios = usuarioService.findAll();
 
 		if (wiki == null) {
 
@@ -70,7 +80,7 @@ public class WikiController {
 			return "redirect:/listar";
 
 		}
-
+		modelo.put("lista_usuarios", usuarios);	
 		modelo.put("wiki", wiki);
 		modelo.put("titulo", "Dentro de la Wiki: " + wiki.getNombre());
 

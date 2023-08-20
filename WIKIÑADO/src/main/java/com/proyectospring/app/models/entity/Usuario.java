@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "usuarios")
@@ -35,18 +36,53 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "user_id") // es la llave foranea que tiene la clase Role
 	private List<Role> roles = new ArrayList<Role>();
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para los artículos asigandos al usuario.
-	private List<Articulo> articulosAsignados = new ArrayList<>();
 	
+	
+	@OneToMany( mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para las wikis asigandas al usuario.
+	private List<UsuarioWiki> usuarioWikis = new ArrayList<>();
+	
+	@OneToMany( mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para los artículos asigandos al usuario.
+	private List<UsuarioArticulo> usuarioArticulos = new ArrayList<>();
+	
+	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
 	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();  // el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
 	
+	
+	
+	
+	
 	//Getters and Setters
 	
+	
+	public List<UsuarioArticulo> getUsuarioArticulos() {
+		return usuarioArticulos;
+	}
 
+
+
+	public void setUsuarioArticulos(List<UsuarioArticulo> usuarioArticulos) {
+		this.usuarioArticulos = usuarioArticulos;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
+    
+	
+
+	public List<UsuarioWiki> getUsuarioWikis() {
+		return usuarioWikis;
+	}
+
+
+
+	public void setUsuarioWikis(List<UsuarioWiki> usuarioWikis) {
+		this.usuarioWikis = usuarioWikis;
+	}
+
+
 
 	public List<PropuestaModificacion> getModificacionesPropuestas() {
 		return modificacionesPropuestas;
@@ -56,14 +92,7 @@ public class Usuario implements Serializable {
 		this.modificacionesPropuestas = modificacionesPropuestas;
 	}
 
-	public List<Articulo> getArticulosAsignados() {
-		return articulosAsignados;
-	}
-
-	public void setArticulosAsignados(List<Articulo> articulosAsignados) {
-		this.articulosAsignados = articulosAsignados;
-	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
