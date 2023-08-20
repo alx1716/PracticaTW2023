@@ -70,6 +70,9 @@ public class ArticuloController {
 		//obtenemos el articulo por su id
 		Articulo articulo = wikiService.findArticuloById(articuloId);
 		
+		//obtenemos la lista de los usuarios registrados para pasarla a la vista y poder asignar los artículos a los usuarios
+		List<Usuario> usuarios = userService.findAll();
+		
 		//miramos si el artículo está precargado.
 		if (articulo.getContenido().startsWith("/")) { // para ver si la observacion comienza con una url
 			
@@ -104,7 +107,7 @@ public class ArticuloController {
 		
 		
 		
-		
+		modelo.addAttribute("lista_usuarios", usuarios);  // se pasan los usuarios a la vista
 		modelo.addAttribute("articulo", articulo);  // se pasa el articulo a la vista
 		modelo.addAttribute("titulo", "Estás opinando sobre: "+ articulo.getTitulo());
 		
@@ -133,20 +136,22 @@ public class ArticuloController {
 
 	
 	/**
-	 * vamos a crera el método para guardar la factura en la BBDD
+	 * vamos a crera el método para guardar el artículo en la BBDD
 	 * 
 	 */
 	@PostMapping("/formulario")
 	public String guardarArticulo( @Valid Articulo articulo,BindingResult resultado, Model modelo,RedirectAttributes flash, SessionStatus status ) {
 		
 		if (resultado.hasErrors()) {
-			modelo.addAttribute("titulo", "Crear Articulo");
+			modelo.addAttribute("titulo", "Iluminanos con tu sabiduría!!");
 			return "articulo/formulario";
 		}
 		
-	
+		if (articulo.getContenido() == null) {
+			
+		}
 		
-		wikiService.saveArticulo(articulo); //aquí se guarda la factura con todas sus líneas y sus observaciones que vienen del formulario desde la BBDD esto me va a servir para implementar el registro de los articulos
+		wikiService.saveArticulo(articulo); //aquí se guarda registro de los articulos
 		
 		status.setComplete();
 		

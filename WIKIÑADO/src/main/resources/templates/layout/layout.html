@@ -114,18 +114,17 @@
 
 			<!--despues de poner en el meta lo de sec se usa para el nombre y el rol del usuario autenticado-->
 
-			Usuario Logeado: <span sec:authentication="name"></span> | Roles: <span
-				sec:authentication="principal.authorities"></span>
+			Usuario Logeado: <span sec:authentication="name"></span> | Roles: <span th:each="authority : ${#authentication.getAuthorities()}" th:text="'<'+${authority.getAuthority().substring(5)}+ '>'+' '"></span>
 			<!--el rol se muestra como ROL_GESTOR en el caso de alex, supongo que se podrá personalizar -->
 		</p>
 
 		<p>
-			Powered By me
+			Powered By Springboot
 		</p>
 
 		<p>
-			Este proyecto es realizado siguiendo unos vídeos que me van a convertir en un excelente programador<br />
-			&COPY; Company 2023. Incluye todos los derechos a Javier Alexander Victoria Baltán.
+			Este proyecto es realizado usando Sprinboot, Thymeleaf, Javascript y Bootstrap<br />
+			&COPY; Company 2023. Incluye todos los derechos a  Fernando Rubio Salgado y Javier Alexander Victoria Baltán.
 		</p>
 		<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
 		<script th:src="@{/js/popper.min.js}"></script>

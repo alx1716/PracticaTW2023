@@ -56,9 +56,31 @@
     				</thead>
 
 					<tbody>
-						<tr th:each="articulo : ${usuario.articulosAsignados}">
-				            <td th:text="${articulo.id}"></td>
-				            <td th:text="${articulo.wiki}"></td>
+						<tr th:each="usuarioArticulo : ${usuario.usuarioArticulos}">
+				            <td th:text="${usuarioArticulo.articulo.id}"></td>
+				            <td><h4><a th:href="@{/articulo/ver/} + ${usuarioArticulo.articulo.id}" th:text="${usuarioArticulo.articulo.titulo}"></a></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+        
+         	<!--Tabla con los Wikis asignadas en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Wikis asignadas'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-info">Wiki</th>
+           					 <th class="text-success">Que habla de</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="usuarioWiki : ${usuario.usuarioWikis}">
+				            <td th:text="${usuarioWiki.wiki.id}"></td>
+				            <td ><h4><a th:href="@{/ver/} + ${usuarioWiki.wiki.id}" th:text="${usuarioWiki.wiki.nombre}"></a></h4></td>
         				</tr>
 						
 					</tbody>
