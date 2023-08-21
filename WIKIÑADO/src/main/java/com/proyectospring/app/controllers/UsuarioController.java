@@ -63,6 +63,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private IRoleDao roleDao;
+	
+	@Autowired
 	private IWikiService wikiService;
 	
 	
@@ -110,6 +112,7 @@ public class UsuarioController {
 			flash.addFlashAttribute("error", "No está escogiendo a un cuñado para asignar");
 			return "redirect:/ver/"+wikiId;
 		}
+		
 		
 		
 	    // Realizar la asignación de la wiki al usuario aquí
