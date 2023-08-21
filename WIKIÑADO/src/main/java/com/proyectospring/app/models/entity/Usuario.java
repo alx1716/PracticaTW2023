@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.proyectospring.app.enums.RoleEnum;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
@@ -49,8 +51,9 @@ public class Usuario implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
 	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();  // el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
 	
-	
-	
+	//relacion con PeticionRol
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<PeticionRol> peticionesRol = new ArrayList<>();
 	
 	
 	//Getters and Setters
@@ -136,10 +139,24 @@ public class Usuario implements Serializable {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public List<PeticionRol> getPeticionesRol() {
+	    return peticionesRol;
+	}
 
+	public void setPeticionesRol(List<PeticionRol> peticionesRol) {
+	    this.peticionesRol = peticionesRol;
+	}
+	
+	public boolean tieneRol(RoleEnum rolSolicitado) {
+		return roles.stream().anyMatch(r -> r.getAuthority() == rolSolicitado);
+	}
+	
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 
 }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -63,6 +64,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private IRoleDao roleDao;
+	
+	@Autowired
 	private IWikiService wikiService;
 	
 	
@@ -202,56 +205,59 @@ public class UsuarioController {
 
 	
 
-	//metodo que devuelve lista de usuarios y roles
-		@GetMapping("/gestor_user")
-		public String listarUsuarios(Model model) {
-	        List<Usuario> listaUsuarios = usuarioserv.userList();
-	        List<String> predefinedRoles = Arrays.asList("COLABORADOR", "SUPERVISOR", "COORDINADOR", "GESTOR"); 
-	        List<Usuario> usuariosConPropuestas = roleDao.findUsersWithNewRoles();
-	        model.addAttribute("usuariosConPropuestas", usuariosConPropuestas);
-	        model.addAttribute("listaUsuarios", listaUsuarios);
-	        model.addAttribute("predefinedRoles", predefinedRoles);
-	        return "gestor_user";
-		}
+	@GetMapping("/gestor_user")
+	public String listarUsuarios(Model model) {
+	    List<Usuario> listaUsuarios = usuarioserv.userList();
+	    
+	    // Obtener los roles predefinidos del enumerado RoleEnum
+	    List<String> predefinedRoles = Arrays.stream(RoleEnum.values())
+	                                        .map(role -> role.toString())
+	                                        .collect(Collectors.toList());
+
+	    model.addAttribute("listaUsuarios", listaUsuarios);
+	    model.addAttribute("predefinedRoles", predefinedRoles);
+	    return "gestor_user";
+	}
 		
 		
-		
-	//método que añade un rol nuevo a un usuario existente
+		//método que añade un rol nuevo a un usuario existente
 		@Transactional
 		@PostMapping("/asigna_rol")
-		public String asignarRol(@RequestParam("userId") Long userId,
-				
-	    @RequestParam("nuevoRol") String nuevoRol) {
-			Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
-			if (usuarioOptional.isPresent()) {
+		public String asignarRol(
+		    @RequestParam("userId") Long userId,
+		    @RequestParam("newRole") RoleEnum newRole
+		) {
+		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
+		    
+		    if (usuarioOptional.isPresent()) {
 		        Usuario usuario = usuarioOptional.get();
 		        
 		        // Verificar si el usuario ya tiene el rol
 		        boolean hasRole = usuario.getRoles().stream()
-		                           .anyMatch(role -> role.getAuthority().equals(nuevoRol));
+		                           .anyMatch(role -> role.getAuthority().equals(newRole));
 		        
 		        if (hasRole) {
 		            // El usuario ya tiene el rol, redirigir con mensaje de error
-		            return "redirect:/resultado_asigna_rol?success=false&userId=" + userId;
-		        } else {	
-			//String sql = "UPDATE authorities  SET `authority` = ? WHERE `user_id` = ?";
-			String sql = "INSERT INTO `authorities` (user_id, authority) VALUES (?,?)";
-		    Query query = entityManager.createNativeQuery(sql)	
-		    .setParameter(1, userId)
-		    .setParameter(2, nuevoRol);
-		        
-		
-		query.executeUpdate();
-		
-		return "redirect:/resultado_asigna_rol?success=true&userId=" + userId;
-		        } 
-			}else {
-		            // Manejar el caso en el que no se encontró el usuario
-		            return "error_403";
+		        	return "redirect:/resultado_asigna_rol?success=false&userId=" + userId;
+		        } else {
+		            Role newRoleEntity = new Role();
+		            newRoleEntity.setAuthority(newRole);
+		            newRoleEntity.setUsuario(usuario);
+		            
+		            usuario.getRoles().add(newRoleEntity);
+		            
+		            usuarioserv.saveUser(usuario);  // Asumiendo que usuarioserv es un servicio que maneja la entidad Usuario
+		            
+		            return "redirect:/resultado_asigna_rol?success=true&userId=" + userId;
+		            
 		        }
-	}
-
-	//método para mostrar el resultado de la asignación de un nuevo rol
+		    } else {
+		        // Manejar el caso en el que no se encontró el usuario
+		        return "error_403";
+		    }
+		}
+		
+		//método para mostrar el resultado de la asignación de un nuevo rol
 		@GetMapping("/resultado_asigna_rol")
 		public String mostrarResultadoAsignacionRolResult(@RequestParam("success") boolean success,
 		                                                  @RequestParam("userId") Long userId,
@@ -270,28 +276,23 @@ public class UsuarioController {
 		        return "error_403"; 
 		    }
 		}
-
-	//método que permite eliminar un usuario determinado
+//método que permite eliminar un usuario determinado
 		@Transactional
-		 @PostMapping("/eliminar_usuario")
-		    public String eliminarUsuario(@RequestParam("userId") Long userId) {
-			 String deleteRolesSql = "DELETE FROM authorities WHERE user_id = ?";
-			 String deleteUserSql = "DELETE FROM usuarios WHERE id = ?";
-			 
-			 Query deleteRolesQuery = entityManager.createNativeQuery(deleteRolesSql)
-		            .setParameter(1, userId);
-			 	
-		     Query deleteUserQuery = entityManager.createNativeQuery(deleteUserSql)
-		            .setParameter(1, userId);
-
+		@PostMapping("/eliminar_usuario")
+		public String eliminarUsuario(@RequestParam("userId") Long userId) {
+		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
+		    
+		    if (usuarioOptional.isPresent()) {
+		        Usuario usuario = usuarioOptional.get();
 		        
-
-		        deleteRolesQuery.executeUpdate();
-		        deleteUserQuery.executeUpdate();
-
-
+		        usuarioserv.delete(usuario);  // Asumiendo que usuarioserv es un servicio que maneja la entidad Usuario
+		        
 		        return "redirect:/gestor_user"; // Redirige a la página de la lista de usuarios después de eliminar
+		    } else {
+		        // Manejar el caso en el que no se encontró el usuario
+		        return "error_403";
 		    }
+		}
 
 	//método que atiende la llamada a la creación de un usuario nuevo
 		@GetMapping("/crear")
@@ -319,7 +320,7 @@ public class UsuarioController {
 	        return "redirect:/gestor_user"; // Redirigir a la página de usuarios actualizada
 	    } 
 	    
-	    */
+	    
 		@Transactional
 		@PostMapping("/actualizar-rol")
 		public String actualizarRol(@RequestParam Long userId, @RequestParam String action) {
@@ -358,7 +359,7 @@ public class UsuarioController {
 		private boolean usuarioHasRole(Usuario usuario, RoleEnum roleEnum) {
 		    return usuario.getRoles().stream()
 		            .anyMatch(role -> role.getAuthority().equals(roleEnum.toString()));
-		}
+		} */
 }
 		
 
