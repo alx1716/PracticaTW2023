@@ -20,12 +20,8 @@ public interface IRoleDao extends CrudRepository<Role, Long>{
 
 	public Role findByUsuario(Usuario usuario);
 	
-	@Query("SELECT u, r.newRole, r.status FROM Usuario u JOIN u.roles r WHERE r.newRole IS NOT NULL")
-    public List<Usuario> findUsersWithNewRoles();
+	
 
-	public Role findByUsuarioAndNewRoleAndStatus(Usuario usuario, RoleEnum newRole, PeticionStatus pendiente);
-
-	public boolean existsByUsuarioAndStatus(Usuario usuario, PeticionStatus pendiente);
 
 
 

@@ -2,6 +2,8 @@ package com.proyectospring.app.models.service;
 
 import java.util.List;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.entity.Usuario;
 
@@ -19,5 +21,9 @@ public interface IUsuarioService {
 	public void save(Usuario user);
 	
 	void actualizarRol(Usuario usuario, RoleEnum nuevoRol);
+
+	public boolean usuarioTieneRol(Long userId, RoleEnum rolSolicitado);
+
+	public void actualizarRol(Long userId, RoleEnum nuevoRol) throws AccountNotFoundException;
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
  */
 import org.springframework.transaction.annotation.Transactional;
 
+import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.dao.IRoleDao;
 import com.proyectospring.app.models.dao.IUsuarioDao;
 import com.proyectospring.app.models.entity.Role;
@@ -37,7 +38,7 @@ public class RegistroService {
 
 		// le añado el rol por defecto al usuario nuevo
 		Role defaultRole = new Role();
-		defaultRole.setAuthority("ROLE_COLABORADOR");
+		defaultRole.setAuthority(RoleEnum.ROLE_COLABORADOR);
 		roleDao.save(defaultRole); // guardo el nuevo rol en la BBDD para que tenga un ID válido
 		
 		nuevoUsuario.getRoles().add(defaultRole); // cada usuario tiene un ArrayList ya seteado por lo que sólo añado el nuevo rol

@@ -39,24 +39,20 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 			throw new UsernameNotFoundException("El usuario con email:  " + email + " NO existe en el sistema");
 		}
 
-		// 2- obtenemos sus roles
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); // creamos una lista para guardar los
-																				// roles del usuario
+		// 2- Obtenemos sus roles
+		List<GrantedAuthority> authorities = new ArrayList<>(); // Creamos una lista para guardar los roles del usuario
 
-		for (Role rol : usuario.getRoles()) {
-
-			authorities.add(new SimpleGrantedAuthority(rol.getAuthority())); // se añaden los roles de dicho usuario, ya que esto sólo es el login y este usuario puede tener mucho roles asignados
+		for (Role role : usuario.getRoles()) {
+		    authorities.add(new SimpleGrantedAuthority(role.getAuthority().toString())); // Se añaden los roles de dicho usuario
 		}
 
 		if (authorities.isEmpty()) {
-			
-
-			throw new UsernameNotFoundException("Error de login para el email: " + email + " NO tiene roles asignados");
+		    throw new UsernameNotFoundException("Error de login para el usuario con ID: " + usuario.getId() + " - No tiene roles asignados");
 		}
 
-		// se devuelve el usuario autenticado // esto lo tengo que checkear a ver si me sirve así o al cambiar al email como forma de login pasa algo.
+		// Se devuelve el usuario autenticado
 		return new CustomUserDetails(usuario.getUsername(), usuario.getPassword(), usuario.getId(), authorities);
-		}
+	}
 		
 		//metodo para obtener listado de roles
 		public Iterable<Usuario> rolList(){
@@ -78,6 +74,11 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 		//metodo que almacena un usuario en BBDD
 		public void saveUser(Usuario usuario){
 			usuarioaDao.save(usuario);
+		}
+
+		public void delete(Usuario usuario) {
+			usuarioaDao.delete(usuario);
+			
 		}
 
 
