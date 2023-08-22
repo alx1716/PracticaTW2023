@@ -27,13 +27,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectospring.app.models.entity.Articulo;
-
+import com.proyectospring.app.models.entity.PropuestaModificacion;
 import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.UsuarioArticulo;
 import com.proyectospring.app.models.entity.UsuarioWiki;
 import com.proyectospring.app.models.entity.Wiki;
 import com.proyectospring.app.models.service.CustomUserDetails;
 import com.proyectospring.app.models.service.IArticuloService;
+import com.proyectospring.app.models.service.IPropuestaModificacionService;
 import com.proyectospring.app.models.service.IUsuarioArticuloService;
 import com.proyectospring.app.models.service.IUsuarioService;
 
@@ -78,6 +79,9 @@ public class UsuarioController {
 	@Autowired
 	private IArticuloService articuloService;
 	
+	@Autowired
+	private IPropuestaModificacionService propuestaModificacionService;
+	
 
 	
 	@GetMapping("/perfil")
@@ -88,6 +92,8 @@ public class UsuarioController {
 	    Long userId = userDetails.getUserId();
 	    RoleEnum[] rolesEnum = RoleEnum.values();
 	    Usuario usuario = usuarioService.findOne(userId);
+	    List<PropuestaModificacion> propuestas = propuestaModificacionService.findAll();
+	    modelo.addAttribute("propuestas", propuestas);
 	    modelo.addAttribute("usuario", usuario);
 	    modelo.addAttribute("rolesEnum", rolesEnum);
 	    modelo.addAttribute("usuario", usuarioService.findOne(userId)); // este es el usuario para poder acceder a TODA la información de dicho usuario

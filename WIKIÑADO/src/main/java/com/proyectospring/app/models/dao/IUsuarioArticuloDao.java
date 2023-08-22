@@ -14,7 +14,7 @@ import com.proyectospring.app.models.entity.UsuarioArticulo;
 public interface IUsuarioArticuloDao extends CrudRepository<UsuarioArticulo, Long> {
 
 	
-	
+	public UsuarioArticulo findOneById(Long id);
 	public List<UsuarioArticulo> findALLByUsuarioId(Long id);
 	
 	public UsuarioArticulo findByUsuarioAndArticulo(Usuario user , Articulo articulo);  // para ver si un artículo está ya asignado a un usuario

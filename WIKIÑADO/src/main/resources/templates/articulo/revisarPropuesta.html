@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+	
+	<!--Tabla con las Propuestas hechas ara ese articulo -->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Propuestas Presentadas Para el artículo: '+${articulo.titulo}"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-success">Propuesta ID</th>
+           					 <th class="text-warning">Presentada por</th>
+           					 <th class="text-primary">Decidir</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="propuesta : ${lista_propuestas}">
+				            <td th:text="${propuesta.id}"></td>
+				            <td th:text="${propuesta.usuario}"></td>
+				            <td th:text="'ESTO SERÁ UN ENLACE QUE ME LLEVE A LA VISUALIZACION'"></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proyectospring.app.models.dao.IPropuestaModificacionDao;
+import com.proyectospring.app.models.entity.Articulo;
 import com.proyectospring.app.models.entity.PropuestaModificacion;
+import com.proyectospring.app.models.entity.Usuario;
 
 
 @Service
@@ -44,6 +46,13 @@ public class PropuestaModificacionServiceImpl implements IPropuestaModificacionS
 		
 		propuestaDao.deleteById(id);
 		
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public PropuestaModificacion findByArticuloAndUsuario(Articulo articulo, Usuario usuario) {
+		
+		return propuestaDao.findByArticuloAndUsuario(articulo, usuario);
 	}
 	
 	

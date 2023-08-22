@@ -58,10 +58,20 @@ INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
 
 INSERT INTO peticiones_rol (id, requested_authority, status, user_id) VALUES (1, 'ROLE_COORDINADOR', 'PENDIENTE', 1 );
 
-INSERT INTO peticiones_rol (id, requested_authority, status, user_id) VALUES (1, 'ROLE_COORDINADOR', 'PENDIENTE', 1 )
+INSERT INTO peticiones_rol (id, requested_authority, status, user_id) VALUES (1, 'ROLE_COORDINADOR', 'PENDIENTE', 1 );
 
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('EVALUACION','Esto es una prueba para cargar la propuesta desde el import sql', 1, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('EVALUACION','Este es la única propuesta pendiente de revisión que le debería de salir al Supervisor', 2, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('EVALUACION','Esto es una prueba para cargar la propuesta desde el import sql', 3, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('EVALUACION','Esto es una prueba para cargar la propuesta desde el import sql', 4, 1 );
+INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 1, 1 );
+INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Este es la única propuesta pendiente de revisión que le debería de salir al Supervisor', 2, 1 );
+INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 3, 1 );
+INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 4, 1 );
+
+INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,1);
+INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,2);
+INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,3);
+INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,4);
+
+INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (1,1);
+INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (2,2);
+INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (3,3);
+INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (4,4);
 

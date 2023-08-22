@@ -55,6 +55,7 @@
             </tr>
         </table>
     </div>
+    
  	
 		<!--Tabla con las Propuestas hechas por el usuario // tengo que comprobar que aunque haga logout se siguen viendo  FUNCIONA A 19/08/2023!!!-->
 		<div class="card bg-light my-5 rounded">
@@ -82,19 +83,24 @@
         
         	<!--Tabla con los artículos asignados en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
 		<div sec:authorize="isAuthenticated() and hasRole('ROLE_SUPERVISOR')" class="card bg-light my-5 rounded">
-			<div class="card-header h2 text-center text-white bg-success" th:text="'Artículos asignados'"> </div>
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Artículos asignados para supervisión'"> </div>
             	<table class="table table-hover">
 					<thead>
         				<tr>
-           					 <th class="text-info">Artículo</th>
+           					 <th class="text-info">Artículo número</th>
            					 <th class="text-success">Perteneciente a la Wiki</th>
+           					  <th class="text-success">Trata de </th>
+           					   <th th:if="${not #lists.isEmpty(usuario.usuarioArticulos)}" class="text-success">hay que revisar?</th>
         				</tr>
     				</thead>
 
 					<tbody>
 						<tr th:each="usuarioArticulo : ${usuario.usuarioArticulos}">
-				            <td th:text="${usuarioArticulo.articulo.id}"></td>
+				            <td class="h4" th:text="${usuarioArticulo.articulo.id}"></td>
+				            <td  class="h4" th:text="${usuarioArticulo.articulo.wiki.nombre}"></td>
 				            <td><h4><a th:href="@{/articulo/ver/} + ${usuarioArticulo.articulo.id}" th:text="${usuarioArticulo.articulo.titulo}"></a></td>
+				            <td  th:if="${not #lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4"><a th:href="@{/revisar/} +${usuarioArticulo.id}">Revisa esta Cuñadada</a></td>
+				            <td  th:if="${#lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4">Ningún Cuñado ha opinado sobre este tema</td>
         				</tr>
 						
 					</tbody>
