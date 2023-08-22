@@ -21,7 +21,7 @@ public class PropuestaModificacion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;  // toda entidad debe tener su id único
 
-	private String estado;  // puede ser ACEPTADO, RECHAZADO, EN ESTUDIO
+	private String estado;  // puede ser ACEPTADO, RECHAZADO, EN ESTUDIO  Esto lo tengo que mejorar!!!
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Articulo articulo;  // este será el articulo al que está referenciando //OJO!!!  no creo que haga falta esto si ya el Artículo tiene una lista de las propuestas
 	
