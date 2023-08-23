@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+		
+		<strong><h1 class="shadow p-3 mb-5 bg-white rounded text-info " th:text="'Bienvenido a tu perfil '+${usuario.username}"></h1></strong>
+		
+		<!--mostrará la información de la wiki -->
+				<ul class="list-group">
+				
+					<strong>
+    					<li class="list-group-item h3 bg-primary text-white">Roles:
+        					<span th:each="role : ${#authentication.principal.authorities}" th:text="'<'+${role.authority.replace('ROLE_', '') + '> '} "></span>
+    					</li>
+					</strong>
+					<strong><li class="list-group-item h4 bg-light text-primary" th:text="'E-mail: '+${usuario.email}"></li></strong>
+				
+				</ul>
+				
+		
+		
+<!-- Solicitud de agregar nuevo rol -->
+<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Solicitar nuevo Rol'" th:if="${#authorization.expression('hasAnyRole(''ROLE_GESTOR'', ''ROLE_COORDINADOR'', ''ROLE_SUPERVISOR'', ''ROLE_COLABORADOR'')')}"> </div>
+            	
+ 
+        <!-- Sección para mostrar roles disponibles y solicitudes de rol -->
+  
+        <form th:action="@{/solicitar-rol}" method="post">
+            <select name="rolSolicitado">
+            	<option value= "" disabled selected> Selecciona el nuevo Rol</option>
+                <option th:each="rol : ${rolesEnum}" th:value="${rol}" th:text="${rol}"></option>
+            </select>
+            <button type="submit">Solicitar Rol</button>
+        </form>
+
+ </div>
+ <!-- Estado de las solicitudes de rol -->
+ <div class="card bg-light my-5 rounded">
+		<div class="card-header h2 text-center text-white bg-success" th:text="'Estado de las solicitudes de Rol'" th:if="${#authorization.expression('hasAnyRole(''ROLE_GESTOR'', ''ROLE_COORDINADOR'', ''ROLE_SUPERVISOR'', ''ROLE_COLABORADOR'')')}"> </div>
+        	<table class="table table-hover">
+            <tr>
+                <th>Rol Solicitado</th>
+                <th>Estado</th>
+            </tr>
+            <tr th:each="solicitud : ${usuario.peticionesRol}">
+                <td th:text="${solicitud.requestedAuthority}"></td>
+                <td th:text="${solicitud.status}"></td>
+            </tr>
+        </table>
+    </div>
+    
+ 	
+		<!--Tabla con las Propuestas hechas por el usuario // tengo que comprobar que aunque haga logout se siguen viendo  FUNCIONA A 19/08/2023!!!-->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Propuestas Presentadas'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-success">Propuesta ID</th>
+           					 <th class="text-warning">Estado</th>
+           					 <th class="text-primary">Articulo a modificar</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="propuesta : ${usuario.modificacionesPropuestas}">
+				            <td th:text="${propuesta.id}"></td>
+				            <td th:text="${propuesta.estado}"></td>
+				            <td th:text="${propuesta.articulo.titulo}"></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+        
+        	<!--Tabla con los artículos asignados en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
+		<div sec:authorize="isAuthenticated() and hasRole('ROLE_SUPERVISOR')" class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Artículos asignados para supervisión'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-info">Artículo número</th>
+           					 <th class="text-success">Perteneciente a la Wiki</th>
+           					  <th class="text-success">Trata de </th>
+           					   <th th:if="${not #lists.isEmpty(usuario.usuarioArticulos)}" class="text-success">hay que revisar?</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="usuarioArticulo : ${usuario.usuarioArticulos}">
+				            <td class="h4" th:text="${usuarioArticulo.articulo.id}"></td>
+				            <td  class="h4" th:text="${usuarioArticulo.articulo.wiki.nombre}"></td>
+				            <td><h4><a th:href="@{/articulo/ver/} + ${usuarioArticulo.articulo.id}" th:text="${usuarioArticulo.articulo.titulo}"></a></td>
+				            <td  th:if="${not #lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4"><a th:href="@{/revisar/} +${usuarioArticulo.id}">Revisa esta Cuñadada</a></td>
+				            <td  th:if="${#lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4">Ningún Cuñado ha opinado sobre este tema</td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+        
+         	<!--Tabla con los Wikis asignadas en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Wikis asignadas'"> </div>
+            	<table class="table table-hover">
+					<thead>
+        				<tr>
+           					 <th class="text-info">Wiki</th>
+           					 <th class="text-success">Que habla de</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						<tr th:each="usuarioWiki : ${usuario.usuarioWikis}">
+				            <td th:text="${usuarioWiki.wiki.id}"></td>
+				            <td ><h4><a th:href="@{/ver/} + ${usuarioWiki.wiki.id}" th:text="${usuarioWiki.wiki.nombre}"></a></h4></td>
+        				</tr>
+						
+					</tbody>
+				</table>
+            	
+        </div>
+		
+
+		
+		
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

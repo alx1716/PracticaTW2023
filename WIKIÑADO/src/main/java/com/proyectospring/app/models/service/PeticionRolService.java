@@ -71,6 +71,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 			 peticionRolDao.save(solicitud);
 			
 		}
+		
+		//método que obtiene las solicitudes de Rol en estado pendiente del usuario
+		@Transactional
+		   public List<PeticionRol> obtenerSolicitudesPendientesPorUsuario(Long userId) {
+		       return peticionRolDao.findByUsuarioIdAndStatus(userId, PeticionStatus.PENDIENTE);
+		   }
 
 
 	}

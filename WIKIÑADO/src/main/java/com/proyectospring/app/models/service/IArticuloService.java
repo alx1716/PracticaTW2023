@@ -2,12 +2,9 @@ package com.proyectospring.app.models.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.proyectospring.app.models.entity.Articulo;
 import com.proyectospring.app.models.entity.PropuestaModificacion;
-import com.proyectospring.app.models.entity.Wiki;
 
 
 
@@ -29,6 +26,8 @@ public interface IArticuloService {
 		public PropuestaModificacion findPropuestaModificacionById(Long id); // método para encontrar una propuesta y ver el detalle de la misma. 
 		
 		public void deletePropuesta(Long id); // método para eliminar la propuesta.
+		
+		
 		
 
 }

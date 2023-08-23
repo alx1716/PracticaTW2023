@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,10 +69,12 @@ public class WikiController {
 
 	//@Secured("ROLE_COLABORADOR")
 	@GetMapping(value = "/ver/{id}") // Método para poder ver la foto con el controlador
-	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> modelo, RedirectAttributes flash) {
-
-		Wiki wiki = wikiService.findOne(id);
+	@PermitAll
+	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> modelo, Authentication authentication, Model model, RedirectAttributes flash) {
 		
+		//obtenemos la wiki por id
+		Wiki wiki = wikiService.findOne(id);
+
 		List<Usuario> usuarios = usuarioService.findAll();
 
 		if (wiki == null) {
@@ -83,6 +86,15 @@ public class WikiController {
 		modelo.put("lista_usuarios", usuarios);	
 		modelo.put("wiki", wiki);
 		modelo.put("titulo", "Dentro de la Wiki: " + wiki.getNombre());
+
+		// Verificar si el usuario está autenticado antes de verificar si es el coordinador de la wiki
+	    boolean esCoordinadorPorWiki = false;
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        Usuario usuarioCoordinadorPorWiki = usuarioService.esUsuarioCoordinadorPorWiki(id, authentication);
+	        esCoordinadorPorWiki = usuarioCoordinadorPorWiki != null;
+	    }
+
+	    model.addAttribute("esCoordinadorPorWiki", esCoordinadorPorWiki);
 
 		return "ver";
 

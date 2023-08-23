@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import org.springframework.security.core.Authentication;
+
 import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.entity.Usuario;
 
@@ -25,5 +27,8 @@ public interface IUsuarioService {
 	public boolean usuarioTieneRol(Long userId, RoleEnum rolSolicitado);
 
 	public void actualizarRol(Long userId, RoleEnum nuevoRol) throws AccountNotFoundException;
+
+	public Usuario esUsuarioCoordinador(Long articuloId, Authentication authentication);
+	public Usuario esUsuarioCoordinadorPorWiki(Long wikiId, Authentication authentication);
 
 }

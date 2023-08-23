@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head">
+	<link rel="stylesheet" th:href="@{/css/contenidoArticulo.css}" />
+</head>
+
+
+
+<!--AQUI ES DONDE ESTA LA CHICHA DEL ARTICULO// TENGO QUE:
+					- IMPLEMENTAR BOTONES PARA MODIFICAR EL ARTICULO Y SUBIR LA PROPUESTA. HECHO
+					- PODER EDITAR EL ARTICULO (CONLLEVA QUE EL GESTOR LO PUEDA ESCRIBIR O BORRAR EN CASO TAL)
+					- PARA LA VISTA DEBE TENER:
+												- EL TITULO
+												- ALGUNA IMAGEN ALEATORIA AL LADO DERECHO
+												- TEXTO 
+												- BOTON DE COLABORAR POR PARTE DEL CUÑADO COLABORADOR. HECHO
+												APARTE DE EL BOTON DE VOLVER A LA LISTA DE LAS WIKIS QUE YA ESTÁ IMPLEMENTADO
+
+-->
+
+
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+
+			<div class="card-header h2 text-center text-primary" th:text="${titulo}"> </div>
+			<span id="tituloArticulo" style="display: none;" th:text="${articulo.titulo}"></span>
+			<form sec:authorize="hasRole('ROLE_GESTOR')" th:action="@{/asignarArticulo/}+${articulo.id}" method="POST" class="ml-3">
+						<label class=" mx-2 h4 text-success">Asignale este articulo a --></label>
+				        <select class="btn btn-primary btn-xs" name="userId">
+							<option value="" disabled selected>Selecciona Cuñado</option>
+				            <option class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" th:value="${usuario.id}" th:text="${usuario.username}"></option>
+				        </select>
+				        <button type="submit" class="btn btn-success text-white">Asignar Artículo</button>
+				    </form>
+			<div class="card-body">
+
+
+				
+
+				<ul class="list-group"> <!-- datos de la wiki// lo de my-2 es un margen "m" de 2 en el eje "y"-->
+					
+					<!--Subtitulo del list group-->
+					<li class="list-group-item list-group-item-primary h2 mt-0 mb-0" th:text="'Pertenece a la Wiki: '+${articulo.wiki.nombre}"></li>
+					<!--aquí se usa el método toString() de la clase wiki-->
+					<li class="list-group-item h5 mt-0 mb-0" th:text="'Redactado por el cuñado: '+${articulo.wiki.email}"></li> <!--aquí debería de poner el nombre del usuario que ha redactado este artículo o el que lo ha modificado-->
+					<li class="list-group-item mt-0 mb-0" th:text="' En la gloriosa fecha: '+${articulo.fechaCreacion}"></li>
+				</ul>
+
+
+				
+
+				
+
+				<!--Vamos a crear lo del contenido-->
+			<div class="card boder-info mb-2">
+    			<div class="card-body d-flex flex-row justify-content-between">
+       				<div class="article">
+            			<p id="contenidoArticulo" class="card-text" th:text="${articulo.contenido}" th:if="${not #strings.isEmpty(articulo.contenido)}"></p>
+            			<h4 class="card-title" th:if="${#strings.isEmpty(articulo.contenido)}" th:text="'El articulo no tiene contenido!!'"></h4>
+        			</div>
+        		<div class="ml-auto">
+            		<img th:src="@{/images/logo.png}" alt="Imagen" class="image"><!--aqui me puedo crear algún tipo de algoritmo para que la imagen se pase de forma aleatoria dentro del artículo-->
+        		   <!-- <img th:src="@{/images/cuñadismo.jpg}" alt="Imagen" class="image"><!--aqui me puedo crear algún tipo de algoritmo para que la imagen se pase de forma aleatoria dentro del artículo-->
+
+        		</div>
+        		
+    			</div>
+			</div>
+
+				
+				<a th:href="@{'/ver/'+${articulo.wiki.id}}" class="btn btn-success btn-xs" th:text="'&laquo; Volver a la lista de Articulos de la Wiki: '+${articulo.wiki.nombre}"></a> <!-- aquí va el link para volver a la vista del cliente con sus facturas-->
+				
+				<!-- Botón para poner la modificación del artículo-->
+				
+				<a sec:authorize="hasRole('ROLE_COLABORADOR')or !isAuthenticated()" th:href="@{'/articulo/modificar/'+${articulo.id}}" class="btn btn-primary  mx-5" th:text="'Enseña lo que sabes (Modifica este artículo)'" onclick="descargarContenido()"></a>
+					
+				
+				
+			</div>
+		</div>
+
+	</div>
+	<!-- Función para descargar el contenido del artículo-->
+	<script>
+        function descargarContenido() {
+            var contenido = document.getElementById('contenidoArticulo').innerHTML;
+            var titulo = document.getElementById('tituloArticulo').innerText;
+            var blob = new Blob([contenido], { type: 'text/html' });
+            var url = window.URL.createObjectURL(blob);
+            
+            var enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = url;
+            enlaceDescarga.download = titulo + '.html';
+            
+            document.body.appendChild(enlaceDescarga);
+            enlaceDescarga.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(enlaceDescarga);
+        }
+    </script>
+	<footer th:replace="layout/layout :: footer"></footer>
+	
+
+</body>
+
+</html>

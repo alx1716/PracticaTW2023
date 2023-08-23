@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+	<!--Barra de Navegación-->
+	<header th:replace="layout/layout :: header"></header>
+
+
+
+	<!--Contenedor de la lista de wikis-->
+	<div class="container py-4">
+		<div class="card bg-success text-white">
+			<div class="card-header h3" th:text="'Dosis de Cuñadismo'"></div>
+
+			<div class="card-body">
+
+
+				<!--Ahora haré un link que me lleve al formulario para crear las wikis -->
+				<h4 class="card-title">
+					<a  sec:authorize="hasRole('ROLE_GESTOR')" th:href="@{/formulario}" class="btn btn-primary btn-xs">Crear Wiki</a>
+				</h4><!--AUNQUE NO ME HARÍA FALTA SI LO PONGO DIRECTAMENTE EN LA BARRA DE NAVEGACIÓN-->
+
+
+				<table class="table table-striped">
+
+					<thead>
+						<tr>
+							<!--<th sec:authorize="hasRole('ROLE_COLABORADOR')">Id</th>-->
+							<th>Idea Cuñada</th>
+							<th>Sabio Autor</th>
+							<th>Email</th>
+							<th>Arreglando el mundo el día</th>
+							<th sec:authorize="hasRole('ROLE_GESTOR')">Crear Articulo</th>
+							<th sec:authorize="hasRole('ROLE_GESTOR')">Editar</th>
+							<th sec:authorize="hasRole('ROLE_GESTOR')">Eliminar</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="wiki: ${listado_wikis}">
+	  <!-- OJO importante--><td><h4><a th:href="@{/ver/} + ${wiki.id}" th:text="${wiki.nombre}"></a></h4></td> <!-- He modificado esto hoy 05/08/2023 para que me por el nombre al detalle de cada link, esto sirve para entrar en cada wiki y luego en cada articulo-->
+							<td th:text="${wiki.creador}"></td>
+							<td th:text="${wiki.email}"></td>
+							<td th:text="${wiki.createAt}"></td>
+							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-success btn-xs" th:href="@{'/articulo/formulario/'} + ${wiki.id}"
+									th:text="'Crear Articulo'"></a></td>
+							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-primary btn-xs" th:href="@{'/formulario/'} + ${wiki.id}"
+									th:text="'Editar'"></a></td>
+							<!--Se crea un link al formulario y se le concatena con el id de cliente que es la ruta del método editar -->
+							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-danger btn-xs" th:href="@{'/eliminar/'} + ${wiki.id}"
+									th:text="'Eliminar'"
+									onclick="return confirm('Estás seguro que quieres eliminar?')"></a>
+							</td> <!-- Dentro del onclick hay código de javascript-->
+						</tr>
+					</tbody>
+				</table>
+				
+				<nav th:replace="paginador :: paginador"></nav>
+
+			</div>
+
+		</div>
+
+
+	</div>
+	<div>
+		<footer th:replace="layout/layout :: footer"></footer>
+	</div>
+
+</body>
+
+</html>

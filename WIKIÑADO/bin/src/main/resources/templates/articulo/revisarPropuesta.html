@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+	
+	<!--Tabla con las Propuestas hechas ara ese articulo -->
+		<div class="card bg-light my-5 rounded">
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Para el artículo: '+' &OpenCurlyDoubleQuote;'+${articulo.titulo}+'&CloseCurlyDoubleQuote;'+' Cuyo contenido actual es...'"> </div>
+			
+			
+			<!--aquí voy a poner el artículo para que se vea-->
+			<div class="card bg-light my-5 rounded">
+				<textarea style="height: 500px; width: auto;" th:text="${articulo.contenido}"></textarea>
+			</div>
+			
+			<div class="card-header h2 text-center text-white bg-success" th:text="'Tienes la siguientes propuestas...'"> </div>
+
+            	<table  th:each="propuesta : ${lista_propuestas}"class="table table-hover my-2">
+					<thead>
+        				<tr>
+           					 <th class="text-success">Propuesta Número</th>
+           					 <th class="text-warning">Presentada por</th>
+           					 <th class="text-primary">Qué Decides?</th>
+        				</tr>
+    				</thead>
+
+					<tbody>
+						
+						<tr>
+				            <td th:text="${propuesta.id}"></td>
+				            <td th:text="${propuesta.usuario.username}"></td>
+				           
+								<td>
+								<a class="btn btn-success btn-xs" th:href="@{/aceptar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Aceptar'"></a> 
+								<a class="btn btn-danger btn-xs" th:href="@{/rechazar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Rechazar'"></a>
+								</td>
+								
+				          
+				     
+        				</tr>
+        				   <tr>
+            					<td colspan="3">
+                					
+                   						 <textarea style="height: 500px; width: 100%;" th:text="${propuesta.propuesta}"></textarea>
+                					
+           					    </td>
+        				   </tr>
+        				
+						
+					</tbody>
+				</table>
+            	
+        </div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

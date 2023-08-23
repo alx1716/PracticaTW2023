@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+<!-- Mostrar mensaje de exito -->
+        <div th:if="${exito}" class="alert alert-success" role="alert">
+            <p th:text="${exito}"></p>
+        </div>
+        <!-- Mostrar mensaje de error -->
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

@@ -15,7 +15,7 @@
 
 				<div class="d-flex">
 				    <h4 class="card-title ">
-				        <a sec:authorize="hasRole('ROLE_GESTOR')" class="btn btn-primary btn-xs"
+				        <a th:if="${#authorization.expression('hasRole(''ROLE_GESTOR'') or ' + esCoordinadorPorWiki + ' == true')}" class="btn btn-primary btn-xs"
 				            th:href="@{'/articulo/formulario/'} + ${wiki.id}" th:text="'Crear Articulo'"></a>
 				    </h4>
 
@@ -55,7 +55,7 @@
 							<th>Fecha de creación</th>
 							<th>Lee este sinsentido!</th>
 							<th sec:authorize="hasRole('ROLE_GESTOR')">Editar Articulo</th>
-							<th sec:authorize="hasRole('ROLE_GESTOR')">Eliminar Articulo</th>
+							<th th:if="${#authorization.expression('hasRole(''ROLE_GESTOR'') or ' + esCoordinadorPorWiki + ' == true')}">Eliminar Articulo</th>
 						</tr>
 					</thead>
 
@@ -67,9 +67,12 @@
 							<td th:text="${articulo.fechaCreacion}"></td>
 							<td><a class="btn btn-primary btn-xs"
 									th:href="@{'/articulo/ver/'+${articulo.id}}" th:text="'A ver esta Trola?'"></a></td>
+									
 									<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-success btn-xs"
 									th:href="@{'/articulo/editar/'+${articulo.id}}" th:text="'Editar Artículo'"></a></td>
-							<td sec:authorize="hasRole('ROLE_GESTOR')"><a class="btn btn-danger btn-xs"
+									
+									<td th:if="${#authorization.expression('hasRole(''ROLE_GESTOR'') or ' + esCoordinadorPorWiki + ' == true')}">
+									<a class="btn btn-danger btn-xs"
 									th:href="@{'/articulo/eliminar/'+${articulo.id}}" th:text="'Eliminar Articulo'"
 									onclick="return confirm('¿Estás seguro que deseas eliminar este articulo?');"></td>
 

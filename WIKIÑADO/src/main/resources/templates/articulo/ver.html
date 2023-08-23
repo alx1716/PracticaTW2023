@@ -29,11 +29,13 @@
 
 			<div class="card-header h2 text-center text-primary" th:text="${titulo}"> </div>
 			<span id="tituloArticulo" style="display: none;" th:text="${articulo.titulo}"></span>
-			<form sec:authorize="hasRole('ROLE_GESTOR')" th:action="@{/asignarArticulo/}+${articulo.id}" method="POST" class="ml-3">
+			<form th:if="${#authorization.expression('hasRole(''ROLE_GESTOR'') or ' + esCoordinador + ' == true')}"  
+			th:action="@{/asignarArticulo/}+${articulo.id}" method="POST" class="ml-3">
 						<label class=" mx-2 h4 text-success">Asignale este articulo a --></label>
 				        <select class="btn btn-primary btn-xs" name="userId">
 							<option value="" disabled selected>Selecciona Cuñado</option>
-				            <option class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" th:value="${usuario.id}" th:text="${usuario.username}"></option>
+				            <option class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" 
+				            th:value="${usuario.id}" th:text="${usuario.username}"></option>
 				        </select>
 				        <button type="submit" class="btn btn-success text-white">Asignar Artículo</button>
 				    </form>
