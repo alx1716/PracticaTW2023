@@ -212,6 +212,7 @@ public class UsuarioController {
 
 	
 
+	//para enviar los datos necesarios a la vista
 	@GetMapping("/gestor_user")
 	public String listarUsuarios(Model model) {
 	    List<Usuario> listaUsuarios = usuarioserv.userList();
@@ -232,7 +233,8 @@ public class UsuarioController {
 		@PostMapping("/asigna_rol")
 		public String asignarRol(
 		    @RequestParam("userId") Long userId,
-		    @RequestParam("newRole") RoleEnum newRole
+		    @RequestParam("newRole") RoleEnum newRole,
+		    RedirectAttributes redirectAttributes
 		) {
 		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
 		    
@@ -244,8 +246,9 @@ public class UsuarioController {
 		                           .anyMatch(role -> role.getAuthority().equals(newRole));
 		        
 		        if (hasRole) {
-		            // El usuario ya tiene el rol, redirigir con mensaje de error
-		        	return "redirect:/resultado_asigna_rol?success=false&userId=" + userId;
+		            // El usuario ya tiene el rol, mostramos mensaje de error
+		        	redirectAttributes.addFlashAttribute("error", "El usuario "+ usuario.getUsername() +" ya tiene el rol solicitado, debes seleccionar otro rol.");
+		            return "redirect:/gestor_user";
 		        } else {
 		            Role newRoleEntity = new Role();
 		            newRoleEntity.setAuthority(newRole);
@@ -253,62 +256,47 @@ public class UsuarioController {
 		            
 		            usuario.getRoles().add(newRoleEntity);
 		            
-		            usuarioserv.saveUser(usuario);  // Asumiendo que usuarioserv es un servicio que maneja la entidad Usuario
-		            
-		            return "redirect:/resultado_asigna_rol?success=true&userId=" + userId;
+		            usuarioserv.saveUser(usuario);  
+		            //asignacion de rol correcta, mensaje flash para notificarlo
+		            redirectAttributes.addFlashAttribute("success", "La asignación de Rol al usuario "+ usuario.getUsername()+", se ha realizado con éxito!");
+		            return "redirect:/gestor_user";
 		            
 		        }
 		    } else {
 		        // Manejar el caso en el que no se encontró el usuario
-		        return "error_403";
+		    	redirectAttributes.addFlashAttribute("error", "No se ha encontrado al usuario.");
+	            return "redirect:/gestor_user";
 		    }
 		}
 		
-		//método para mostrar el resultado de la asignación de un nuevo rol
-		@GetMapping("/resultado_asigna_rol")
-		public String mostrarResultadoAsignacionRolResult(@RequestParam("success") boolean success,
-		                                                  @RequestParam("userId") Long userId,
-		                                                  Model model) {
-		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
-		    
-		    if (usuarioOptional.isPresent()) {
-		        Usuario usuario = usuarioOptional.get();
-		        List<Role> usuarioRoles = usuario.getRoles();
-		        model.addAttribute("asignacionExitosa", success);
-		        model.addAttribute("usuarioRoles", usuarioRoles);
-		        
-		        return "asigna_rol";
-		    } else {
-		        // Manejar el caso en el que no se encontró el usuario
-		        return "error_403"; 
-		    }
-		}
 //método que permite eliminar un usuario determinado
 		@Transactional
 		@PostMapping("/eliminar_usuario")
-		public String eliminarUsuario(@RequestParam("userId") Long userId) {
+		public String eliminarUsuario(@RequestParam("userId") Long userId,
+										RedirectAttributes redirectAttributes) {
 		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
 		    
 		    if (usuarioOptional.isPresent()) {
 		        Usuario usuario = usuarioOptional.get();
 		        
-		        usuarioserv.delete(usuario);  // Asumiendo que usuarioserv es un servicio que maneja la entidad Usuario
-		        
-		        return "redirect:/gestor_user"; // Redirige a la página de la lista de usuarios después de eliminar
+		        usuarioserv.delete(usuario);  
+		        // mensaje que indica que se ha eliminado el usuario correctamente
+	        	redirectAttributes.addFlashAttribute("success", "El usuario "+ usuario.getUsername() +" se ha eliminado correctamente.");
+		        return "redirect:/gestor_user"; 
 		    } else {
-		        // Manejar el caso en el que no se encontró el usuario
-		        return "error_403";
+		    	// mensaje que indica que no se puede eliminar porque no existe usuario
+	        	redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
+		        return "redirect:/gestor_user"; 
 		    }
 		}
 
-	//método que atiende la llamada a la creación de un usuario nuevo
+	//método qpara la creación de un usuario nuevo
 		@GetMapping("/crear")
 	    public String mostrarFormularioCreacion(Model model) {
 	        Usuario nuevoUsuario = new Usuario();
 	        model.addAttribute("nuevoUsuario", nuevoUsuario);
 	        return "crear_usuario"; 
 	    }
-	
 }
 		
 

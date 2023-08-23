@@ -14,7 +14,6 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,13 +44,20 @@ public class PeticionRolController {
     ) {
         Long userId = customUserDetails.getUserId();
         
-        // Implementa la lógica para verificar si el usuario ya tiene el rol solicitado
+      
         if (usuarioService.usuarioTieneRol(userId, rolSolicitado)) {
             redirectAttributes.addFlashAttribute("error", "Ya tienes el rol solicitado");
             return "redirect:/perfil";
         }
 
-        // Implementa la lógica para crear la solicitud de rol
+     // Verificar si el usuario tiene una solicitud pendiente para el mismo rol
+        List<PeticionRol> solicitudesPendientes = peticionRolService.obtenerSolicitudesPendientesPorUsuario(userId);
+        for (PeticionRol solicitud : solicitudesPendientes) {
+            if (solicitud.getRequestedAuthority() == rolSolicitado) {
+                redirectAttributes.addFlashAttribute("error", "Ya tienes una solicitud pendiente para este rol");
+                return "redirect:/perfil";
+            }
+        }
         peticionRolService.lanzarSolicitudNuevoRol(userId, rolSolicitado);
         
         redirectAttributes.addFlashAttribute("success", "Solicitud de rol enviada con éxito");
@@ -74,39 +80,35 @@ public class PeticionRolController {
         return "gesto_user";
     }
     
-    /*
-    //Rechazar peticion de Rol
-    @PostMapping("/actualizar-rol")
-    public String actualizarEstadoSolicitud(
-            @RequestParam("userId") Long userId,
-            @RequestParam("solicitudId") Long solicitudId,
-            @RequestParam("action") String action
-    ) {
-        if (action.equals("reject")) {
-            peticionRolService.actualizarEstadoSolicitud(solicitudId, PeticionStatus.RECHAZADA);
-        }
-        return "redirect:/gestor_user";
-    }
-    
-    */
-    
+
     @PostMapping("/actualizar-rol")
     public String actualizarRol(
             @RequestParam("userId") Long userId,
             @RequestParam("solicitudId") Long solicitudId,
-            @RequestParam("action") String action
+            @RequestParam("action") String action,
+            RedirectAttributes redirectAttributes
     ) throws AccountNotFoundException {
         PeticionRol solicitud = peticionRolService.obtenerPeticionPorId(solicitudId);
 
         if (action.equals("accept")) {
-            // Actualiza el estado de la solicitud a ACEPTADA
-            solicitud.setStatus(PeticionStatus.ACEPTADA);
-            // Agrega el rol solicitado al usuario
-            RoleEnum nuevoRol = solicitud.getRequestedAuthority();
-            usuarioService.actualizarRol(userId, nuevoRol);
+        	RoleEnum nuevoRol = solicitud.getRequestedAuthority();
+            
+            // Verifica si el usuario ya tiene asignado el rol
+            if (!usuarioService.usuarioTieneRol(userId, nuevoRol)) {
+                // Actualiza el estado de la solicitud a ACEPTADA
+                solicitud.setStatus(PeticionStatus.ACEPTADA);
+                // Agrega el rol solicitado al usuario
+                usuarioService.actualizarRol(userId, nuevoRol);
+                redirectAttributes.addFlashAttribute("success", "Actualización de rol realizada con éxito.");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "El usuario ya tiene asignado el rol solicitado. Tienes que rechazar la solicitud.");
+            }
+            
         } else if (action.equals("reject")) {
             // Actualiza el estado de la solicitud a RECHAZADA
             solicitud.setStatus(PeticionStatus.RECHAZADA);
+            redirectAttributes.addFlashAttribute("success", "Has rechazado la petición de Rol correctamente.");
+           
         }
 
         peticionRolService.guardarSolicitud(solicitud);

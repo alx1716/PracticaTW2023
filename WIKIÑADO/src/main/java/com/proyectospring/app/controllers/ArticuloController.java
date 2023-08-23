@@ -65,7 +65,7 @@ public class ArticuloController {
 	 * método para ver el detalle de la factura de un cliente
 	 */
 	@GetMapping("/ver/{articuloId}")
-	public String verDetalleArticulo(@PathVariable(value = "articuloId") Long articuloId, Model modelo, RedirectAttributes flash) throws IOException { // la Exception es por el url del archivo que vamos a buscar
+	public String verDetalleArticulo(@PathVariable(value = "articuloId") Long articuloId, Authentication authentication,  Model modelo, RedirectAttributes flash) throws IOException { // la Exception es por el url del archivo que vamos a buscar
 		
 		//obtenemos el articulo por su id
 		Articulo articulo = wikiService.findArticuloById(articuloId);
@@ -110,6 +110,16 @@ public class ArticuloController {
 		modelo.addAttribute("lista_usuarios", usuarios);  // se pasan los usuarios a la vista
 		modelo.addAttribute("articulo", articulo);  // se pasa el articulo a la vista
 		modelo.addAttribute("titulo", "Estás opinando sobre: "+ articulo.getTitulo());
+		
+		// Verificar si el usuario está autenticado antes de compronbar si es el coordinador de ka wiki a la que pertenece el artícuo
+	    boolean esCoordinador = false;
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        Usuario usuarioCoordinador = userService.esUsuarioCoordinador(articuloId, authentication);
+	        		esCoordinador = usuarioCoordinador != null;
+	    }
+	
+
+	    modelo.addAttribute("esCoordinador", esCoordinador);
 		
 		return "articulo/ver";
 	}

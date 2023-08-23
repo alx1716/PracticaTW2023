@@ -56,7 +56,7 @@ INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COORDINADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
 
-INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_COORDINADOR', 'PENDIENTE', 1 );
+
 
 
 
@@ -74,4 +74,11 @@ INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (1,1);
 INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (2,2);
 INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (3,3);
 INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (4,4);
+
+INSERT INTO usuarios_wikis (usuario_id, wiki_id) VALUES (3,2);
+INSERT INTO usuarios_wikis (usuario_id, wiki_id) VALUES (3,3);
+
+INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_COORDINADOR', 'PENDIENTE', 1)
+INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_GESTOR', 'PENDIENTE', 4)
+INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_SUPERVISOR', 'PENDIENTE', 3)
 

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,14 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.excepctions.RoleAlreadyExistsException;
+import com.proyectospring.app.models.dao.IArticuloDao;
 import com.proyectospring.app.models.dao.IUsuarioDao;
+import com.proyectospring.app.models.dao.IWikiDao;
+import com.proyectospring.app.models.entity.Articulo;
 import com.proyectospring.app.models.entity.Role;
 import com.proyectospring.app.models.entity.Usuario;
+import com.proyectospring.app.models.entity.UsuarioWiki;
+import com.proyectospring.app.models.entity.Wiki;
 
 @Service
 public class UsuarioServiceImpl  implements IUsuarioService{
@@ -25,6 +31,12 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 	
 	@Autowired
 	private EntityManager entityManager;
+	
+	@Autowired
+	private IArticuloDao articuloDao;
+	
+	@Autowired
+	private IWikiDao wikiDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -117,8 +129,69 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 	    }
 	}
 
+	
+	
+	//método que valida si el usuario autenticado es el coordinador de la wiki del artículo que se pasa por argumento
+	public Usuario esUsuarioCoordinador(Long articuloId, Authentication authentication) {
+		 // Obtener el usuario autenticado
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+	    
+	    // Obtener el artículo a partir de su ID
+	    Articulo articulo = articuloDao.findById(articuloId).orElse(null);
+	    
+	    if (articulo != null) {
+	        // Obtener la wiki asociada al artículo
+	        Wiki wiki = articulo.getWiki();
+	        
+	        if (wiki != null) {
+	            // Obtener la lista de usuarios de la wiki
+	            List<UsuarioWiki> usuarioWikis = wiki.getUsuarioWikis();
+	            
+	            for (UsuarioWiki usuarioWiki : usuarioWikis) {
+	                // Verificar si el usuario tiene el rol de coordinador y su id coincide con el usuario autenticado
+	                Usuario usuario = usuarioWiki.getUsuario();
+	                if (usuario.tieneRol(RoleEnum.ROLE_COORDINADOR) && usuario.getId().equals(userDetails.getUserId())) {
+	                    return usuario;
+	                }
+	            }
+	        }
+	    }
+	    
+	    return null;
+	
+	}
+	
+	//método que valida si el usuario autenticado es el coordinador de la wiki que se pasa por argumento
+	public Usuario esUsuarioCoordinadorPorWiki(Long wikiId, Authentication authentication) {
+	    // Obtener el usuario autenticado
+	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+	    // Obtener la wiki a partir de su ID
+	    Wiki wiki = wikiDao.findById(wikiId).orElse(null);
+
+	    if (wiki != null) {
+	        // Obtener la lista de usuarios de la wiki
+	        List<UsuarioWiki> usuarioWikis = wiki.getUsuarioWikis();
+
+	        for (UsuarioWiki usuarioWiki : usuarioWikis) {
+	            // Verificar si el usuario tiene el rol de coordinador y su id coincide con el usuario autenticado
+	            Usuario usuario = usuarioWiki.getUsuario();
+	            if (usuario.tieneRol(RoleEnum.ROLE_COORDINADOR) && usuario.getId().equals(userDetails.getUserId())) {
+	                return usuario;
+	            }
+	        }
+	    }
+
+	    return null;
+	}
 
 }
+
+
+
+
+
+
 
 
 

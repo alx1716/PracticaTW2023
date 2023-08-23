@@ -1,0 +1,14 @@
+.article {
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+}
+
+.article p {
+    flex: 1; /* Ocupa el espacio disponible */
+}
+
+.image {
+    width: 20px; /* Tamaño fijo de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-left: 20px; /* Espacio entre el texto y la imagen */
+}
