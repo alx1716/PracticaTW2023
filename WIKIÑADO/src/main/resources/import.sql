@@ -56,12 +56,12 @@ INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COORDINADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
 
-INSERT INTO peticiones_rol (id, requested_authority, status, user_id) VALUES (1, 'ROLE_COORDINADOR', 'PENDIENTE', 1 );
+INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_COORDINADOR', 'PENDIENTE', 1 );
 
-INSERT INTO peticiones_rol (id, requested_authority, status, user_id) VALUES (1, 'ROLE_COORDINADOR', 'PENDIENTE', 1 );
+
 
 INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 1, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Este es la única propuesta pendiente de revisión que le debería de salir al Supervisor', 2, 1 );
+INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','pRUEBAS PARA VER QUE SE LE HACE', 2, 1 );
 INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 3, 1 );
 INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 4, 1 );
 

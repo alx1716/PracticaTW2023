@@ -44,8 +44,11 @@ public class PropuestaController {
 		Articulo articuloActual =  articuloService.findOne(propuesta.getArticulo().getId());
 		articuloActual.setContenido(propuesta.getPropuesta());
 		
-		/*TENGO QUE CAMBIARLE EL ESTADO A LA PROPUESTA DEPUES DE SER ACEPTADA O RECHAZADA FLATA IMPLEMENTAR ESO Y CONTROL DE ERRORES*/
-		
+		/*TENGO QUE CAMBIARLE EL ESTADO A LA PROPUESTA DEPUES DE SER ACEPTADA O RECHAZADA FLATA IMPLEMENTAR ESO Y CONTROL DE ERRORES
+		 * CREO QUE PARA ELLO TENGO QUE AÑADIR LA PROPUESTA A LA LISTA DE PROPUESTAS DEL ARTÍCULO Y GUARDAR EL ARTICULO AUNQUE ESO NO SÉ SI CREE UN PROBLEMA
+		 * DE DUPLICIDAD O PUEDA GUARDAR LA PROPUESTA CON LA PROPUESTASERVICE*/
+		propuesta.setEstado("ACEPTADA");
+		//articuloActual.getPropuestas().add(propuesta);	
 		articuloService.save(articuloActual);
 		flash.addFlashAttribute("success", "Se acepta la sabiduría de este cuñado!! ahora regodeate en la contemplación de su obra");
 		return"redirect:/articulo/ver/"+articuloActual.getId();  // redirijo a la vista del artículo

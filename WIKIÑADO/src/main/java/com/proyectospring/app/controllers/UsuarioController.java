@@ -308,65 +308,7 @@ public class UsuarioController {
 	        model.addAttribute("nuevoUsuario", nuevoUsuario);
 	        return "crear_usuario"; 
 	    }
-	/*
-		@PostMapping("/actualizar-rol")
-	    public String actualizarRol(@RequestParam Long userId, @RequestParam String action) {
-	        Usuario usuario = usuarioService.findOne(userId);
-	        
-	        if (usuario != null && usuario.getRoles().size() > 0) {
-	            Role role = usuario.getRoles().get(0);
-	            if ("accept".equals(action)) {
-	                role.setStatus(PeticionStatus.ACEPTADA);
-	                role.setAuthority(role.getNewRole().toString());
-	            } else if ("reject".equals(action)) {
-	                role.setStatus(PeticionStatus.RECHAZADA);
-	            }
-	            usuarioService.save(usuario);
-	        }
-	        
-	        return "redirect:/gestor_user"; // Redirigir a la página de usuarios actualizada
-	    } 
-	    
-	    
-		@Transactional
-		@PostMapping("/actualizar-rol")
-		public String actualizarRol(@RequestParam Long userId, @RequestParam String action) {
-		    Optional<Usuario> usuarioOptional = Optional.ofNullable(usuarioService.findOne(userId));
-
-		    if (usuarioOptional.isPresent()) {
-		        Usuario usuario = usuarioOptional.get();
-		        List<Role> roles = usuario.getRoles();
-
-		        if (roles.size() > 0) {
-		            Role role = roles.get(0);
-
-		            if ("accept".equals(action)) {
-		                role.setStatus(PeticionStatus.ACEPTADA);
-		                RoleEnum newRole = role.getNewRole();
-		                if (newRole != null && !usuarioHasRole(usuario, newRole)) {
-		                    // Aquí inserta el nuevo rol si el usuario no lo tiene
-		                    // (similando tu lógica de asignarRol)
-		                    String sql = "INSERT INTO `authorities` (user_id, authority) VALUES (?,?)";
-		                    Query query = entityManager.createNativeQuery(sql)
-		                            .setParameter(1, userId)
-		                            .setParameter(2, newRole.toString());
-		                    query.executeUpdate();
-		                }
-		            } else if ("reject".equals(action)) {
-		                role.setStatus(PeticionStatus.RECHAZADA);
-		            }
-
-		            usuarioService.save(usuario);
-		        }
-		    }
-
-		    return "redirect:/gestor_user"; // Redirigir a la página de usuarios actualizada
-		}
-
-		private boolean usuarioHasRole(Usuario usuario, RoleEnum roleEnum) {
-		    return usuario.getRoles().stream()
-		            .anyMatch(role -> role.getAuthority().equals(roleEnum.toString()));
-		} */
+	
 }
 		
 

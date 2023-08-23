@@ -19,7 +19,7 @@
 			
 			<div class="card-header h2 text-center text-white bg-success" th:text="'Tienes la siguientes propuestas...'"> </div>
 
-            	<table  th:each="propuesta : ${lista_propuestas}"class="table table-hover my-2">
+            	<table  th:each="propuesta : ${lista_propuestas}" th:if="${propuesta.estado == 'PENDIENTE'}" class="table table-hover my-2">
 					<thead>
         				<tr>
            					 <th class="text-success">Propuesta Número</th>
@@ -35,7 +35,7 @@
 				            <td th:text="${propuesta.usuario.username}"></td>
 				           
 								<td>
-								<a class="btn btn-success btn-xs" th:href="@{/aceptar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Aceptar'"></a> 
+								<a class="btn btn-success btn-xs" th:href="@{/aceptar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres aceptar?')" th:text="'Aceptar'"></a> 
 								<a class="btn btn-danger btn-xs" th:href="@{/rechazar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Rechazar'"></a>
 								</td>
 								

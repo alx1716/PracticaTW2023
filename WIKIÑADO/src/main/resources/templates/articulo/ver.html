@@ -77,9 +77,12 @@
 				
 				<!-- Botón para poner la modificación del artículo-->
 				
-				<a sec:authorize="hasRole('ROLE_COLABORADOR')or !isAuthenticated()" th:href="@{'/articulo/modificar/'+${articulo.id}}" class="btn btn-primary  mx-5" th:text="'Enseña lo que sabes (Modifica este artículo)'" onclick="descargarContenido()"></a>
-					
 				
+					
+				<a th:if="${!#authorization.expression('isAuthenticated()')}" th:href="@{/registro}" class="btn btn-danger mx-5" th:text="'Registrate para poder corregir este entuerto'"></a>
+				<a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{'/articulo/modificar/'+${articulo.id}}" class="btn btn-primary mx-5" th:text="'Descarga y corrige este sin sentido'" onclick="descargarContenido()"></a>
+				
+
 				
 			</div>
 		</div>

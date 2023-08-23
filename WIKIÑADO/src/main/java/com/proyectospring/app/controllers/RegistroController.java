@@ -55,7 +55,7 @@ public class RegistroController {
 		registroService.saveNuevoUsuario(nuevoUsuario);
 		
 		// se manda una mensaje de éxito si el usuario ha sido guardado
-		flash.addFlashAttribute("success", "El usuario ha sido registrado con Éxito!!");
+		flash.addFlashAttribute("success", "Te has registrado con éxito!!, inicia sesion para cambiar el mundo!!");
 		
 		return "redirect:/listar"; // listar deberia ser la lista de las wikis o el home
 	}

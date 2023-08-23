@@ -44,7 +44,7 @@
  <!-- Estado de las solicitudes de rol -->
  <div class="card bg-light my-5 rounded">
 		<div class="card-header h2 text-center text-white bg-success" th:text="'Estado de las solicitudes de Rol'" th:if="${#authorization.expression('hasAnyRole(''ROLE_GESTOR'', ''ROLE_COORDINADOR'', ''ROLE_SUPERVISOR'', ''ROLE_COLABORADOR'')')}"> </div>
-        	<table class="table table-hover">
+        	<table  th:if="${not #lists.isEmpty(usuario.peticionesRol)}" class="table table-hover">
             <tr>
                 <th>Rol Solicitado</th>
                 <th>Estado</th>
@@ -54,13 +54,15 @@
                 <td th:text="${solicitud.status}"></td>
             </tr>
         </table>
+        
+        <div th:if="${#lists.isEmpty(usuario.peticionesRol)}" class="card bg-light my-5 rounded h4 text-center text-danger">No hay peticiones de cambio de rol presentadas por este usuario</div>
     </div>
     
  	
 		<!--Tabla con las Propuestas hechas por el usuario // tengo que comprobar que aunque haga logout se siguen viendo  FUNCIONA A 19/08/2023!!!-->
 		<div class="card bg-light my-5 rounded">
 			<div class="card-header h2 text-center text-white bg-success" th:text="'Propuestas Presentadas'"> </div>
-            	<table class="table table-hover">
+            	<table th:if="${not #lists.isEmpty(usuario.modificacionesPropuestas)}" class="table table-hover">
 					<thead>
         				<tr>
            					 <th class="text-success">Propuesta ID</th>
@@ -78,13 +80,14 @@
 						
 					</tbody>
 				</table>
+				<div th:if="${#lists.isEmpty(usuario.modificacionesPropuestas)}" class="card bg-light my-5 rounded h4 text-center text-danger">No hay propuestas presentadas por este usuario</div>
             	
         </div>
         
         	<!--Tabla con los artículos asignados en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
-		<div sec:authorize="isAuthenticated() and hasRole('ROLE_SUPERVISOR')" class="card bg-light my-5 rounded">
+		<div sec:authorize="isAuthenticated() and hasAnyRole('ROLE_SUPERVISOR','ROLE_COORDINADOR','ROLE_GESTOR')" class="card bg-light my-5 rounded">
 			<div class="card-header h2 text-center text-white bg-success" th:text="'Artículos asignados para supervisión'"> </div>
-            	<table class="table table-hover">
+            	<table  th:if="${not #lists.isEmpty(usuario.usuarioArticulos)}" class="table table-hover">
 					<thead>
         				<tr>
            					 <th class="text-info">Artículo número</th>
@@ -99,19 +102,19 @@
 				            <td class="h4" th:text="${usuarioArticulo.articulo.id}"></td>
 				            <td  class="h4" th:text="${usuarioArticulo.articulo.wiki.nombre}"></td>
 				            <td><h4><a th:href="@{/articulo/ver/} + ${usuarioArticulo.articulo.id}" th:text="${usuarioArticulo.articulo.titulo}"></a></td>
-				            <td  th:if="${not #lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4"><a th:href="@{/revisar/} +${usuarioArticulo.id}">Revisa esta Cuñadada</a></td>
-				            <td  th:if="${#lists.isEmpty(usuarioArticulo.articulo.propuestas)}" class="text-danger h4">Ningún Cuñado ha opinado sobre este tema</td>
+				            <td  th:if="${usuarioArticulo.articulo.propuestas.?[estado == 'PENDIENTE'].size() > 0}" class="text-info h4"><a class="text-info" th:href="@{/revisar/} +${usuarioArticulo.id}">Revisa esta Cuñadada</a></td>
+				            <td th:unless= "${usuarioArticulo.articulo.propuestas.?[estado == 'PENDIENTE'].size() > 0}" class="text-danger h4">Ningún cuñado ha opinado </td>
         				</tr>
 						
 					</tbody>
 				</table>
-            	
+            	<div th:if="${#lists.isEmpty(usuario.usuarioArticulos)}" class="card bg-light my-5 rounded h4 text-center text-danger">No hay artículos asignados a este usuario</div>
         </div>
         
          	<!--Tabla con los Wikis asignadas en caso de ser un Supervisor // lo que haré será ponerle un campo de a que wiki pertenece  //  -->
-		<div class="card bg-light my-5 rounded">
+		<div sec:authorize="isAuthenticated() and hasAnyRole('ROLE_SUPERVISOR','ROLE_COORDINADOR','ROLE_GESTOR')" class="card bg-light my-5 rounded">
 			<div class="card-header h2 text-center text-white bg-success" th:text="'Wikis asignadas'"> </div>
-            	<table class="table table-hover">
+            	<table   th:if="${not #lists.isEmpty(usuario.usuarioWikis)}" class="table table-hover">
 					<thead>
         				<tr>
            					 <th class="text-info">Wiki</th>
@@ -127,7 +130,7 @@
 						
 					</tbody>
 				</table>
-            	
+            	<div th:if="${#lists.isEmpty(usuario.usuarioWikis)}" class="card bg-light my-5 rounded h4 text-center text-danger">No hay wikis asignadas a este usuario</div>
         </div>
 		
 

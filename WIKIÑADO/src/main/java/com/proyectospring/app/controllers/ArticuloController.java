@@ -165,7 +165,7 @@ public class ArticuloController {
 	public String guardarPropuesta(@RequestParam("file") MultipartFile file, @ModelAttribute Articulo articulo,RedirectAttributes flash) throws IOException {
 		
 		byte[] archivo = file.getBytes();
-		PropuestaModificacion nuevaPropuesta = new PropuestaModificacion();
+		PropuestaModificacion nuevaPropuesta = new PropuestaModificacion(); // YA VIENE CON EL ESTADO 'PENDIENTE'
 		String contenido = new String(archivo, StandardCharsets.UTF_8);   // aquí meto el contenido del archivo en un string
 		
 		// se obtiene el usuario autenticado y se guarda la propuesta en su lista
@@ -174,7 +174,6 @@ public class ArticuloController {
 	    Usuario usuario = userService.findOne(userDetails.getUserId());
 	    
 	    nuevaPropuesta.setPropuesta(contenido);
-		nuevaPropuesta.setEstado("Evaluación");  // COMENTAR CON FER SI ESTO SERÍA MEJOR HACERLO CON UN ENUMERADO
 		nuevaPropuesta.setArticulo(articulo);  // aquí se pone para que artículo viene dicha propuesta
 	    nuevaPropuesta.setUsuario(usuario); // le paso el nombre del usuario autenticado ///
 	    propuestaService.save(nuevaPropuesta); // guardamos la propuesta

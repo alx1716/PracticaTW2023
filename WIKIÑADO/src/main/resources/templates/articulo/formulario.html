@@ -11,7 +11,7 @@
 			<div class="card-header bg bg-success text-white h2" th:text="${titulo}"></div>
 			<div class="card-body">
 				<h4 class="card-title">
-					<a class="btn btn-secondary btn-xs" th:href="@{'/ver/' + ${articulo.wiki.id}}"
+					<a class="btn btn-info btn-xs text-white" th:href="@{'/ver/' + ${articulo.wiki.id}}"
 						th:text="'&laquo; Volver a la lista de Articulos de la Wiki: '+${articulo.wiki.nombre}"></a>
 				</h4>
 
@@ -37,7 +37,7 @@
 					<div class="form-group row">
 						<label for="contenido" class="col-sm-2 col-form-label" th:text="'Contenido del Artículo'"></label>
 						<div class="col-sm-6">
-							<textarea th:field="*{contenido}" class="form-control" th:errorclass="'form-control is-invalid'"></textarea>
+							<textarea style="height: 500px; width: 150%;" th:field="*{contenido}" class="form-control" th:errorclass="'form-control is-invalid'"></textarea>
 							<div class="invalid-feedback" th:if="${#fields.hasErrors('contenido')}" th:errors="*{contenido}"></div>
 						</div>
 					</div>
@@ -49,7 +49,7 @@
 					
 					<div class="form-group row">
 						<div class="col-sm-6">
-							<input type="submit" th:value="'Crear Articulo'" class="btn btn-secondary" />
+							<input type="submit" th:value="'Crear Articulo'" class="btn btn-success" />
 						</div>
 					</div>
 
