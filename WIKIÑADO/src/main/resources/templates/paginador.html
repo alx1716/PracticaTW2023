@@ -4,25 +4,25 @@
 <body>
 <nav th:fragment="paginador">
 	<ul class="pagination">
-		<li class="page-item" th:class="${pagina.first? 'page-item disabled': 'page-item'}">
+		<li style="font-weight: 700;"  class="page-item" th:class="${pagina.first? 'page-item disabled': 'page-item'}">
 			<span class="page-link" th:if="${pagina.first}">Primera</span>
 			<a class="page-link"  th:if="${not pagina.first}" th:href="@{${pagina.url}(pagina=0)}">Primera</a>
 		</li>
 		
-		<li class="page-item" th:class="${not pagina.itHasPrevious? 'page-item disabled': 'page-item'}">
+		<li style="font-weight: 700;"  class="page-item" th:class="${not pagina.itHasPrevious? 'page-item disabled': 'page-item'}">
 			<span class="page-link" th:if="${not pagina.itHasPrevious}">&laquo;</span>
 			<a class="page-link"  th:if="${pagina.itHasPrevious}" th:href="@{${pagina.url}(pagina=${pagina.paginaActual-2})}"> &laquo;</a>
 		</li>
-		<li class="page-item" th:each="item: ${pagina.paginas}" th:class="${item.actual? 'page-item active': 'page-item'}">
+		<li style="font-weight: 700;"  class="page-item" th:each="item: ${pagina.paginas}" th:class="${item.actual? 'page-item active': 'page-item'}">
 			
 			<span class="page-link" th:if="${item.actual}" th:text="${item.numeroPagina}"></span>
 			<a class="page-link" th:if="${not item.actual}" th:href="@{${pagina.url}(pagina=${item.numeroPagina-1})}" th:text="${item.numeroPagina}"></a>
 		</li>
-		<li class="page-item" th:class="${not pagina.itHasNext? 'page-item disabled': 'page-item'}">
+		<li style="font-weight: 700;"  class="page-item" th:class="${not pagina.itHasNext? 'page-item disabled': 'page-item'}">
 			<span class="page-link" th:if="${not pagina.itHasNext}">&raquo;</span>
 			<a class="page-link"  th:if="${pagina.itHasNext}" th:href="@{${pagina.url}(pagina=${pagina.paginaActual})}"> &raquo;</a>
 		</li>
-		<li class="page-item" th:class="${pagina.last? 'page-item disabled': 'page-item'}">
+		<li style="font-weight: 700;"  class="page-item" th:class="${pagina.last? 'page-item disabled': 'page-item'}">
 			<span class="page-link" th:if="${pagina.last}">&Uacute;ltima</span>
 			<a class="page-link"  th:if="${not pagina.last}" th:href="@{${pagina.url}(pagina=${pagina.totalPaginas -1})}">&Uacute;ltima</a>
 			

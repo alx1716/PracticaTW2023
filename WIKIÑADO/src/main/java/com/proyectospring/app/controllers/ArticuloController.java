@@ -73,6 +73,7 @@ public class ArticuloController {
 		//obtenemos la lista de los usuarios registrados para pasarla a la vista y poder asignar los artículos a los usuarios
 		List<Usuario> usuarios = userService.findAll();
 		
+		
 		//miramos si el artículo está precargado.
 		if (articulo.getContenido().startsWith("/")) { // para ver si la observacion comienza con una url
 			

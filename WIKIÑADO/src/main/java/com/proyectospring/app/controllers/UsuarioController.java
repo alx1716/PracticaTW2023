@@ -96,8 +96,8 @@ public class UsuarioController {
 	    modelo.addAttribute("rolesEnum", rolesEnum);
 	    modelo.addAttribute("usuario", usuarioService.findOne(userId)); // este es el usuario para poder acceder a TODA la información de dicho usuario
 		return "perfil";
-	}    
-	 
+	}
+	
 	
 	
 	
@@ -180,7 +180,7 @@ public class UsuarioController {
 		UsuarioArticulo articuloAsignado = new UsuarioArticulo();
 		
 		try {
-			
+				
 			//Tengo que validar que el usuario no tenga ya esa wiki asignada sino me da error
 			if (usuarioArticuloService.findByUsuarioAndArticulo(usuario, articulo) != null) {
 				flash.addFlashAttribute("error", "El usuario ya tiene ese artículo asignado!!");
@@ -196,13 +196,11 @@ public class UsuarioController {
 			status.setComplete(); // se debe cerrar la sesion despues de guardar, esto elimina el objeto cliente
 			// de la session y termina el proceso.
 			
-			// ahora tengo que validar que el usuario es un SUPERVISOR o COORDINADOR
+			
 			
 		    flash.addFlashAttribute("success", "Artículo asignado con éxito al usuario "+usuario.getUsername());
 			
 		} catch (Exception e) {
-			/*flash.addFlashAttribute("error", "Se me está duplicando la cosa");
-			return "redirect:/listar";*/
 			e.printStackTrace();
 		}
 	    return "redirect:/articulo/ver/"+articuloId;

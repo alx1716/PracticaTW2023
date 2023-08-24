@@ -9,7 +9,7 @@
 	
 	<!--Tabla con las Propuestas hechas ara ese articulo -->
 		<div class="card bg-light my-5 rounded">
-			<div class="card-header h2 text-center text-white bg-success" th:text="'Para el artículo: '+' &OpenCurlyDoubleQuote;'+${articulo.titulo}+'&CloseCurlyDoubleQuote;'+' Cuyo contenido actual es...'"> </div>
+			<div style="font-weight: 700;"  class="card-header h2 text-center text-white bg-success" th:text="'Para el artículo: '+' &OpenCurlyDoubleQuote;'+${articulo.titulo}+'&CloseCurlyDoubleQuote;'+' Cuyo contenido actual es...'"> </div>
 			
 			
 			<!--aquí voy a poner el artículo para que se vea-->
@@ -17,7 +17,7 @@
 				<textarea style="height: 500px; width: auto;" th:text="${articulo.contenido}"></textarea>
 			</div>
 			
-			<div class="card-header h2 text-center text-white bg-success" th:text="'Tienes la siguientes propuestas...'"> </div>
+			<div  style="font-weight: 700;" class="card-header h2 text-center text-white bg-success" th:text="'Tienes la siguientes propuestas...'"> </div>
 
             	<table  th:each="propuesta : ${lista_propuestas}" th:if="${propuesta.estado == 'PENDIENTE'}" class="table table-hover my-2">
 					<thead>
@@ -35,8 +35,8 @@
 				            <td th:text="${propuesta.usuario.username}"></td>
 				           
 								<td>
-								<a class="btn btn-success btn-xs" th:href="@{/aceptar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres aceptar?')" th:text="'Aceptar'"></a> 
-								<a class="btn btn-danger btn-xs" th:href="@{/rechazar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Rechazar'"></a>
+								<a style="font-weight: 700;" class="btn btn-success btn-xs" th:href="@{/aceptar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres aceptar?')" th:text="'Aceptar'"></a> 
+								<a style="font-weight: 700;" class="btn btn-danger btn-xs" th:href="@{/rechazar/}+${propuesta.id}" onclick="return confirm('Estás seguro que quieres rechazar?')" th:text="'Rechazar'"></a>
 								</td>
 								
 				          
