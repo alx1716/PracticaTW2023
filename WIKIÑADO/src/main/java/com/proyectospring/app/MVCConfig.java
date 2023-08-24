@@ -17,6 +17,7 @@ public class MVCConfig implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		
+
 	
 	}
 	

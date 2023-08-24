@@ -65,10 +65,10 @@
 							<!--AQUI ES DONDE DEBERÍA METER EL ACCESO LA MEMORIA, EL MANUAL, JAVADOC Y EL PERFIL, SEGURAMENTE TENGA QUE
 							ESTAR AL LORO DEL ORDEN EN QUE LOS PONGO-->
 								
-								<button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/home';">Acceso a la Memoria</button>
-    							<button style="font-weight: 700;" class="dropdown-item text-warning" onclick="location.href='/home';">Acceso al Manual</button>
-							    <button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/doc/index.html';">Acceso al Javadoc</button> <!--así es como accedemos al javadoc que está en static, hay que meter el manual y la memoria ahí tambien-->
-							    <button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/perfil';">Mi Perfil</button> <!--He creado una vista perfil y esto me manda al controlador y FUNCIONA 09/08/2023-->
+								<button  class="dropdown-item text-info"><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/home}">Acceso a la Memoria</a></button>
+    							<button  class="dropdown-item text-warning" ><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/home}">Acceso al Manual</a></button>
+							    <button  class="dropdown-item text-info" ><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/doc/index.html}">Acceso al Javadoc</a></button> <!--así es como accedemos al javadoc que está en static, hay que meter el manual y la memoria ahí tambien-->
+							    <button  class="dropdown-item text-info"><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/perfil}">Mi Perfil</a></button> <!--He creado una vista perfil y esto me manda al controlador y FUNCIONA 09/08/2023-->
 														
 								<form id="logoutForm" th:action="@{/logout}" method="post">	<!-- En el contexto de Spring Security, cuando se realiza una solicitud a la URL "/logout" 
 								(que es lo que especifica th:action="@{/logout}"), Spring Security automáticamente intercepta esta solicitud y realiza el proceso de cierre de sesión. 

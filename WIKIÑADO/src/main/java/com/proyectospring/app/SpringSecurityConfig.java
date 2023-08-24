@@ -36,7 +36,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{    // u
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		//aquí se configuran los accesos a la app EN EL CONTROLADOR?
-		http.authorizeRequests().antMatchers("/","/css/**","/js/**","/images/**","/listar", "/registro", "/ver/**","/home", "/articulo/ver/**,/doc/**").permitAll() // A ESTAS PaGINAS TENDRaN ACCESO TODOS LOS USUARIOS ESTeN O NO REGISTARDOS
+		http.authorizeRequests().antMatchers("/","/css/**","/js/**","/images/**","/listar", "/registro", "/ver/**","/home", "/articulo/ver/**","/doc/**","/articulos/**","/pdf/**","/static/**","/layout/**" ).permitAll() // A ESTAS PaGINAS TENDRaN ACCESO TODOS LOS USUARIOS ESTeN O NO REGISTARDOS
 		.anyRequest().authenticated()
 		//se configura el Log in y el Log out
 		.and()
