@@ -10,7 +10,7 @@
 	<div class="container py-4">
 		<div class="card bg-light ">
 
-			<div class="card-header h4 card bg-success text-white " th:text="${titulo}"></div>
+			<div style="text-decoration: none; font-weight: 700;" class="card-header h4 card bg-success text-white " th:text="${titulo}"></div>
 			<div class="card-body card bg-success text-white">
 
 				<div class="d-flex">
@@ -23,9 +23,9 @@
 						<label class=" mx-2 h4 text-white">Asignale esta wiki a --></label>
 				        <select class="btn btn-primary btn-xs" name="userId">
 							<option value="" disabled selected>Selecciona Cuñado</option>
-				            <option class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" th:value="${usuario.id}" th:text="${usuario.username}"></option>
+				            <option style="font-weight: 700;"  class="bg bg-white text-primary" th:each="usuario : ${lista_usuarios}" th:value="${usuario.id}" th:text="${usuario.username}" th:if="${usuario.hasRole('ROLE_COORDINADOR') or usuario.hasRole('ROLE_GESTOR')}"></option>
 				        </select>
-				        <button type="submit" class="btn btn-outline-primary text-white">Asignar Wiki</button>
+				        <button style="font-weight: 700;"  type="submit" class="btn btn-outline-primary text-white">Asignar Wiki</button>
 				    </form>
 				</div>
 
@@ -34,8 +34,8 @@
 				<!--mostrará la información de la wiki -->
 				<ul class="list-group">
 					
-					<li class="list-group-item" th:text="'Creada el día: '+${wiki.createAt}"></li>
-					<li class="list-group-item" th:text="'Tenemos Los siguientes Articulos:'"></li>
+					<li  style="text-decoration: none; font-weight: 700;" class="list-group-item" th:text="'Creada el día: '+${wiki.createAt}"></li>
+					<li style="text-decoration: none; font-weight: 700;" class="list-group-item text-warning" th:text="'Tenemos Los siguientes Articulos:'"></li>
 				</ul>
 
 				<!--Dentro de cada wiki se deben ver una lista de todos los articulos asociadas a la wiki -->
@@ -51,7 +51,7 @@
 					<thead class="thead-dark">
 						<tr>
 							<th>Articulo</th>
-							<th>Descripción</th>
+							<th>Titulo</th>
 							<th>Fecha de creación</th>
 							<th>Lee este sinsentido!</th>
 							<th sec:authorize="hasRole('ROLE_GESTOR')">Editar Articulo</th>
@@ -62,9 +62,9 @@
 					<tbody>
 						<tr th:each="articulo: ${wiki.articulos}">
 
-							<td th:text="${articulo.id}"></td>
-							<td th:text="${articulo.titulo}"></td>
-							<td th:text="${articulo.fechaCreacion}"></td>
+							<td style="text-decoration: none; font-weight: 700;" th:text="${articulo.id}"></td>
+							<td class="text-primary" style="text-decoration: none; font-weight: 700;" th:text="${articulo.titulo}"></td>
+							<td style="text-decoration: none; font-weight: 700;" th:text="${articulo.fechaCreacion}"></td>
 							<td><a class="btn btn-primary btn-xs"
 									th:href="@{'/articulo/ver/'+${articulo.id}}" th:text="'A ver esta Trola?'"></a></td>
 									
@@ -81,7 +81,7 @@
 				</table>
 			</div>
 			<!-- aquí va el link para volver a la vista de los clientes -->
-			<a th:href="@{/listar}" class="btn btn-primary btn-xs" th:text="'&laquo; Volver a la lista de Wikis'"></a>
+			<a style="font-weight: 700;"  th:href="@{/listar}" class="btn btn-primary btn-xs" th:text="'&laquo; Volver a la lista de Wikis'"></a>
 		</div>
 
 

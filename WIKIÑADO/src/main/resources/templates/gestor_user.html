@@ -12,39 +12,40 @@
 <div class="d-flex justify-content-end mb-3">
 <!-- Botón para crear nuevos usuarios -->
         <form th:action="@{/crear}" method="get">
-            <button class="btn btn-secondary btn-lg mx-10" type="submit">Crear Nuevo Usuario</button>
+            <button class="btn btn-success btn-lg mx-10" type="submit">Crear Nuevo Usuario</button>
         </form>				
 </div>	
-        <h4>Lista de Usuarios</h4>
-  <table class="table table-striped">
+        <h4 style="font-weight: 700;"  class="text-info">Lista de Usuarios</h4>
+  <table class="table table-striped ">
         <tr>
-            <th>ID</th>
-            <th>Nombre de Usuario</th>
-            <th>Email</th>
-            <th>Roles</th>
+            <th class="text-primary">ID</th>
+            <th class="text-primary">Nombre de Usuario</th>
+            <th class="text-primary">Email</th>
+            <th class="text-primary">Roles</th>
            
-            <th>Asignar Nuevo Rol</th>
-            <th>Baja de usuario</th>
+            <th class="text-primary">Asignar Nuevo Rol</th>
+            <th class="text-primary">Baja de usuario</th>
             
         </tr>
         <tr th:each="usuario : ${listaUsuarios}">
-            <td th:text="${usuario.id}"></td>
-            <td th:text="${usuario.username}"></td>
-            <td th:text="${usuario.email}"></td>
+            <td style="font-weight: 700;"  th:text="${usuario.id}"></tdstyle="font-weight: 700;" >
+            <td style="font-weight: 700;"  th:text="${usuario.username}"></td>
+            <td style="font-weight: 700;"  th:text="${usuario.email}"></td>
             <td>
                 <ul>
-                    <li th:each="rol : ${usuario.roles}" th:text="${rol.authority}"></li>
+                    <li style="font-weight: 700;"  th:each="rol : ${usuario.roles}" th:text="${rol.authority.name.substring(5)}"></li>
                 </ul>
             </td>
 			
       
         <td>
                 <form th:action="@{/asigna_rol}" method="post">
-                    <input type="hidden" name="userId" th:value="${usuario.id}">
-                   <select name="newRole">
-    					  <option th:each="rol : ${predefinedRoles}" th:value="${rol}" th:text="${rol}"></option>
+                   <input type="hidden" name="userId" th:value="${usuario.id}">
+                   <select class="btn btn-primary btn-xs" name="newRole" required oninvalid="this.setCustomValidity('Debes seleccionar a un Cuñado primero')">
+					      <option value="" disabled selected>Selecciona Un Rol</option>
+    					  <option style="font-weight: 700;"  class="bg bg-white text-primary"th:each="rol : ${predefinedRoles}" th:value="${rol}" th:text="${rol}"></option>
 					</select>
-                    <button type="submit" th:href="@{/asigna_rol(userId=${usuario.id})}">Guardar</button>
+                    <button style="width: 90px; font-weight: 700;" class="btn btn-success btn-xs" type="submit" th:href="@{/asigna_rol(userId=${usuario.id})}">Guardar</button>
                 </form>
                
             </td>
@@ -52,7 +53,7 @@
             <td>
         <form th:action="@{/eliminar_usuario}" method="post">
             <input type="hidden" name="userId" th:value="${usuario.id}">
-            <button type="submit">Baja</button>
+            <button style="width: 90px; font-weight: 700;" class="btn btn-danger btn-xs" type="submit">Baja</button>
         </form>
     </td>
     
@@ -60,7 +61,7 @@
     </table>
 
 <!-- Tabla para mostrar las solicitudes de cambio de rol -->
-<h4>Peticiones de cambio de Rol</h4>
+<h4 style="font-weight: 700;"  class="text-info">Peticiones de cambio de Rol</h4>
 <table class="table table-striped">
     <tr>
     	
@@ -71,9 +72,9 @@
     </tr>
     <th:block th:each="usuario : ${listaUsuarios}">
         <tr th:each="peticion : ${usuario.peticionesRol}" th:if="${peticion.requestedAuthority != null}">
-            <td th:if="${peticion.requestedAuthority != null}" th:text="${usuario.username}"></td>
-            <td th:if="${peticion.requestedAuthority != null}" th:text="${peticion.requestedAuthority}"></td>
-            <td th:if="${peticion.requestedAuthority != null}" th:text="${peticion.status}"></td>
+            <td style="font-weight: 700;"  th:if="${peticion.requestedAuthority != null}" th:text="${usuario.username}"></td>
+            <td style="font-weight: 700;"  th:if="${peticion.requestedAuthority != null}" th:text="${peticion.requestedAuthority.name.substring(5)}"></td>
+            <td style="font-weight: 700;"  th:if="${peticion.requestedAuthority != null}" th:text="${peticion.status}"></td>
            
             <td>
              
@@ -81,13 +82,13 @@
 	                <input type="hidden" th:name="userId" th:value="${usuario.id}" />
 	                <input type="hidden" th:name="solicitudId" th:value="${peticion.id}" />
 	                <input type="hidden" name="action" value="accept" />
-	                <button th:if="${peticion.status.toString() == 'PENDIENTE'}" type="submit">Aceptar</button>
+	                <button style="width: 90px; font-weight: 700;" class="btn btn-success btn-sm" th:if="${peticion.status.toString() == 'PENDIENTE'}" type="submit">Aceptar </button>
 	            </form>
                 <form th:action="@{/actualizar-rol}" method="post">
 				    <input type="hidden" th:name="userId" th:value="${usuario.id}" />
 				    <input type="hidden" th:name="solicitudId" th:value="${peticion.id}" />
 				    <input type="hidden" name="action" value="reject" />
-				    <button th:if="${peticion.status.toString() == 'PENDIENTE'}" type="submit">Rechazar</button>
+				    <button style="width: 90px; font-weight: 700;" class="btn btn-danger btn-sm" th:if="${peticion.status.toString() == 'PENDIENTE'}" type="submit">Rechazar</button>
 				</form>
 				
             </td>

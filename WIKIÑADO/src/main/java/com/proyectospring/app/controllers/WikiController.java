@@ -191,8 +191,7 @@ public class WikiController {
 																		// BindingResult OJO el objeto mapeado y el
 																		// BindingResult SIEMPRE van juntos en este
 																		// orden.
-	public String guardar(@Valid Wiki nuevaWiki, BindingResult resultado, Model modelo,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+	public String guardar(@Valid Wiki nuevaWiki, BindingResult resultado, Model modelo, RedirectAttributes flash, SessionStatus status) {
 		if (resultado.hasErrors()) {
 
 			modelo.addAttribute("titulo", "Formulario de Wiki");

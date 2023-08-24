@@ -153,6 +153,26 @@ public class Usuario implements Serializable {
 	}
 	
 	
+	
+	/**
+	 * esto es una prueba para ver si el usuario tiene un rol solicitado
+	 * @param rol el rol se está comprobando
+	 */
+	public boolean hasRole(String rolBuscado) {
+		
+		for (Role rol : this.roles) {
+			
+			int comparacion = rol.getAuthority().name().compareToIgnoreCase(rolBuscado);
+			
+			if (comparacion == 0) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * 
 	 */

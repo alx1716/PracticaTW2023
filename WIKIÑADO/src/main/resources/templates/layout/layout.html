@@ -18,10 +18,10 @@
 			<li class="container-fluid">
 				
 				<a class="navbar-brand" th:href="@{/home}">
-					<img th:src="@{/images/logo.png}" alt="Logo de WIKIÑADO" /><h5 class="text-primary">¡Lo sabes todo y no lo sabes!</h5></a>
+					<img style="height: 100px;" th:src="@{/images/logo.png}" alt="Logo de WIKIÑADO" /><h5 style="font-weight: 700;" class="text-primary">¡Lo sabes todo y no lo sabes!</h5></a>
 					
 					
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				<button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -29,13 +29,13 @@
 				<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 					<ul class="navbar-nav">
 						<li  sec:authorize="isAuthenticated() and hasRole('ROLE_GESTOR')" class="nav-item">  <!-- esto es solo para controlar que solo los gestores puedan tener el boton de Gestor de usuarios 16/08/2023-->
-							<a class="btn btn-primary btn-lg mx-2" aria-current="page" th:href="@{/gestor_user}">Gestor de Usuarios<span class="sr-only"></span></a>
+							<a style="font-weight: 700;" class="btn btn-outline-primary btn-lg mx-2" aria-current="page" th:href="@{/gestor_user}">Gestor de Usuarios<span class="sr-only"></span></a>
 						</li>
 						<li  sec:authorize="isAuthenticated() and hasRole('ROLE_GESTOR')" class="nav-item">  <!-- esto es solo para controlar que solo los gestores puedan tener el boton de crear wiki 09/08/2023-->
-							<a class="btn btn-primary btn-lg mx-2" aria-current="page" th:href="@{/formulario}">Crear Una Wiki<span class="sr-only"></span></a>
+							<a style="font-weight: 700;" class="btn btn-outline-primary btn-lg mx-2" aria-current="page" th:href="@{/formulario}">Crear Una Wiki<span class="sr-only"></span></a>
 						</li>
 						<li sec:authorize="isAuthenticated()" class="nav-item">
-							<a class="btn btn-primary btn-lg mx-2" th:href="@{/listar}">Lista de Wikis</a>
+							<a style="font-weight: 700;" class="btn btn-outline-primary btn-lg mx-2" th:href="@{/listar}">Lista de Wikis</a>
 							<!--Notese como se manda ese link a la vista listar con Thymeleaf-->
 						</li>
 
@@ -48,32 +48,32 @@
 
 				<ul class="navbar-nav navbar-right">
 					<!-- Este va a ser el Botón de login-->
-					<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/login}">Log
+					<li sec:authorize="!isAuthenticated()"><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/login}">Log
 							in</a></li> <!-- sólo sí el usuario no está autenticado mostrará el boton de login -->
 							
 					<!-- Este va a ser el Botón de registro-->		
-					<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/registro}">Registrarse</a></li> <!-- sólo sí el usuario no está autenticado mostrará el boton de Registro -->		
+					<!--<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/registro}">Registrarse</a></li>--> <!-- sólo sí el usuario no está autenticado mostrará el boton de Registro -->		
 							
 					<!-- Este es el desplegable copiado de bootstrap sólo se mostrará si el usuario está autenticado-->
 					<li sec:authorize="isAuthenticated()" class="dropdown">
-						<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+						<a style="font-weight: 700;" class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false">
 							<span sec:authentication="name"></span>
 						</a>
 
-						<div class="dropdown-menu">
+						<div class="dropdown-menu dropdown-menu-end">
 							<!--AQUI ES DONDE DEBERÍA METER EL ACCESO LA MEMORIA, EL MANUAL, JAVADOC Y EL PERFIL, SEGURAMENTE TENGA QUE
 							ESTAR AL LORO DEL ORDEN EN QUE LOS PONGO-->
 								
-								<button class="btn btn-outline-primary" onclick="location.href='/home';">Acceso a la Memoria</button>
-    							<button class="dropdown-item" onclick="location.href='/home';">Acceso al Manual</button>
-							    <button class="dropdown-item" onclick="location.href='doc/index';">Acceso al Javadoc</button>
-							    <button class="dropdown-item" onclick="location.href='/perfil';">Mi Perfil</button> <!--He creado una vista perfil y esto me manda al controlador y FUNCIONA 09/08/2023-->
+								<button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/home';">Acceso a la Memoria</button>
+    							<button style="font-weight: 700;" class="dropdown-item text-warning" onclick="location.href='/home';">Acceso al Manual</button>
+							    <button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/doc/index.html';">Acceso al Javadoc</button> <!--así es como accedemos al javadoc que está en static, hay que meter el manual y la memoria ahí tambien-->
+							    <button style="font-weight: 700;" class="dropdown-item text-info" onclick="location.href='/perfil';">Mi Perfil</button> <!--He creado una vista perfil y esto me manda al controlador y FUNCIONA 09/08/2023-->
 														
 								<form id="logoutForm" th:action="@{/logout}" method="post">	<!-- En el contexto de Spring Security, cuando se realiza una solicitud a la URL "/logout" 
 								(que es lo que especifica th:action="@{/logout}"), Spring Security automáticamente intercepta esta solicitud y realiza el proceso de cierre de sesión. 
 								No es necesario que implementes un controlador para gestionar el cierre de sesión manualmente.-->	
-									<button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
+									<button style="font-weight: 700;" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit();"
 										type="submit">Log out</button>
 								</form>
 							
@@ -113,7 +113,7 @@
 		<img class="img-fluid " style="width: 70%; height: 30%;" th:src="@{/images/tok.jpg}" />
 		</div>
 		<br/><br/><br/><br/>
-		<p sec:authorize="isAuthenticated()"><!--Para validar si el susario está autentica -->
+		<p style="font-weight: 700;"  sec:authorize="isAuthenticated()"><!--Para validar si el susario está autentica -->
 
 			<!--despues de poner en el meta lo de sec se usa para el nombre y el rol del usuario autenticado-->
 
@@ -127,7 +127,7 @@
 
 		<p>
 			Este proyecto es realizado usando Sprinboot, Thymeleaf, Javascript y Bootstrap<br />
-			&COPY; Company 2023. Incluye todos los derechos a  Fernando Rubio Salgado y Javier Alexander Victoria Baltán.
+			&COPY; Company 2023. Incluye todos los derechos a  <span style="font-weight: 700; font-size:x-large;" >Fernando Rubio Salgado</span> y <span style="font-weight: 700; font-size:x-large;" >Javier Alexander Victoria Baltán</span>.
 		</p>
 		<br/>
 		<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
