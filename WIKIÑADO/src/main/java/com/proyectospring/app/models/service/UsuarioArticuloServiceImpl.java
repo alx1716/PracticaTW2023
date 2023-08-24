@@ -9,6 +9,7 @@ import com.proyectospring.app.models.dao.IUsuarioArticuloDao;
 import com.proyectospring.app.models.dao.IUsuarioDao;
 import com.proyectospring.app.models.dao.IUsuarioWikiDao;
 import com.proyectospring.app.models.entity.Articulo;
+import com.proyectospring.app.models.entity.PropuestaModificacion;
 import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.UsuarioArticulo;
 import com.proyectospring.app.models.entity.UsuarioWiki;
@@ -18,6 +19,9 @@ public class UsuarioArticuloServiceImpl implements IUsuarioArticuloService {
 	
 	@Autowired
 	private IUsuarioArticuloDao usuarioArticuloDao;
+	
+	@Autowired
+	private IPropuestaModificacionService porpuestaModificacionService;
 
 	@Override
 	public List<UsuarioArticulo> findAllByUsuarioId(Long id) {
@@ -50,7 +54,32 @@ public class UsuarioArticuloServiceImpl implements IUsuarioArticuloService {
 		
 		return usuarioArticuloDao.findByUsuarioAndArticulo(user, articulo);
 	}
+
+	@Override
+    public void delete(UsuarioArticulo relacion) {
+        Articulo articulo = relacion.getArticulo();
+        Usuario usuario = relacion.getUsuario();
+
+        // Eliminar referencia al usuario en las propuestas asociadas al artículo
+        for (PropuestaModificacion propuesta : articulo.getPropuestas()) {
+            if (propuesta.getUsuario() != null && propuesta.getUsuario().equals(usuario)) {
+                propuesta.setUsuario(null);
+                porpuestaModificacionService.save(propuesta);
+            }
+        }
+
+        // Eliminar relación de usuario-artículo
+        articulo.getUsuarioArticulos().remove(relacion);
+        usuario.getUsuarioArticulos().remove(relacion);
+
+        usuarioArticuloDao.delete(relacion);
+    }
+
+
+
+}
+
 	
 	
 
-}
+

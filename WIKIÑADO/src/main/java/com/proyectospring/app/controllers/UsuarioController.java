@@ -1,13 +1,13 @@
 package com.proyectospring.app.controllers;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.proyectospring.app.enums.PeticionStatus;
+
 import com.proyectospring.app.enums.RoleEnum;
 import com.proyectospring.app.models.dao.IRoleDao;
 import com.proyectospring.app.models.entity.Role;
@@ -58,8 +58,6 @@ public class UsuarioController {
 	@Autowired
 	private EntityManager entityManager; // Inyecta el EntityManager
 	
-
-	
 	@Autowired
 	private IUsuarioService usuarioService;
 	
@@ -82,7 +80,7 @@ public class UsuarioController {
 	@Autowired
 	private IPropuestaModificacionService propuestaModificacionService;
 	
-
+	
 	
 	@GetMapping("/perfil")
 	public String perfil(Authentication authentication, Model modelo) {
@@ -268,35 +266,87 @@ public class UsuarioController {
 	            return "redirect:/gestor_user";
 		    }
 		}
-		
-//método que permite eliminar un usuario determinado
-		@Transactional
-		@PostMapping("/eliminar_usuario")
-		public String eliminarUsuario(@RequestParam("userId") Long userId,
-										RedirectAttributes redirectAttributes) {
-		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
-		    
-		    if (usuarioOptional.isPresent()) {
-		        Usuario usuario = usuarioOptional.get();
-		        
-		        usuarioserv.delete(usuario);  
-		        // mensaje que indica que se ha eliminado el usuario correctamente
-	        	redirectAttributes.addFlashAttribute("success", "El usuario "+ usuario.getUsername() +" se ha eliminado correctamente.");
-		        return "redirect:/gestor_user"; 
-		    } else {
-		    	// mensaje que indica que no se puede eliminar porque no existe usuario
-	        	redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
-		        return "redirect:/gestor_user"; 
-		    }
-		}
+		/*
+		//método que permite eliminar un usuario determinado
+				@Transactional
+				@PostMapping("/eliminar_usuario")
+				public String eliminarUsuario(@RequestParam("userId") Long userId,
+												RedirectAttributes redirectAttributes) {
+				    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
+				    
+				    if (usuarioOptional.isPresent()) {
+				        Usuario usuario = usuarioOptional.get();
+				        
+				        usuarioserv.delete(usuario);  
+				        // mensaje que indica que se ha eliminado el usuario correctamente
+			        	redirectAttributes.addFlashAttribute("success", "El usuario "+ usuario.getUsername() +" se ha eliminado correctamente.");
+				        return "redirect:/gestor_user"; 
+				    } else {
+				    	// mensaje que indica que no se puede eliminar porque no existe usuario
+			        	redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
+				        return "redirect:/gestor_user"; 
+				    }
+				}
+*/
+				
+				
+				
+				//permite eliminar usuarios del sistema, elimina todas las relaciones posibles en el resto de tablas
+				@Transactional
+				@PostMapping("/eliminar_usuario")
+				public String eliminarUsuario(@RequestParam("userId") Long userId, RedirectAttributes redirectAttributes) {
+				    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
 
-	//método qpara la creación de un usuario nuevo
-		@GetMapping("/crear")
-	    public String mostrarFormularioCreacion(Model model) {
-	        Usuario nuevoUsuario = new Usuario();
-	        model.addAttribute("nuevoUsuario", nuevoUsuario);
-	        return "crear_usuario"; 
-	    }
-}
-		
+				    if (usuarioOptional.isPresent()) {
+				        Usuario usuario = usuarioOptional.get();
 
+				        // Eliminar las relaciones en las tablas intermedias antes de eliminar el usuario
+				        eliminarRelaciones(usuario);
+
+				        usuarioserv.delete(usuario);
+
+				        // Mensaje que indica que se ha eliminado el usuario correctamente
+				        redirectAttributes.addFlashAttribute("success", "El usuario " + usuario.getUsername() + " se ha eliminado correctamente.");
+				        return "redirect:/gestor_user";
+				    } else {
+				        // Mensaje que indica que no se puede eliminar porque no existe usuario
+				        redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
+				        return "redirect:/gestor_user";
+				    }
+				}
+
+				private void eliminarRelaciones(Usuario usuario) {
+				    // Eliminar las relaciones en articulos_propuestas
+				    for (PropuestaModificacion propuesta : usuario.getModificacionesPropuestas()) {
+				        // Eliminar propuestas asociadas al usuario
+				        propuesta.getArticulo().getPropuestas().remove(propuesta);
+				    }
+				    usuario.getModificacionesPropuestas().clear();
+
+				    // Eliminar las relaciones en usuarios_articulos
+				    for (UsuarioArticulo usuarioArticulo : usuario.getUsuarioArticulos()) {
+				        usuarioArticulo.getArticulo().getUsuarioArticulos().remove(usuarioArticulo);
+				    }
+				    usuario.getUsuarioArticulos().clear();
+
+				    // Eliminar las relaciones en usuarios_wikis
+				    for (UsuarioWiki usuarioWiki : usuario.getUsuarioWikis()) {
+				        usuarioWiki.getWiki().getUsuarioWikis().remove(usuarioWiki);
+				    }
+				    usuario.getUsuarioWikis().clear();
+				    
+				    // Actualizar el usuario en la base de datos
+				    usuarioService.save(usuario);
+				}
+
+				
+				
+				
+			//método qpara la creación de un usuario nuevo
+				@GetMapping("/crear")
+			    public String mostrarFormularioCreacion(Model model) {
+			        Usuario nuevoUsuario = new Usuario();
+			        model.addAttribute("nuevoUsuario", nuevoUsuario);
+			        return "crear_usuario"; 
+			    }
+	}

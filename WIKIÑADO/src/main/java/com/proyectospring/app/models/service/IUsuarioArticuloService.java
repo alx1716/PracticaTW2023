@@ -17,6 +17,8 @@ public interface IUsuarioArticuloService {
 	
 	public void deleteById(Long id);
 	
-	public UsuarioArticulo findByUsuarioAndArticulo(Usuario user , Articulo articulo); 
+	public UsuarioArticulo findByUsuarioAndArticulo(Usuario user , Articulo articulo);
+
+	public void delete(UsuarioArticulo relacion); 
 
 }

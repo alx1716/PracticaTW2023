@@ -39,20 +39,20 @@ public class Usuario implements Serializable {
 	private List<Role> roles = new ArrayList<Role>();
 	
 	
-	
-	@OneToMany( mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para las wikis asigandas al usuario.
+	// para las wikis asigandas al usuario.
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UsuarioWiki> usuarioWikis = new ArrayList<>();
-	
-	@OneToMany( mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // para los artículos asigandos al usuario.
-	private List<UsuarioArticulo> usuarioArticulos = new ArrayList<>();
-	
-	
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
-	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();  // el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<UsuarioArticulo> usuarioArticulos = new ArrayList<>();
+
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)// un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
+	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();// el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
+
+	
 	
 	//relacion con PeticionRol
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PeticionRol> peticionesRol = new ArrayList<>();
 	
 	
