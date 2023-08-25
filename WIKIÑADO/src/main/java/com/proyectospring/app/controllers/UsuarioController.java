@@ -1,5 +1,6 @@
 package com.proyectospring.app.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -227,7 +228,7 @@ public class UsuarioController {
 		
 		
 		//método que añade un rol nuevo a un usuario existente
-		@Transactional
+
 		@PostMapping("/asigna_rol")
 		public String asignarRol(
 		    @RequestParam("userId") Long userId,
@@ -268,25 +269,55 @@ public class UsuarioController {
 		}
 		
 //método que permite eliminar un usuario determinado
+
+		//permite eliminar usuarios del sistema, elimina todas las relaciones posibles en el resto de tablas
 		@Transactional
 		@PostMapping("/eliminar_usuario")
-		public String eliminarUsuario(@RequestParam("userId") Long userId,
-										RedirectAttributes redirectAttributes) {
+		public String eliminarUsuario(@RequestParam("userId") Long userId, RedirectAttributes redirectAttributes) {
 		    Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
-		    
+
 		    if (usuarioOptional.isPresent()) {
 		        Usuario usuario = usuarioOptional.get();
-		        
-		        usuarioserv.delete(usuario);  
-		        // mensaje que indica que se ha eliminado el usuario correctamente
-	        	redirectAttributes.addFlashAttribute("success", "El usuario "+ usuario.getUsername() +" se ha eliminado correctamente.");
-		        return "redirect:/gestor_user"; 
+
+		        // Eliminar las relaciones en las tablas intermedias antes de eliminar el usuario
+		        eliminarRelaciones(usuario);
+
+		        usuarioserv.delete(usuario);
+
+		        // Mensaje que indica que se ha eliminado el usuario correctamente
+		        redirectAttributes.addFlashAttribute("success", "El usuario " + usuario.getUsername() + " se ha eliminado correctamente.");
+		        return "redirect:/gestor_user";
 		    } else {
-		    	// mensaje que indica que no se puede eliminar porque no existe usuario
-	        	redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
-		        return "redirect:/gestor_user"; 
+		        // Mensaje que indica que no se puede eliminar porque no existe usuario
+		        redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
+		        return "redirect:/gestor_user";
 		    }
 		}
+
+		private void eliminarRelaciones(Usuario usuario) {
+		    // Eliminar las relaciones en articulos_propuestas
+		    for (PropuestaModificacion propuesta : usuario.getModificacionesPropuestas()) {
+		        // Eliminar propuestas asociadas al usuario
+		        propuesta.getArticulo().getPropuestas().remove(propuesta);
+		    }
+		    usuario.getModificacionesPropuestas().clear();
+
+		    // Eliminar las relaciones en usuarios_articulos
+		    for (UsuarioArticulo usuarioArticulo : usuario.getUsuarioArticulos()) {
+		        usuarioArticulo.getArticulo().getUsuarioArticulos().remove(usuarioArticulo);
+		    }
+		    usuario.getUsuarioArticulos().clear();
+
+		    // Eliminar las relaciones en usuarios_wikis
+		    for (UsuarioWiki usuarioWiki : usuario.getUsuarioWikis()) {
+		        usuarioWiki.getWiki().getUsuarioWikis().remove(usuarioWiki);
+		    }
+		    usuario.getUsuarioWikis().clear();
+		    
+		    // Actualizar el usuario en la base de datos
+		    usuarioService.save(usuario);
+		}
+
 
 	//método qpara la creación de un usuario nuevo
 		@GetMapping("/crear")

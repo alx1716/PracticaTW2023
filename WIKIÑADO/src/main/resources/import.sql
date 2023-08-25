@@ -43,7 +43,7 @@ INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Atlá
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('5G y teorías de conspiración sobre la salud', '/articulos/test.txt', 5, NOW());
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion) VALUES('Control de la mente a través de smartphones', '/articulos/test.txt', 5, NOW());
 
-INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('USUARIO_ANONIMO','$2a$10$6RupV85kTTieYF1ybeilB.N43CSXTmH/FPJV.HsQ0wsApvP5WR/gC','anonimo@wikinado.com',1);
+INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('COLABORADOR','$2a$10$6RupV85kTTieYF1ybeilB.N43CSXTmH/FPJV.HsQ0wsApvP5WR/gC','colaborador@wikinado.com',1);
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('GESTOR','$2a$10$miSV48.apvsRhzMmO1YAz.PQi6aKaxDRY8qARFl67A.taLG5Uws1e','gestor@wikinado.com',1);
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('COORDINADOR','$2a$10$riL0iV3GSwsm4/HX0YePgOz1ys.wyj0mPhFWEB/N3vtkMvRRlyv2C','coordinador@wikinado.com',1);
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('SUPERVISOR','$2a$10$hMgaXSjfiWT6l1Btozp5M.xozobXE9upygUIVuMz/0GXkQ4Q2WuYm','supervisor@wikinado.com',1);

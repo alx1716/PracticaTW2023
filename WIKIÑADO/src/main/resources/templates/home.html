@@ -3,48 +3,50 @@
 
 <head th:replace="layout/layout :: head"></head>
 
-<body style="background-image: url('/images/tok.jpg'); background-size: cover;">
-	<!--Barra de Navegación-->
-	<header th:replace="layout/layout :: header"></header>
-	
-	
-	
-	<div class="row justify-content-start">
-		<div class="col-md-5">
-			<br/>
-			<p class="text-left text-white">¡Atención, cuñados del mundo! ¡Ha llegado vuestra hora de brillar en la
-				WIKIÑADO, la enciclopedia de los que saben de todo y nada a la vez! Si tienes la teoría perfecta para
-				resolver problemas mundiales mientras disfrutas de tu café, si tus consejos inigualables eclipsan a los
-				mismos expertos, ¡entonces este es tu lugar sagrado!
+<body>
+    <!--Barra de Navegación-->
+    <header th:replace="layout/layout :: header"></header>
 
-				¿Estás convencido de que puedes explicar la física cuántica mientras cocinas una tortilla? ¿Tienes la
-				solución para el cambio climático mientras ves la televisión? ¡No te preocupes, aquí no juzgamos!
-				Invitamos a todos los cuñados de corazón a compartir sus opiniones, ideas y teorías en este rincón único
-				del conocimiento (o no conocimiento, en realidad).
+    <div class="row justify-content-start">
+        <div class="col-md-5">
+            <br/>
+            <p style="font-weight: 700;" class="text-left text-info mx-4">¡Atención, cuñados del mundo! ¡Ha llegado vuestra hora de brillar en la
+                WIKIÑADO, la enciclopedia de los que saben de todo y nada a la vez! Si tienes la teoría perfecta para
+                resolver problemas mundiales mientras disfrutas de tu café, si tus consejos inigualables eclipsan a los
+                mismos expertos, ¡entonces este es tu lugar sagrado!
 
-				Nuestra misión es simple: crear un espacio donde tus pensamientos más profundos e inesperados se
-				conviertan en la chispa de conversaciones épicas. Aunque quizás no sepas exactamente cómo funciona una
-				tostadora, aquí eres el rey o la reina del debate. Así que, ¡únete a la WIKIÑADO y comparte tus gemas de
-				sabiduría cuñada con el mundo!
+                ¿Estás convencido de que puedes explicar la física cuántica mientras cocinas una tortilla? ¿Tienes la
+                solución para el cambio climático mientras ves la televisión? ¡No te preocupes, aquí no juzgamos!
+                Invitamos a todos los cuñados de corazón a compartir sus opiniones, ideas y teorías en este rincón único
+                del conocimiento (o no conocimiento, en realidad).
 
-				Recuerda, aquí todos somos aprendices de todo y maestros de nada, ¡y eso es lo que hace que todo sea tan
-				divertido! ¡Bienvenidos a la revolución de la opinión cuñada! </p>
-		</div>
-	</div>
-	
-	<div class="row justify-content-end">
-		<div class="col-md-5">
-			<a th:href="@{/listar}" class="text-right">
-				<h1>Quita que tu no sabes!(Opina)</h1>
-			</a>
-		</div>
-	</div>
+                Nuestra misión es simple: crear un espacio donde tus pensamientos más profundos e inesperados se
+                conviertan en la chispa de conversaciones épicas. Aunque quizás no sepas exactamente cómo funciona una
+                tostadora, aquí eres el rey o la reina del debate. Así que, ¡únete a la WIKIÑADO y comparte tus gemas de
+                sabiduría cuñada con el mundo!
 
+                Recuerda, aquí todos somos aprendices de todo y maestros de nada, ¡y eso es lo que hace que todo sea tan
+                divertido! ¡Bienvenidos a la revolución de la opinión cuñada! </p>
+        </div>
+       
+        <div class="col-md-4 mx-4">
+            <img style="width: 800px; height: 400px;" th:src="@{/images/cuñadismo.jpg}" class="rounded" alt="Imagen de cuñadismo">
+        </div>
+    </div>
 
-
-
+    <div class="row justify-content-end">
+        <div class="col-md-10 rounded">
+            <a style="text-decoration: none;" th:href="@{/listar}" class="text-right">
+                <h1>Quita que tu no sabes!, danos  <span class="text-warning" style="font-weight: 700;"> tu maravillosa opinion</span></h1>
+            </a>
+        </div>
+    </div>
 
 </body>
-<!--<footer th:replace="layout/layout :: footer"></footer>-->
+<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<!--<script th:src="@{/js/bootstrap.bundle.min.js}"></script>   esto parece ser que me daba problemas para que se desplegara el boton de log out-->
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
 
 </html>
