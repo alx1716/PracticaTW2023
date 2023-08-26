@@ -23,10 +23,12 @@ public class PropuestaModificacion implements Serializable {
 	private Long id;  // toda entidad debe tener su id único
 
 	private String estado = "PENDIENTE";  // puede ser ACEPTADA, RECHAZADA, o PENDIENTE que va a ser el valor por defecto cada vez que se instancie una propuesta!!
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "articulo_id")
 	private Articulo articulo;  // este será el articulo al que está referenciando //OJO!!!  no creo que haga falta esto si ya el Artículo tiene una lista de las propuestas
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;   // este es el nombre del usuario que propone la modificación
 	
 	@Column(columnDefinition = "TEXT")

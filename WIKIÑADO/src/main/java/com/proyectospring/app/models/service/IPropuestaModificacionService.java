@@ -17,5 +17,7 @@ public interface IPropuestaModificacionService {
 	public void delete(Long id); // elimina una propuesta de la BBDD
 	
 	public PropuestaModificacion findByArticuloAndUsuario(Articulo articulo, Usuario usuario); // para no tener registros repetidos en las tablas.
+	
+	public void deleteByUsuario(Usuario usuario);
 
 }

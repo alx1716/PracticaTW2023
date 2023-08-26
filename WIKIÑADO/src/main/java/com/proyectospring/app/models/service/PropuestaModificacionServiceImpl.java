@@ -54,6 +54,14 @@ public class PropuestaModificacionServiceImpl implements IPropuestaModificacionS
 		
 		return propuestaDao.findByArticuloAndUsuario(articulo, usuario);
 	}
+
+	@Override
+	@Transactional
+	public void deleteByUsuario(Usuario usuario) {
+		
+		propuestaDao.deleteByUsuario(usuario);
+		
+	}
 	
 	
 

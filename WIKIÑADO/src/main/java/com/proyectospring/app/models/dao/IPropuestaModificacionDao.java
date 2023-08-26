@@ -9,5 +9,7 @@ import com.proyectospring.app.models.entity.Usuario;
 public interface IPropuestaModificacionDao extends CrudRepository<PropuestaModificacion, Long> {
 	
 	public PropuestaModificacion findByArticuloAndUsuario(Articulo articulo, Usuario usuario);
+	
+	public void deleteByUsuario(Usuario usuario);
 
 }

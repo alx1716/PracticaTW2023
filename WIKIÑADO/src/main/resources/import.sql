@@ -50,7 +50,7 @@ INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('SUPERVISOR'
 
 INSERT INTO `authorities` (user_id, authority) VALUES (1,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_GESTOR');
-/*INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_COLABORADOR');*/
+
 INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_SUPERVISOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (4,'ROLE_COLABORADOR');
 INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COORDINADOR');
@@ -60,23 +60,12 @@ INSERT INTO `authorities` (user_id, authority) VALUES (3,'ROLE_COLABORADOR');
 
 
 
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 1, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','pRUEBAS PARA VER QUE SE LE HACE', 2, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 3, 1 );
-INSERT INTO `propuestas` (estado, propuesta, articulo_id, usuario_id) VALUES ('PENDIENTE','Esto es una prueba para cargar la propuesta desde el import sql', 4, 1 );
 
-INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,1);
-INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,2);
-INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,3);
-INSERT INTO  usuarios_modificaciones_propuestas (usuario_id, modificaciones_propuestas_id) VALUES (1,4);
 
-INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (1,1);
-INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (2,2);
-INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (3,3);
-INSERT INTO  articulos_propuestas (articulo_id, propuestas_id) VALUES (4,4);
 
-INSERT INTO usuarios_wikis (usuario_id, wiki_id) VALUES (3,2);
-INSERT INTO usuarios_wikis (usuario_id, wiki_id) VALUES (3,3);
+
+
+
 
 INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_COORDINADOR', 'PENDIENTE', 1)
 INSERT INTO peticiones_rol (requested_authority, status, user_id) VALUES ('ROLE_GESTOR', 'PENDIENTE', 4)
