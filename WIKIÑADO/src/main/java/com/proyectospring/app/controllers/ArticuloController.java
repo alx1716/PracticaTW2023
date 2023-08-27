@@ -273,8 +273,11 @@ public class ArticuloController {
 		Articulo articulo = wikiService.findArticuloById(id);
 		
 		if (articulo != null) {
+			//lo desactivo
+			articulo.setEnabled(0);
+			wikiService.saveArticulo(articulo);
 			
-			wikiService.deleteArticulo(id);
+			wikiService.deleteArticulo(articulo);
 			flash.addFlashAttribute("success", "Articulo Eliminado con Éxito!!");
 			return "redirect:/ver/"+articulo.getWiki().getId();
 			

@@ -27,6 +27,7 @@ public interface IArticuloService {
 		
 		public void deletePropuesta(Long id); // método para eliminar la propuesta.
 		
+		public void deleteByArticulo(Articulo articulo);
 		
 		
 

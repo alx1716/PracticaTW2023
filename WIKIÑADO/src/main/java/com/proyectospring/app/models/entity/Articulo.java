@@ -57,12 +57,13 @@ public class Articulo implements Serializable{
 	@ManyToOne(fetch= FetchType.LAZY)
     private Usuario usuarioAsignado;          // esto es para ver el usuario al que está asignado el artículo
 	
-	@OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany( mappedBy = "articulo" ,fetch= FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PropuestaModificacion> propuestas = new ArrayList<PropuestaModificacion>();
 	
 	@OneToMany(mappedBy = "articulo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<UsuarioArticulo> usuarioArticulos = new ArrayList<>();
 	
+	private int enabled = 1; // para poder desactivar el artículo
 	
 	
 
@@ -83,6 +84,16 @@ public class Articulo implements Serializable{
 	public Long getId() {
 		return id;
 	}
+	public int getEnabled() {
+		return enabled;
+	}
+
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+
+
 	public List<UsuarioArticulo> getUsuarioArticulos() {
 		return usuarioArticulos;
 	}

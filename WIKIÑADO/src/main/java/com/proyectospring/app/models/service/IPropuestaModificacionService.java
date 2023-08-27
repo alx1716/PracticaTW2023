@@ -19,5 +19,7 @@ public interface IPropuestaModificacionService {
 	public PropuestaModificacion findByArticuloAndUsuario(Articulo articulo, Usuario usuario); // para no tener registros repetidos en las tablas.
 	
 	public void deleteByUsuario(Usuario usuario);
+	
+	public void deleteByArticulo(Articulo articulo);
 
 }

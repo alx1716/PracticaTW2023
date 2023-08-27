@@ -62,6 +62,13 @@ public class PropuestaModificacionServiceImpl implements IPropuestaModificacionS
 		propuestaDao.deleteByUsuario(usuario);
 		
 	}
+
+	@Transactional
+	public void deleteByArticulo(Articulo articulo) {
+		
+		propuestaDao.deleteByArticulo(articulo);
+		
+	}
 	
 	
 

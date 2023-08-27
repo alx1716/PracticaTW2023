@@ -18,15 +18,22 @@ public class CustomUserDetails  extends User{
 	
 	private Long userId;
 	
+	private int userEnabled;
 	
-	public CustomUserDetails(String username, String password, Long userId, Collection<? extends GrantedAuthority> authorities) {
+	public CustomUserDetails(String username, String password, Long userId, Collection<? extends GrantedAuthority> authorities, int enabled) {
         super(username, password, authorities);
         this.userId = userId;
+        this.userEnabled = enabled;
     }
 	
 	
 	public Long getUserId() {
         return userId;
     }
+	
+	public int getUserEnabled() {
+		
+		return userEnabled;
+	}
 
 }

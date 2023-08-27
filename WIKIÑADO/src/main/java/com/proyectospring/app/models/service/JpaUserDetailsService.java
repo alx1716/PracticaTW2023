@@ -51,7 +51,7 @@ public class JpaUserDetailsService implements UserDetailsService { // en esta cl
 		}
 
 		// Se devuelve el usuario autenticado
-		return new CustomUserDetails(usuario.getUsername(), usuario.getPassword(), usuario.getId(), authorities);
+		return new CustomUserDetails(usuario.getUsername(), usuario.getPassword(), usuario.getId(), authorities, usuario.getEnabled());
 	}
 		
 		//metodo para obtener listado de roles

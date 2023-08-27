@@ -59,6 +59,13 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 		usuarioDao.deleteById(id);
 		
 	}
+	
+	
+	@Transactional
+	public void deleteByUsuario(Usuario usuario) {
+		
+		usuarioDao.delete(usuario);
+	}
 
 	@Override
 	@Transactional
@@ -183,6 +190,12 @@ public class UsuarioServiceImpl  implements IUsuarioService{
 	    }
 
 	    return null;
+	}
+
+	@Override
+	public Usuario findByEmail(String email) {
+		
+		return usuarioDao.findByEmail(email);
 	}
 
 }

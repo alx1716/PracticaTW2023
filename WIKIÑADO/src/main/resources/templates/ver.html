@@ -60,7 +60,7 @@
 					</thead>
 
 					<tbody>
-						<tr th:each="articulo: ${wiki.articulos}">
+						<tr th:each="articulo: ${wiki.articulos}" th:if="${articulo.enabled == 1}">
 
 							<td style="text-decoration: none; font-weight: 700;" th:text="${articulo.id}"></td>
 							<td class="text-primary" style="text-decoration: none; font-weight: 700;" th:text="${articulo.titulo}"></td>

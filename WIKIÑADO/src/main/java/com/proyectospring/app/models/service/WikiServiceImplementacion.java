@@ -96,9 +96,9 @@ public class WikiServiceImplementacion implements IWikiService {
 
 	@Override
 	@Transactional
-	public void deleteArticulo(Long id) {
+	public void deleteArticulo(Articulo articulo) {
 		
-		articuloDao.deleteById(id);
+		articuloDao.delete(articulo);
 	}
 
 }

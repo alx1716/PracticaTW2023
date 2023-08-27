@@ -1,19 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layout/layout :: head"></head>
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="'WIKIÑADO-La enciclopedia de cuñaos'"></title>
+
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet" />
+</head>
 
 <body>
 
-	<header th:replace="layout/layout :: header"></header>
+	<header th:fragment="header"> <!--Barra de Navegación-->
+		<nav class="navbar navbar-expand-lg navbar-primary bg-white ">
+			<li class="container-fluid">
+				
+				<a class="navbar-brand" th:href="@{/home}">
+					<img style="height: 100px;" th:src="@{/images/logo.png}" alt="Logo de WIKIÑADO" /><h5 style="font-weight: 700;" class="text-primary">¡Lo sabes todo y no lo sabes!</h5></a>
+					
+					
+				<button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				
+				
+				
+				<!--este va a ser un desplegable para hacer log in y log out-->
+
+				<ul class="navbar-nav navbar-right">
+					<!-- Este va a ser el Botón de login-->
+					<li sec:authorize="!isAuthenticated()"><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/login}">Log
+							in</a></li> <!-- sólo sí el usuario no está autenticado mostrará el boton de login -->
+							
+					<!-- Este va a ser el Botón de registro-->		
+					<!--<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/registro}">Registrarse</a></li>--> <!-- sólo sí el usuario no está autenticado mostrará el boton de Registro -->		
+							
+					<!-- Este es el desplegable copiado de bootstrap sólo se mostrará si el usuario está autenticado-->
+					<li sec:authorize="isAuthenticated()" class="dropdown">
+						<a style="font-weight: 700;" class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<span> Ayuda</span>
+						</a>
+
+						<div class="dropdown-menu dropdown-menu-end">
+							<!--AQUI ES DONDE DEBERÍA METER EL ACCESO LA MEMORIA, EL MANUAL, JAVADOC Y EL PERFIL, SEGURAMENTE TENGA QUE
+							ESTAR AL LORO DEL ORDEN EN QUE LOS PONGO-->
+								
+								<button  class="dropdown-item text-info"><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/home}">Acceso a la Memoria</a></button>
+    							<button  class="dropdown-item text-warning" ><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/home}">Acceso al Manual</a></button>
+							    <button  class="dropdown-item text-info" ><a style="font-weight: 700;" class="btn btn-outline-primary" th:href="@{/doc/index.html}">Acceso al Javadoc</a></button> <!--así es como accedemos al javadoc que está en static, hay que meter el manual y la memoria ahí tambien-->
+							    
+														
+								<form id="logoutForm" th:action="@{/logout}" method="post">	<!-- En el contexto de Spring Security, cuando se realiza una solicitud a la URL "/logout" 
+								(que es lo que especifica th:action="@{/logout}"), Spring Security automáticamente intercepta esta solicitud y realiza el proceso de cierre de sesión. 
+								No es necesario que implementes un controlador para gestionar el cierre de sesión manualmente.-->	
+									<button style="font-weight: 700;" class="dropdown-item text-danger" onclick="document.getElementById('logoutForm').submit();"
+										type="submit">Volver al inicio</button>
+								</form>
+							
+							
+							
+
+						</div>
+					</li>
+
+				</ul>
+			
+				
+		</nav>
+
+		<!--Creamos mensajes de alerta que se guarden en la sessión cuando se editen o se eliminen usuarios y se redirija a la lista de de usuarios actualizada-->
+
+		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	</header>
+	
 
 	<div class="container py-4">
 		<div class="card bg-danger text-white">
 			<div class="card-header">Error: Acceso Denegado</div>
 			<div class="card-body">
-				<h5 class="card-title">Lo sentimos <span th:text="${#httpServletRequest.remoteUser}"></span> NO tienes
-					permiso para acceder a este recurso</h5>
-				<a th:href="@{/listar}" class="btn btn-outline-light" role="button">Ir al inicio</a>
+				<h5 class="card-title">Lo sentimos  NO tienes
+					permiso para acceder a este recurso Usa el menú de ayuda</h5>
+
 			</div>
 		</div>
 

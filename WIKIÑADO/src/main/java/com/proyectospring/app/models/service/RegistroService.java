@@ -42,7 +42,7 @@ public class RegistroService {
 		roleDao.save(defaultRole); // guardo el nuevo rol en la BBDD para que tenga un ID válido
 		
 		nuevoUsuario.getRoles().add(defaultRole); // cada usuario tiene un ArrayList ya seteado por lo que sólo añado el nuevo rol
-		nuevoUsuario.setEnabled(true);
+		nuevoUsuario.setEnabled(1);
 		nuevoUsuario.setPassword(encoder.encode(nuevoUsuario.getPassword())); // aquí se encrypta la contraseña antes de
 																				// que sea guardada en la BBDD
 		usuarioDao.save(nuevoUsuario);

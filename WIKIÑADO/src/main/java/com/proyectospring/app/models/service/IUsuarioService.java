@@ -17,6 +17,7 @@ public interface IUsuarioService {
 	public Usuario findOne(Long id);
 	
 	public Usuario findByUsername(String name);
+	public Usuario findByEmail(String email); 
 	
 	public void delete(Long id);
 	
@@ -30,5 +31,7 @@ public interface IUsuarioService {
 
 	public Usuario esUsuarioCoordinador(Long articuloId, Authentication authentication);
 	public Usuario esUsuarioCoordinadorPorWiki(Long wikiId, Authentication authentication);
+	
+	public void deleteByUsuario(Usuario usuario);
 
 }

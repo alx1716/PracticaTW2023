@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	@Column
 	private String email;
 
-	private Boolean enabled;
+	private int enabled;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true) // un usuario puede tener muchos roles.
 	@JoinColumn(name = "user_id") // es la llave foranea que tiene la clase Role
 	private List<Role> roles = new ArrayList<Role>();
@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
 	
 	
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
+	@OneToMany( mappedBy="usuario",fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // un usuario tiene una lista de las modificaciones que ha realizado en caso de un COLABORADOR.
 	private List<PropuestaModificacion> modificacionesPropuestas = new ArrayList<>();  // el SUPERVISOR deberá ver sólo las propuestas de los artículos que tiene asignados.
 	
 	//relacion con PeticionRol
@@ -124,11 +124,11 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
-	public Boolean getEnabled() {
+	public int getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Boolean enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 

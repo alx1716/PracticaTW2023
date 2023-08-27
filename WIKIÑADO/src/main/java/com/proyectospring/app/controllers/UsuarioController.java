@@ -275,59 +275,24 @@ public class UsuarioController {
 		@PostMapping("/eliminar_usuario")
 		public String eliminarUsuario(@RequestParam("userId") Long userId, RedirectAttributes redirectAttributes) {
 			
-			
+			/**
+			 * lo que voy a hacer es desactivar el usuario, así no tengo que borrar registros ya que esto me está dando problemas
+			 * 
+			 */
 			//primero elimino todas las propuestas
 			Usuario usuario = usuarioService.findOne(userId);
+			usuario.setEnabled(0);
+			usuarioService.save(usuario);
+			/*usuario.getModificacionesPropuestas().clear();
 			propuestaModificacionService.deleteByUsuario(usuario);
-			usuarioService.delete(userId);
+			usuarioService.deleteByUsuario(usuario);*/
 			
-		   /*Optional<Usuario> usuarioOptional = usuarioserv.findUsuarioById(userId);
-
-		    if (usuarioOptional.isPresent()) {
-		        Usuario usuario = usuarioOptional.get();
-
-		        // Eliminar las relaciones en las tablas intermedias antes de eliminar el usuario
-		        eliminarRelaciones(usuario);
-
-
-		        // Mensaje que indica que se ha eliminado el usuario correctamente
-		        redirectAttributes.addFlashAttribute("success", "El usuario " + usuario.getUsername() + " se ha eliminado correctamente.");
-		        return "redirect:/gestor_user";
-		    } else {
-		        // Mensaje que indica que no se puede eliminar porque no existe usuario
-		        redirectAttributes.addFlashAttribute("error", "El usuario no se puede eliminar, ya que no existe en el sistema.");
-		        return "redirect:/gestor_user";
-		    }*/
+		   
 			redirectAttributes.addFlashAttribute("success", "El ya que no existe en el sistema.");
 	        return "redirect:/gestor_user";
 		}
 
-		/*private void eliminarRelaciones(Usuario usuario) {
-		    // Eliminar las relaciones en articulos_propuestas
-			
-		    for (PropuestaModificacion propuesta : usuario.getModificacionesPropuestas()) {
-		        // Eliminar propuestas asociadas al usuario
-		        propuestaModificacionService.delete(propuesta.getId());
-		        
-		    }
-		    
-
-		    // Eliminar las relaciones en usuarios_articulos
-		    for (UsuarioArticulo usuarioArticulo : usuario.getUsuarioArticulos()) {
-		        usuarioArticuloService.deleteById(usuarioArticulo.getId());
-		    }
-		   
-		   
-
-		    // Eliminar las relaciones en usuarios_wikis
-		    for (UsuarioWiki usuarioWiki : usuario.getUsuarioWikis()) {
-		        usuarioWikiService.deleteById(usuarioWiki.getId());
-		    }
-		   
-		    
-		    // Actualizar el usuario en la base de datos
-		    usuarioService.delete(usuario.getId());
-		}*/
+		
 
 
 	//método qpara la creación de un usuario nuevo

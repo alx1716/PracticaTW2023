@@ -43,7 +43,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{    // u
 		   .formLogin()
 		   		.successHandler(succesHandler)
 		   		.loginPage("/login") // esta es la ruta del metodo en el controlador de inicio de sesion.
-		   		.defaultSuccessUrl("/listar") // aquí se redirige despues de un inicio de sesion exitoso
+		   		.defaultSuccessUrl("/comprobar") // aquí se redirige despues de un inicio de sesion exitoso
 		   		.usernameParameter("email")
 		   .permitAll()
 		.and()

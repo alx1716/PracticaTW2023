@@ -27,7 +27,7 @@
             <th class="text-primary">Baja de usuario</th>
             
         </tr>
-        <tr th:each="usuario : ${listaUsuarios}">
+        <tr th:each="usuario : ${listaUsuarios}" th:if="${usuario.enabled == 1}">
             <td style="font-weight: 700;"  th:text="${usuario.id}"></tdstyle="font-weight: 700;" >
             <td style="font-weight: 700;"  th:text="${usuario.username}"></td>
             <td style="font-weight: 700;"  th:text="${usuario.email}"></td>

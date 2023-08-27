@@ -71,6 +71,14 @@ public class ArticuloServiceImplementation implements IArticuloService {
 		propuestaDao.deleteById(id);
 		
 	}
+
+	@Override
+	@Transactional
+	public void deleteByArticulo(Articulo articulo) {
+		
+		propuestaDao.deleteByArticulo(articulo);
+		
+	}
 	
 
 	

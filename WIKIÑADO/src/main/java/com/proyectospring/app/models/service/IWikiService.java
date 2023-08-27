@@ -30,6 +30,6 @@ public interface IWikiService {
 	
 	public Articulo findArticuloById(Long id); // método para encontrar una factura y ver el detalle de la misma. 
 	
-	public void deleteArticulo(Long id); // método para eliminar la factura y sus líneas.
+	public void deleteArticulo(Articulo articulo); // método para eliminar la factura y sus líneas.
 	
 }

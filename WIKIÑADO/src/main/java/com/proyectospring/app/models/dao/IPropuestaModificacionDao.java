@@ -11,5 +11,7 @@ public interface IPropuestaModificacionDao extends CrudRepository<PropuestaModif
 	public PropuestaModificacion findByArticuloAndUsuario(Articulo articulo, Usuario usuario);
 	
 	public void deleteByUsuario(Usuario usuario);
+	
+	public void deleteByArticulo(Articulo articulo);
 
 }
