@@ -159,7 +159,7 @@ public class Usuario implements Serializable {
 	
 	/**
 	 * esto es una prueba para ver si el usuario tiene un rol solicitado
-	 * @param rol el rol se esta comprobando
+	 * @param rolBuscado el rol se esta comprobando
 	 */
 	public boolean hasRole(String rolBuscado) {
 		
