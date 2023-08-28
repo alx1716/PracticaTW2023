@@ -5,6 +5,12 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+
+/**
+ * Clase encargada de generar la información necesaria para renderizar la interfaz de paginación en la vista.
+ *
+ * @param <T> Tipo de elementos en la página.
+ */
 public class PageRender<T> {
 
 	private String url;
@@ -18,7 +24,12 @@ public class PageRender<T> {
 	private int paginaActual;
 
 	private List<PageItem> paginas;
-
+	
+	/**
+	 * Constructor de la clase paginador
+	 * @param url
+	 * @param pagina
+	 */
 	public PageRender(String url, Page<T> pagina) {
 
 		this.url = url;
@@ -60,6 +71,8 @@ public class PageRender<T> {
 		}
 	}
 
+	// Getters y Setters
+	
 	public String getUrl() {
 		return url;
 	}

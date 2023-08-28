@@ -5,6 +5,9 @@ import com.proyectospring.app.enums.RoleEnum;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Clase para mapear los Roles con la BBDD
+ */
 @Entity
 @Table(name = "authorities")
 public class Role implements Serializable {

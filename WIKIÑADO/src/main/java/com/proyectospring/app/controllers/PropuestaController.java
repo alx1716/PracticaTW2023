@@ -14,6 +14,11 @@ import com.proyectospring.app.models.service.IArticuloService;
 import com.proyectospring.app.models.service.IPropuestaModificacionService;
 import com.proyectospring.app.models.service.IUsuarioArticuloService;
 
+
+/**
+ * Controlador para la gestión de propuestas de modificación de artículos.
+ * Administra la revisión, aceptación y rechazo de propuestas de modificación.
+ */
 @Controller
 public class PropuestaController {
 	
@@ -26,6 +31,14 @@ public class PropuestaController {
 	@Autowired
 	private IPropuestaModificacionService propuestaModificacionService;
 	
+	
+	/**
+     * Muestra la página para revisar una propuesta de modificación de artículo.
+     *
+     * @param articuloAsignado_id El ID del artículo asignado a revisar.
+     * @param modelo              El modelo para la vista.
+     * @return La vista para revisar la propuesta de modificación.
+     */
 	@GetMapping("/revisar/{articuloAsignado_id}")
 	public String revisarPropuesta( @PathVariable Long articuloAsignado_id,Model modelo) {
 		
@@ -37,6 +50,14 @@ public class PropuestaController {
 		return "articulo/revisarPropuesta";
 	}
 	
+	
+	/**
+     * Acepta una propuesta de modificación de artículo.
+     *
+     * @param propuestaId   El ID de la propuesta a aceptar.
+     * @param flash         Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de aceptar la propuesta.
+     */
 	@GetMapping("/aceptar/{propuestaId}")
 	public String aceptarPropuesta( @PathVariable Long propuestaId,RedirectAttributes flash) {
 		
@@ -55,7 +76,13 @@ public class PropuestaController {
 	}
 	
 	
-	
+	/**
+     * Rechaza una propuesta de modificación de artículo.
+     *
+     * @param propuestaId   El ID de la propuesta a rechazar.
+     * @param flash         Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de rechazar la propuesta.
+     */
 	@GetMapping("/rechazar/{propuestaId}")
 	public String rechazarPropuesta( @PathVariable Long propuestaId,RedirectAttributes flash) {
 		

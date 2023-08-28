@@ -29,19 +29,19 @@ INSERT INTO wikis (Nombre, Creador, Email, Fecha) VALUES('Fenómenos naturales i
 
 
 INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Falsa llegada a la Luna','/articulos/test.txt' , 1, NOW(),1);  
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Reptilianos: ¿verdad o ficción?', '/articulos/test.txt', 1, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Control del clima por el gobierno', '/articulos/test.txt', 1, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Roswell: El incidente OVNI más famoso', '/articulos/test.txt', 2, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Encuentros cercanos del tercer tipo', '/articulos/test.txt', 2, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Abducciones extraterrestres', '/articulos/test.txt', 2, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Homeopatía: curando con agua', '/articulos/test.txt', 3, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Energía de cristales y sanación', '/articulos/test.txt', 3, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Astrología y signos del zodíaco', '/articulos/test.txt', 3, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('El verdadero autor de las obras de Shakespeare', '/articulos/test.txt', 4, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('El Santo Grial y su búsqueda', '/articulos/test.txt', 4, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Atlántida: ¿leyenda o realidad?', '/articulos/test.txt', 4, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('5G y teorías de conspiración sobre la salud', '/articulos/test.txt', 5, NOW(),1);
-INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Control de la mente a través de smartphones', '/articulos/test.txt', 5, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Reptilianos: ¿verdad o ficción?', '/articulos/test1.txt', 1, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Control del clima por el gobierno', '/articulos/test2.txt', 1, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Roswell: El incidente OVNI más famoso', '/articulos/test3.txt', 2, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Encuentros cercanos del tercer tipo', '/articulos/test4.txt', 2, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Abducciones extraterrestres', '/articulos/test5.txt', 2, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Homeopatía: curando con agua', '/articulos/test6.txt', 3, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Energía de cristales y sanación', '/articulos/test7.txt', 3, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Astrología y signos del zodíaco', '/articulos/test8.txt', 3, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('El verdadero autor de las obras de Shakespeare', '/articulos/test9.txt', 4, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('El Santo Grial y su búsqueda', '/articulos/test10.txt', 4, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Atlántida: ¿leyenda o realidad?', '/articulos/test11.txt', 4, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('5G y teorías de conspiración sobre la salud', '/articulos/test12.txt', 5, NOW(),1);
+INSERT INTO articulos (titulo, contenido, wiki_id, fecha_creacion,enabled) VALUES('Control de la mente a través de smartphones', '/articulos/test13.txt', 5, NOW(),1);
 
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('COLABORADOR','$2a$10$6RupV85kTTieYF1ybeilB.N43CSXTmH/FPJV.HsQ0wsApvP5WR/gC','colaborador@wikinado.com',1);
 INSERT INTO `usuarios` (username, password, email, enabled) VALUES ('GESTOR','$2a$10$miSV48.apvsRhzMmO1YAz.PQi6aKaxDRY8qARFl67A.taLG5Uws1e','gestor@wikinado.com',1);

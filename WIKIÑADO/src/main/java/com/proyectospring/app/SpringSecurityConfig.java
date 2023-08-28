@@ -15,6 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.proyectospring.app.auth.handler.LoginSuccessHandler;
 import com.proyectospring.app.models.service.JpaUserDetailsService;
 
+/**
+ * Configuración de Spring Security para la aplicación.
+ * Configura la seguridad de la aplicación web utilizando Spring Security.
+ */
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)//SE habilita el uso de anotaciones en la clase configuration y poder usar anotaciones de seguridad en los controladores
 @Configuration
 public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{    // una alternativa a esta deprecated es WebSecurityConfigurer
@@ -32,6 +36,13 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{    // u
 	@Autowired
 	private LoginSuccessHandler succesHandler;
 	
+	
+	 /**
+     * Configura las reglas de seguridad para las rutas y acciones de la aplicación.
+     *
+     * @param http El objeto HttpSecurity que se configura.
+     * @throws Exception Si ocurre un error durante la configuración de la seguridad.
+     */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -58,7 +69,12 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{    // u
 	}
 
 	
-	
+	/**
+     * Configura el administrador de autenticación global.
+     *
+     * @param builder El objeto AuthenticationManagerBuilder utilizado para configurar la autenticación.
+     * @throws Exception Si ocurre un error durante la configuración de la autenticación.
+     */
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder)  throws Exception{
 		

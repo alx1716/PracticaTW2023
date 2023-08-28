@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 
 /**
  * Esta clase va a ser una relación intermedia para manejar la asignación de los
- * usuarios a los artículos
+ * Usuarios a los Artículos
  * 
  */
 @Entity

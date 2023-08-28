@@ -9,6 +9,9 @@ import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.UsuarioWiki;
 import com.proyectospring.app.models.entity.Wiki;
 
+/**
+ * interfaz de acceso a los datos
+ */
 public interface IUsuarioWikiDao extends CrudRepository<UsuarioWiki, Long> {
 
 	

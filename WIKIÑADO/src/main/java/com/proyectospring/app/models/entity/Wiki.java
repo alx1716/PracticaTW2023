@@ -24,10 +24,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Esta va a ser la primera tabla donde va a ir todos los clientes, En el caso
- * de la práctica de TW serán USUARIOS.
+ * Clase para mapear las Wikis con la BBDD
  */
-
 @Entity
 @Table(name = "wikis")
 public class Wiki implements Serializable {
@@ -63,9 +61,6 @@ public class Wiki implements Serializable {
 											// Spring convierte el String en formato fecha con este formato
 	private Date createAt;
 
-	// private String foto; // archivo ue se va a subir a cada uno de los clientes.
-	// ESTE archivo es el que subiría a cada uno de los archivos o a las WIKIS?
-
 	@OneToMany(mappedBy = "wiki", fetch = FetchType.LAZY, cascade = CascadeType.ALL) // una wiki (la clase en la que
 																						// estamos), puede tener muchos
 																						// artículos.// cascade es para
@@ -75,8 +70,6 @@ public class Wiki implements Serializable {
 																						// video 89 minuto 9:10
 	private List<Articulo> articulos; // una wiki va a tener muchos articulos.
 
-	// Hay que crear los dos constructores uno sin y otro con los campos sin el ID
-	// al ser autonumerico?? así lo hace el de pildoras
 	public Wiki() {
 
 		articulos = new ArrayList<Articulo>(); // inicializamos la lista de artículos.
@@ -151,7 +144,7 @@ public class Wiki implements Serializable {
 	}
 
 	/**
-	 * método para poner el nombre completo del cliente en los artículos o donde sea
+	 * método para poner el nombre completo del usuario en los artículos o donde sea
 	 * que se necesite sólo poniendo el objeto wiki, directamente se llama a este
 	 * método
 	 * 

@@ -18,6 +18,9 @@ import javax.persistence.UniqueConstraint;
 
 import com.proyectospring.app.enums.RoleEnum;
 
+/**
+ * Clase para mapear los Usuarios con la BBDD
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {

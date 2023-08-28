@@ -42,11 +42,11 @@ import com.proyectospring.app.models.service.IWikiService;
 
 import com.proyectospring.app.util.paginator.PageRender;
 
+/**
+ * Controlador para la gestión de wikis, ver, editar, crear y eliminar.
+ */
 @Controller
-@SessionAttributes("wiki") // para guardar las sesiones de actualización o creación de los usuarios ya así
-								// saber si estamos editando un registro o creando uno nuevo
-// se pasa el objeto a la sesion y este va permanecer ahí hasta que se llame al
-						// método guardar
+@SessionAttributes("wiki") // para guardar las sesiones de actualización
 public class WikiController {
 
 	@Autowired
@@ -67,7 +67,16 @@ public class WikiController {
 	
 	
 
-	//@Secured("ROLE_COLABORADOR")
+	/**
+     * Muestra los detalles de una wiki.
+     *
+     * @param id             ID de la wiki a mostrar.
+     * @param modelo         Modelo para la vista.
+     * @param authentication Autenticación del usuario.
+     * @param model          Modelo de la vista.
+     * @param flash          Atributos para redireccionamiento.
+     * @return La vista para mostrar los detalles de la wiki.
+     */
 	@GetMapping(value = "/ver/{id}") // Método para poder ver la foto con el controlador
 	@PermitAll
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> modelo, Authentication authentication, Model model, RedirectAttributes flash) {
@@ -99,6 +108,8 @@ public class WikiController {
 		return "ver";
 
 	}
+	
+	
 
 	@RequestMapping(value = { "/listar"}, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "pagina", defaultValue = "0") int pagina, Model model) {
@@ -181,16 +192,17 @@ public class WikiController {
 
 	}
 
-	// este método recibe los datos del nuevo cliente que vamos a validar ya
-	// poblados del formulario.
-	// si la clase cliente no se llama como el atributo con que lo pasamos a la
-	// vista en el método "crear" se anota con @ModelAttribute("nombreDelAtributo")
-	//@PreAuthorize("hasRole('ROLE_GESTOR', 'ROLE_COLABORA')")// se puede usar tambien @Secured("ROLE_GESTOR")
-	@RequestMapping(value = "/formulario", method = RequestMethod.POST) // Para devolver al cliente al formulario en
-																		// caso de que haya errores se usa el
-																		// BindingResult OJO el objeto mapeado y el
-																		// BindingResult SIEMPRE van juntos en este
-																		// orden.
+	/**
+	 * Método para guaradar las wikis que se crean 
+	 * 
+	 * @param nuevaWiki 			wiki a guardar
+	 * @param resultado				resultado de la validación
+	 * @param modelo				modelo para enviar a la vista
+	 * @param flash					para pasar mensajes
+	 * @param status				estado de la sesion
+	 * @return						la lista de wikis con la nueva añadida
+	 */
+	@RequestMapping(value = "/formulario", method = RequestMethod.POST) // Para devolver al cliente al formulario en   caso de que haya errores se usa el BindingResult OJO el objeto mapeado y el BindingResult SIEMPRE van juntos en este orden.
 	public String guardar(@Valid Wiki nuevaWiki, BindingResult resultado, Model modelo, RedirectAttributes flash, SessionStatus status) {
 		if (resultado.hasErrors()) {
 
@@ -234,8 +246,11 @@ public class WikiController {
 	}
 	
 	/**
-	 * Método para autyenticar si el usuario posee algún rol
-	 */
+     * Método para autenticar si el usuario posee algún rol.
+     *
+     * @param role     	El rol a verificar.
+     * @return 			`true` si el usuario tiene el rol, de lo contrario `false`.
+     */
 	public boolean hasRole( String role) {
 		
 		SecurityContext context = SecurityContextHolder.getContext(); 

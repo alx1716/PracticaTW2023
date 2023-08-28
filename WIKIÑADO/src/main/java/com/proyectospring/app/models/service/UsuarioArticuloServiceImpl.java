@@ -13,6 +13,13 @@ import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.UsuarioArticulo;
 import com.proyectospring.app.models.entity.UsuarioWiki;
 import com.proyectospring.app.models.entity.Wiki;
+
+
+/**
+ * Clase que implementa la interfaz Service necesaria para el acceso a los datos 
+ * de esta forma no se accede directamente a los Dao desde los controladores
+ * lo cual supone una buena práctica
+ */
 @Service
 public class UsuarioArticuloServiceImpl implements IUsuarioArticuloService {
 	

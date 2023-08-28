@@ -84,7 +84,13 @@ public class UsuarioController {
 	private IPropuestaModificacionService propuestaModificacionService;
 	
 
-	
+	/**
+     * Muestra el perfil del usuario autenticado.
+     *
+     * @param authentication La autenticación del usuario.
+     * @param modelo         El modelo para la vista.
+     * @return La vista del perfil del usuario.
+     */
 	@GetMapping("/perfil")
 	public String perfil(Authentication authentication, Model modelo) {
 		
@@ -160,7 +166,7 @@ public class UsuarioController {
 	
 	
 	/**
-	 * Método para asignar un Artículo al usuario //OJO este método lo cambiaré al controller de la entidad intermedia que he creado!! ya que ahí voy a manejar el borrado de los registros también
+	 * Método para asignar un Artículo al usuario
 	 * @param articuloId ID del artículo que queremos asignar
 	 * @param flash para dar un mensaje de éxito en caso tal
 	 * @return
@@ -211,7 +217,12 @@ public class UsuarioController {
 
 	
 
-	//para enviar los datos necesarios a la vista
+	/**
+     * Lista los usuarios para la gestión.
+     *
+     * @param model El modelo para la vista.
+     * @return La vista para la gestión de usuarios.
+     */
 	@GetMapping("/gestor_user")
 	public String listarUsuarios(Model model) {
 	    List<Usuario> listaUsuarios = usuarioserv.userList();
@@ -227,8 +238,15 @@ public class UsuarioController {
 	}
 		
 		
-		//método que añade un rol nuevo a un usuario existente
-
+	
+	 /**
+     * Asigna un nuevo rol a un usuario.
+     *
+     * @param userId            ID del usuario al que se asignará el rol.
+     * @param newRole           Rol nuevo a asignar.
+     * @param redirectAttributes Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de asignar el rol.
+     */
 		@PostMapping("/asigna_rol")
 		public String asignarRol(
 		    @RequestParam("userId") Long userId,
@@ -268,10 +286,13 @@ public class UsuarioController {
 		    }
 		}
 		
-//método que permite eliminar un usuario determinado
-
-		//permite eliminar usuarios del sistema, elimina todas las relaciones posibles en el resto de tablas
-		
+		/**
+	     * Elimina un usuario del sistema.
+	     *
+	     * @param userId            ID del usuario a eliminar.
+	     * @param redirectAttributes Atributos para redireccionamiento.
+	     * @return La vista de redireccionamiento después de eliminar el usuario.
+	     */
 		@PostMapping("/eliminar_usuario")
 		public String eliminarUsuario(@RequestParam("userId") Long userId, RedirectAttributes redirectAttributes) {
 			
@@ -279,23 +300,25 @@ public class UsuarioController {
 			 * lo que voy a hacer es desactivar el usuario, así no tengo que borrar registros ya que esto me está dando problemas
 			 * 
 			 */
-			//primero elimino todas las propuestas
 			Usuario usuario = usuarioService.findOne(userId);
 			usuario.setEnabled(0);
 			usuarioService.save(usuario);
-			/*usuario.getModificacionesPropuestas().clear();
-			propuestaModificacionService.deleteByUsuario(usuario);
-			usuarioService.deleteByUsuario(usuario);*/
+			
 			
 		   
-			redirectAttributes.addFlashAttribute("success", "El ya que no existe en el sistema.");
+			redirectAttributes.addFlashAttribute("success", " El usuario: "+usuario.getUsername()+" ya que no existe en el sistema.");
 	        return "redirect:/gestor_user";
 		}
 
 		
 
 
-	//método qpara la creación de un usuario nuevo
+		/**
+	     * Muestra el formulario de creación de usuario.
+	     *
+	     * @param model El modelo para la vista.
+	     * @return La vista del formulario de creación de usuario.
+	     */
 		@GetMapping("/crear")
 	    public String mostrarFormularioCreacion(Model model) {
 	        Usuario nuevoUsuario = new Usuario();

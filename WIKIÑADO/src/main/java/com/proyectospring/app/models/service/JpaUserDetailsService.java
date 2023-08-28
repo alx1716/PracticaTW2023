@@ -18,13 +18,26 @@ import com.proyectospring.app.models.dao.IUsuarioDao;
 import com.proyectospring.app.models.entity.Role;
 import com.proyectospring.app.models.entity.Usuario;
 
+/**
+ * Esta clase de servicio implementa la interfaz UserDetailsService de Spring Security.
+ * Maneja la autenticación de usuarios y proporciona métodos para gestionar la información de los usuarios en la base de datos.
+ */
 @Service("JpaUserDetailsService") // OJO!!! sin esto me da problemas.
 public class JpaUserDetailsService implements UserDetailsService { // en esta clase no se necesita una intefaz ya que
 																	// esta la provee spring security
 
 	@Autowired
 	private IUsuarioDao usuarioaDao; // para buscar al usuario en la BBDD
-
+	
+	
+	/**
+     * Carga los detalles del usuario por su dirección de correo electrónico.
+     * Este método se utiliza para la autenticación del usuario.
+     *
+     * @param email La dirección de correo electrónico del usuario.
+     * @return Objeto UserDetails que contiene los detalles del usuario y sus autorizaciones.
+     * @throws UsernameNotFoundException Si el usuario con el correo electrónico proporcionado no existe.
+     */
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { // Userdetails representa

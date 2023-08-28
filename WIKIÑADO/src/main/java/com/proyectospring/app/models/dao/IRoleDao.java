@@ -5,7 +5,9 @@ import com.proyectospring.app.models.entity.Role;
 import com.proyectospring.app.models.entity.Usuario;
 
 
-
+/**
+ * interfaz de acceso a los datos
+ */
 public interface IRoleDao extends CrudRepository<Role, Long>{
 	
 	public Role findByAuthority(String auth);

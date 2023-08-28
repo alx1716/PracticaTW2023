@@ -45,7 +45,10 @@ import com.proyectospring.app.models.service.IPropuestaModificacionService;
 import com.proyectospring.app.models.service.IUsuarioService;
 import com.proyectospring.app.models.service.IWikiService;
 
-//@Secured("ROLE_GESTOR") // se anota la clase entera ya que TODOS los métodos deben ser sólo accesibles a los Gestores.
+/**
+ * Controlador para la gestión de artículos.
+ * Administra la lógica y las acciones relacionadas con los artículos de la aplicación.
+ */
 @Controller
 @RequestMapping("/articulo")
 @SessionAttributes("articulo")   // para que se mantenga el articulo en la sesion hasta que se persista en la BBDD
@@ -60,10 +63,17 @@ public class ArticuloController {
 	@Autowired
 	private IUsuarioService userService;
 	
-	
-	/**
-	 * método para ver el detalle de la factura de un cliente
-	 */
+	 /**
+     * Muestra el detalle de un artículo.
+     * Permite visualizar los detalles y contenido de un artículo específico.
+     *
+     * @param articuloId     El ID del artículo a visualizar.
+     * @param authentication La información de autenticación del usuario.
+     * @param modelo         El modelo para la vista.
+     * @param flash          Atributos para redireccionamiento.
+     * @return La vista para ver el detalle del artículo.
+     * @throws IOException Si ocurre un error de E/S al cargar el contenido del artículo.
+     */
 	@GetMapping("/ver/{articuloId}")
 	public String verDetalleArticulo(@PathVariable(value = "articuloId") Long articuloId, Authentication authentication,  Model modelo, RedirectAttributes flash) throws IOException { // la Exception es por el url del archivo que vamos a buscar
 		
@@ -125,12 +135,22 @@ public class ArticuloController {
 		return "articulo/ver";
 	}
 	
+	
+	/**
+     * Muestra el formulario para crear un nuevo artículo.
+     * Permite a los usuarios crear un nuevo artículo para una wiki específica.
+     *
+     * @param wikiId  El ID de la wiki asociada al artículo.
+     * @param modelo  El modelo para la vista.
+     * @param flash   Atributos para redireccionamiento.
+     * @return La vista del formulario para crear un nuevo artículo.
+     */
 	@GetMapping("/formulario/{wikiId}")
 	public String crear(@PathVariable(value = "wikiId") Long wikiId,  Model modelo, RedirectAttributes flash) {
 		
 		Wiki wiki = wikiService.findOne(wikiId);
 		
-		if (wiki == null) { // nos aseguramos de que el cliente exista
+		if (wiki == null) { // nos aseguramos de que la wiki exista
 			
 			flash.addFlashAttribute("error", "La Wiki no existe en la BBDD");
 			return "redirect:/listar";
@@ -147,9 +167,15 @@ public class ArticuloController {
 
 	
 	/**
-	 * vamos a crera el método para guardar el artículo en la BBDD
-	 * 
-	 */
+     * Guarda un nuevo artículo en la base de datos.
+     *
+     * @param articulo  El artículo a guardar.
+     * @param resultado El resultado de la validación del formulario.
+     * @param modelo    El modelo para la vista.
+     * @param flash     Atributos para redireccionamiento.
+     * @param status    El estado de la sesión.
+     * @return La vista de redireccionamiento después de guardar el artículo.
+     */
 	@PostMapping("/formulario")
 	public String guardarArticulo( @Valid Articulo articulo,BindingResult resultado, Model modelo,RedirectAttributes flash, SessionStatus status ) {
 		
@@ -171,7 +197,15 @@ public class ArticuloController {
 		
 	}
 	
-	
+	 /**
+     * Guarda una propuesta de modificación para un artículo.
+     *
+     * @param file     El archivo que contiene la propuesta de modificación.
+     * @param articulo El artículo al que se aplica la propuesta.
+     * @param flash    Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de guardar la propuesta.
+     * @throws IOException Si ocurre un error de E/S al procesar el archivo.
+     */
 	@PostMapping("/propuesta")
 	public String guardarPropuesta(@RequestParam("file") MultipartFile file, @ModelAttribute Articulo articulo,RedirectAttributes flash) throws IOException {
 		
@@ -206,8 +240,14 @@ public class ArticuloController {
 	}
 	
 	/**
-	 * Método para modificar un artículo
-	 */
+     * Muestra el formulario para modificar un artículo.
+     *
+     * @param articuloId El ID del artículo a modificar.
+     * @param modelo     El modelo para la vista.
+     * @param flash      Atributos para redireccionamiento.
+     * @param response   La respuesta HTTP.
+     * @return La vista del formulario de propuesta de modificación.
+     */
 	@GetMapping("/modificar/{id}")
 	public String modificar(@PathVariable(value = "id") Long articuloId,  Model modelo, RedirectAttributes flash,  HttpServletResponse response) {
 		
@@ -228,7 +268,14 @@ public class ArticuloController {
 		
 	}
 	
-	
+	/**
+     * Edita un artículo existente.
+     *
+     * @param id     El ID del artículo a editar.
+     * @param modelo El modelo para la vista.
+     * @param flash  Atributos para redireccionamiento.
+     * @return La vista del formulario para editar un artículo.
+     */
 	@Secured("ROLE_GESTOR") // pueden pasarse un array de roles
 	@RequestMapping(value = "/editar/{id}") // le vamos a pasar el id por parámetro a la url y hace una pedición GET
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> modelo, RedirectAttributes flash) {
@@ -265,8 +312,12 @@ public class ArticuloController {
 	
 	
 	/**
-	 * implementamos el método para borrar facturas de un cliente
-	 */
+     * Elimina un artículo.
+     *
+     * @param id    El ID del artículo a eliminar.
+     * @param flash Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de eliminar el artículo.
+     */
 	@GetMapping("/eliminar/{id}")  //ojo porque este mapping es para mapear el método para que pueda ser invocado desde la vista!!
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 		

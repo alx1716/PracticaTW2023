@@ -6,6 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.proyectospring.app.models.entity.Usuario;
 
+/**
+ * interfaz de acceso a los datos
+ */
 public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
 	
 	public Usuario findByUsername(String username); // a traves del nombre del método se ejecuta la consulta.. OJO!!!

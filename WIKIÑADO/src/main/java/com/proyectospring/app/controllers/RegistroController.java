@@ -10,7 +10,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.proyectospring.app.models.entity.Role;
 import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.service.RegistroService;
-
+/**
+ * Controlador para el registro de nuevos usuarios
+ */
 @Controller
 public class RegistroController {
 	
@@ -18,7 +20,7 @@ public class RegistroController {
 	RegistroService registroService;
 	
 	/**
-	 * 
+	 * Muestra la vista del registro
 	 * @return la vista del formulario de registro
 	 */
 	@GetMapping("/registro")

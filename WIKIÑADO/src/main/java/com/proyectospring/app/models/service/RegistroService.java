@@ -15,6 +15,10 @@ import com.proyectospring.app.models.dao.IUsuarioDao;
 import com.proyectospring.app.models.entity.Role;
 import com.proyectospring.app.models.entity.Usuario;
 
+
+/**
+ * Clase Service para implementar el registro de los usuarios
+ */
 @Service
 public class RegistroService {
 

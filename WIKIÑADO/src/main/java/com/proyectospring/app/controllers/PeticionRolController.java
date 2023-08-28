@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+/**
+ * Controlador para la gestión de peticiones de roles de usuario.
+ * Administra las solicitudes y la gestión de roles de usuario en la aplicación.
+ */
 @Controller
 public class PeticionRolController {
 
@@ -29,13 +32,28 @@ public class PeticionRolController {
     
     @Autowired
     private IUsuarioService usuarioService;
-
+    
+    /**
+     * Muestra el formulario para solicitar un nuevo rol de usuario.
+     *
+     * @param model El modelo para la vista.
+     * @return La vista del formulario de solicitud de rol.
+     */
     @GetMapping("/solicitar-rol")
     public String mostrarFormularioSolicitud(Model model) {
         model.addAttribute("roles", RoleEnum.values());
         return "solicitar-rol-form";
     }
-
+    
+    
+    /**
+     * Procesa la solicitud de un nuevo rol de usuario.
+     *
+     * @param rolSolicitado       El rol solicitado por el usuario.
+     * @param customUserDetails   Los detalles personalizados del usuario autenticado.
+     * @param redirectAttributes Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de procesar la solicitud.
+     */
     @PostMapping("/solicitar-rol")
     public String procesarSolicitudRol(
             @RequestParam("rolSolicitado") RoleEnum rolSolicitado,
@@ -66,8 +84,12 @@ public class PeticionRolController {
 
  
 
-    
-    //mostrar las solicitudes de Rol
+    /**
+     * Muestra la página de gestión de usuarios y solicitudes de roles.
+     *
+     * @param model El modelo para la vista.
+     * @return La vista para gestionar usuarios y solicitudes de roles.
+     */
     @GetMapping("/gestor")
     public String gestionarUsuarios(Model model) {
         List<Usuario> listaUsuarios = usuarioService.findAll();
@@ -80,7 +102,16 @@ public class PeticionRolController {
         return "gesto_user";
     }
     
-
+    /**
+     * Actualiza el rol de un usuario basado en una solicitud de rol.
+     *
+     * @param userId             El ID del usuario afectado.
+     * @param solicitudId        El ID de la solicitud a procesar.
+     * @param action             La acción a realizar (aceptar o rechazar).
+     * @param redirectAttributes Atributos para redireccionamiento.
+     * @return La vista de redireccionamiento después de actualizar el rol.
+     * @throws AccountNotFoundException Si no se encuentra la cuenta de usuario.
+     */
     @PostMapping("/actualizar-rol")
     public String actualizarRol(
             @RequestParam("userId") Long userId,

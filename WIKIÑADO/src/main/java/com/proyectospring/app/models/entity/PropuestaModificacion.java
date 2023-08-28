@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+/**
+ * Clase para mapear las Propuestas con la BBDD
+ */
 @Entity
 @Table(name = "propuestas") 
 public class PropuestaModificacion implements Serializable {

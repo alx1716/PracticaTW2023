@@ -10,7 +10,9 @@ import com.proyectospring.app.models.entity.Usuario;
 import com.proyectospring.app.models.entity.UsuarioArticulo;
 
 
-
+/**
+ * interfaz de acceso a los datos
+ */
 public interface IUsuarioArticuloDao extends CrudRepository<UsuarioArticulo, Long> {
 
 	

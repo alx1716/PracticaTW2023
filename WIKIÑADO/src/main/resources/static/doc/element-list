@@ -1,9 +1,0 @@
-com.proyectospring.app
-com.proyectospring.app.auth.handler
-com.proyectospring.app.controllers
-com.proyectospring.app.enums
-com.proyectospring.app.excepctions
-com.proyectospring.app.models.dao
-com.proyectospring.app.models.entity
-com.proyectospring.app.models.service
-com.proyectospring.app.util.paginator

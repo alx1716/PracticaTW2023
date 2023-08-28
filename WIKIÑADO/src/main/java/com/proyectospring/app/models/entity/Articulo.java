@@ -30,7 +30,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
 
-
+/**
+ * Clase para mapear los Artículos con la BBDD
+ */
 @Entity
 @Table(name="articulos") //los nombres de las tablas van en plural.
 public class Articulo implements Serializable{
@@ -69,7 +71,7 @@ public class Articulo implements Serializable{
 
 
 	/**
-	 * método para que antes de la persistencia de esta factura se le asigne una fecha de creación
+	 * método para que antes de la persistencia de este artículo se le asigne una fecha de creación
 	 */
 	@PrePersist
 	public void prePersist() {

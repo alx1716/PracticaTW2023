@@ -7,7 +7,12 @@ import com.proyectospring.app.models.entity.Articulo;
 import com.proyectospring.app.models.entity.PropuestaModificacion;
 
 
-
+/**
+ * Interfaz Service necesaria para el acceso a los datos 
+ * Esto nos ayuda a implementar el patrón de diseño Facade que crea un fachada de acceso 
+ * de esta forma no se accede directamente a los Dao desde los controladores
+ * lo cual supone una buena práctica.
+ */
 public interface IArticuloService {
 	
 	 public List<Articulo> findAll();  // retorna una lista de wikis.

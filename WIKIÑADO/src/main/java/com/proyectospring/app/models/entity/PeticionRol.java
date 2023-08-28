@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import com.proyectospring.app.enums.PeticionStatus;
 import com.proyectospring.app.enums.RoleEnum;
 
+/**
+ * Clase para mapear las Peticiones de cambio de Roles con la BBDD
+ */
 @Entity
 @Table(name = "peticiones_rol")
 public class PeticionRol implements Serializable {
